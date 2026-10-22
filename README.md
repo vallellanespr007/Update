@@ -1,15 +1,15 @@
 # Update Group — Website
 
-Nuevo website de [Update Group](https://www.updategrouppr.com): estrategia, marketing y comunicación desde Puerto Rico.
+Website de una sola página de [Update Group](https://www.updategrouppr.com), en español e inglés.
 
-Hecho con [Astro](https://astro.build), contenido editable con Decap CMS (`/admin/`) y listo para Netlify.
+- `index.html`: el website completo (diseño, textos y funciones).
+- `mark.png`: símbolo de la marca.
+- `propuesta-ejemplo.pdf`: propuesta de ejemplo que se muestra en el portal de clientes.
 
-```bash
-npm install
-npm run dev      # versión de revisión (muestra borradores)
-npm run build    # versión de producción
-```
+## Verlo
+Abrir `index.html` en el navegador, o publicarlo gratis con GitHub Pages
+(Settings → Pages → Branch: `main` / root).
 
-- [MANTENIMIENTO.md](MANTENIMIENTO.md): cómo editar contenido y publicar proyectos.
-- [PENDIENTES.md](PENDIENTES.md): assets y datos que faltan.
-- [MIGRACION.md](MIGRACION.md): plan para conectar el dominio y migrar.
+## Importante antes de usarlo con clientes reales
+- **Portal de clientes:** es un prototipo. La clave (`UPDATE2026`) está dentro del código, así que cualquiera puede verla. No subir propuestas reales hasta conectar un sistema con acceso protegido en el servidor.
+- **Formulario de contacto:** todavía no envía mensajes; solo muestra un aviso. Hay que conectarlo a un servicio de formularios.

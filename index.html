@@ -1,0 +1,479 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta charset="utf-8">
+<title>Update Group Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Figtree:wght@400;500;600;700&family=Quicksand:wght@500&display=swap">
+<style>
+/* Layout: midnight bento. Condensed stacked hero (from the "Estrategia. Creatividad. Resultados." flyer), a bento grid where AI and the client portal are tiles, and a second view (#portal) that unlocks a proposal PDF. Single committed dark look. */
+:root{
+  --bg:#070B1C;
+  --panel:#0E1532;
+  --panel-2:#131C40;
+  --ink:#F1F4FC;
+  --muted:#8F9BBE;
+  --line:#1E2952;
+  --blue:#2F6BFF; --cyan:#19CBEA; --lime:#8BE24C;
+  --grad:linear-gradient(100deg,var(--blue),var(--cyan) 55%,var(--lime));
+  --f-display:"Archivo", "Arial Narrow", system-ui, sans-serif;
+  --f-body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-word:"Quicksand", "Varela Round", system-ui, sans-serif;
+  --r:26px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16.5px;line-height:1.6;margin:0;overflow-x:hidden}
+a{color:inherit}
+img{max-width:100%;display:block}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance}
+p{margin:0}
+.k{font-family:var(--f-display);font-stretch:110%;font-weight:700;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.gt{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:8px}
+html:not([data-lang="es"]) .es, html[data-lang="es"] .en{display:none!important}
+i.en,i.es{font-style:normal}
+
+/* NAV */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-block:12px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo img{width:38px;height:auto}
+.wm{display:grid;line-height:.9}
+.wm b{font-family:var(--f-word);font-weight:500;font-size:1.55rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.wm small{font-family:var(--f-display);font-weight:700;font-size:.58rem;letter-spacing:.34em;justify-self:end;margin-right:-.34em}
+.nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-weight:500;font-size:.93rem;color:var(--muted)}
+.nav ul a{text-decoration:none}.nav ul a:hover{color:var(--ink)}
+.nav-r{display:flex;align-items:center;gap:10px}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px}
+.lang button{all:unset;cursor:pointer;font-family:var(--f-display);font-weight:800;font-size:.7rem;letter-spacing:.1em;padding:6px 10px;border-radius:999px;color:var(--muted)}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:var(--f-body);font-weight:700;font-size:.93rem;text-decoration:none;border-radius:999px;padding:13px 22px;border:0;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn-grad{background:var(--grad);color:#050A1C;box-shadow:0 14px 34px -14px color-mix(in srgb,var(--cyan) 80%,transparent)}
+.btn-glass{background:color-mix(in srgb,var(--ink) 8%,transparent);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.btn-glass:hover{background:color-mix(in srgb,var(--ink) 14%,transparent)}
+.btn svg{flex:none}
+@media (max-width:960px){.nav ul{display:none}}
+@media (max-width:540px){.wm{display:none}.nav-r .btn span.t{display:none}.nav-r .btn{padding:11px 13px}}
+
+/* HERO */
+.hero{position:relative;padding-block:clamp(40px,7vw,90px) clamp(36px,5vw,64px);overflow:hidden}
+.hero::before{content:"";position:absolute;width:780px;height:780px;right:-220px;top:-260px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--blue) 30%,transparent),transparent 65%);pointer-events:none}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(20px,4vw,48px);align-items:center}
+.stack{font-family:var(--f-display);font-stretch:68%;font-weight:900;text-transform:uppercase;line-height:.88;font-size:clamp(3.4rem,10.5vw,8.6rem);letter-spacing:-.01em}
+.stack span{display:block}
+.stack .b{color:var(--blue)}.stack .l{color:var(--lime)}
+.hero .lede{margin-top:26px;font-size:clamp(1.05rem,1.5vw,1.2rem);color:var(--muted);max-width:31em}
+.hero .lede strong{color:var(--ink)}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.orb{position:relative;display:grid;place-items:center;aspect-ratio:1;max-width:100%}
+.orb::before{content:"";position:absolute;inset:6%;border-radius:50%;border:1px solid var(--line);background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--cyan) 18%,transparent),transparent 60%)}
+.orb::after{content:"";position:absolute;inset:20%;border-radius:50%;border:1px dashed color-mix(in srgb,var(--line) 80%,var(--cyan));animation:spin 40s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.orb img{position:relative;z-index:1;width:72%;filter:drop-shadow(0 40px 50px color-mix(in srgb,var(--blue) 45%,transparent));animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-12px)}}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr}.orb{max-width:380px;margin-inline:auto;width:100%;order:-1}}
+
+/* MARQUEE */
+.clients{border-block:1px solid var(--line);padding-block:20px;overflow:hidden;display:flex;gap:28px;align-items:center}
+.clients .k{flex:none;padding-left:clamp(16px,4vw,40px)}
+.track{overflow:hidden;flex:1;min-width:0;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee{display:flex;gap:52px;width:max-content;animation:scroll 40s linear infinite}
+.marquee span{font-family:var(--f-display);font-stretch:85%;font-weight:800;font-size:1.25rem;color:color-mix(in srgb,var(--muted) 75%,transparent);white-space:nowrap}
+@keyframes scroll{to{transform:translateX(-50%)}}
+@media (max-width:600px){.clients{flex-direction:column;align-items:stretch;gap:12px}.clients .k{padding-left:16px}}
+
+/* BENTO */
+section.s{padding-block:clamp(56px,8vw,104px)}
+.head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:16px 40px;margin-bottom:34px}
+.head h2{font-stretch:75%;font-weight:900;text-transform:uppercase;font-size:clamp(2.2rem,5.4vw,4rem);line-height:.92;max-width:14em}
+.head p{color:var(--muted);max-width:28em}
+.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:24px;display:grid;gap:12px;align-content:start;position:relative;overflow:hidden;min-width:0}
+.tile h3{font-stretch:85%;font-weight:800;font-size:1.2rem;line-height:1.15;text-transform:uppercase}
+.tile p{color:var(--muted);font-size:.94rem;line-height:1.5}
+.t-ai{grid-column:span 2;grid-row:span 2;background:radial-gradient(500px 300px at 100% 0%,color-mix(in srgb,var(--blue) 30%,transparent),transparent 70%),var(--panel);align-content:space-between}
+.t-ai h3{font-size:clamp(1.6rem,3vw,2.4rem);font-stretch:75%;font-weight:900;line-height:.95}
+.pill{justify-self:start;display:inline-flex;align-items:center;gap:6px;font-family:var(--f-display);font-weight:800;font-stretch:110%;font-size:.66rem;letter-spacing:.18em;padding:5px 11px;border-radius:999px;background:var(--grad);color:#050A1C}
+.chat{display:grid;gap:8px;padding:16px;border-radius:18px;background:color-mix(in srgb,var(--bg) 70%,transparent);border:1px solid var(--line);min-height:236px;align-content:end}
+.msg{max-width:84%;padding:9px 13px;border-radius:16px;font-size:.88rem;line-height:1.4;animation:pop .35s ease both}
+.msg.in{background:var(--panel-2);justify-self:start;border-bottom-left-radius:4px}
+.msg.out{background:linear-gradient(135deg,color-mix(in srgb,var(--blue) 75%,var(--bg)),color-mix(in srgb,var(--cyan) 55%,var(--bg)));justify-self:end;border-bottom-right-radius:4px}
+.msg small{display:block;font-size:.68rem;opacity:.7;margin-top:2px}
+@keyframes pop{from{opacity:.0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.t-portal{grid-column:span 2;background:linear-gradient(135deg,color-mix(in srgb,var(--lime) 16%,var(--panel)),var(--panel) 60%)}
+.t-portal .row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
+.lockico{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--grad);color:#050A1C}
+.t-quote{grid-column:span 2;display:flex;flex-direction:column;justify-content:center}
+.t-quote blockquote{margin:0;font-family:var(--f-display);font-stretch:85%;font-weight:700;font-size:clamp(1.25rem,2.2vw,1.65rem);line-height:1.2}
+.ico{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--panel-2);border:1px solid var(--line)}
+.svc:hover{border-color:color-mix(in srgb,var(--cyan) 50%,var(--line))}
+@media (max-width:1000px){.bento{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.bento{grid-template-columns:1fr}.t-ai,.t-portal,.t-quote{grid-column:auto;grid-row:auto}}
+
+/* PROCESS */
+.proc{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:p}
+.proc li{list-style:none;padding:22px;border-radius:var(--r);border:1px solid var(--line);display:grid;gap:8px;align-content:start}
+.proc .n{font-family:var(--f-display);font-stretch:70%;font-weight:900;font-size:3rem;line-height:.9}
+.proc h3{font-stretch:85%;font-weight:800;text-transform:uppercase;font-size:1.05rem}
+.proc p{color:var(--muted);font-size:.93rem}
+.proc{margin:0;padding:0}
+@media (max-width:900px){.proc{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.proc{grid-template-columns:1fr}}
+
+/* CONTACT */
+.cta{border-radius:34px;padding:clamp(26px,5vw,60px);background:radial-gradient(700px 400px at 0% 100%,color-mix(in srgb,var(--lime) 18%,transparent),transparent 70%),radial-gradient(700px 400px at 100% 0%,color-mix(in srgb,var(--blue) 30%,transparent),transparent 70%),var(--panel);border:1px solid var(--line);display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,5vw,60px)}
+.cta h2{font-stretch:72%;font-weight:900;text-transform:uppercase;font-size:clamp(2.3rem,5.6vw,4.4rem);line-height:.9}
+.cta .lede{color:var(--muted);margin-top:18px;max-width:30em}
+.cinfo{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:10px;font-weight:500}
+.cinfo li{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.cinfo span.k{min-width:86px}
+.cinfo a{text-decoration:none}.cinfo a:hover{color:var(--cyan)}
+form{display:grid;gap:12px;align-content:start;min-width:0}
+label{display:grid;gap:6px;font-size:.84rem;font-weight:700}
+input{font:inherit;font-weight:400;color:var(--ink);background:color-mix(in srgb,var(--bg) 75%,transparent);border:1px solid var(--line);border-radius:14px;padding:13px 15px;width:100%}
+input:focus{outline:none;border-color:var(--cyan)}
+.note{font-size:.88rem;color:var(--lime);font-weight:500}
+@media (max-width:860px){.cta{grid-template-columns:1fr}}
+
+footer{padding-block:30px;border-top:1px solid var(--line);color:var(--muted);font-size:.86rem;margin-top:clamp(56px,8vw,100px)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.social{display:flex;gap:8px;align-items:center}
+.social a{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--panel-2);border:1px solid var(--line)}
+.wa{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:30;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:#25D366;color:#fff;box-shadow:0 14px 30px -10px rgba(37,211,102,.7)}
+
+/* PORTAL VIEW */
+#view-portal{padding-block:clamp(36px,6vw,72px)}
+.gate{max-width:480px;margin:clamp(10px,4vw,40px) auto 0;background:var(--panel);border:1px solid var(--line);border-radius:30px;padding:clamp(24px,5vw,40px);display:grid;gap:18px;position:relative;overflow:hidden}
+.gate::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:var(--grad)}
+.gate h1{font-stretch:75%;font-weight:900;text-transform:uppercase;font-size:clamp(2rem,6vw,2.8rem);line-height:.92}
+.gate p{color:var(--muted)}
+.err{color:#FF8A8A;font-size:.9rem;font-weight:600}
+.demo{font-size:.84rem;color:var(--muted);padding:12px 14px;border-radius:14px;border:1px dashed var(--line)}
+.demo code{font-family:ui-monospace,Menlo,monospace;color:var(--lime);font-size:.92rem;user-select:all}
+.back{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:600}
+.back:hover{color:var(--ink)}
+.dash{display:grid;grid-template-columns:1fr 330px;gap:20px;align-items:start}
+.dash-top{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:14px;margin-bottom:22px}
+.dash-top h1{font-stretch:75%;font-weight:900;text-transform:uppercase;font-size:clamp(1.9rem,4.6vw,3.2rem);line-height:.92}
+.viewer{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.vbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);font-size:.86rem;color:var(--muted);flex-wrap:wrap}
+.vbar .tools{display:flex;gap:6px;align-items:center}
+.vbar button{all:unset;cursor:pointer;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;border:1px solid var(--line);color:var(--ink);font-weight:700}
+.vbar button:hover{background:var(--panel-2)}
+.vbar button:focus-visible{outline:2px solid var(--cyan)}
+.pages{height:min(78vh,900px);overflow:auto;padding:18px;display:grid;gap:16px;justify-items:center;background:color-mix(in srgb,var(--bg) 60%,var(--panel))}
+.pages canvas{max-width:100%;height:auto;border-radius:8px;box-shadow:0 20px 50px -24px #000;background:#fff}
+.pages .loading{color:var(--muted);align-self:center;padding:40px;text-align:center}
+.side{display:grid;gap:14px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:12px}
+.meta{display:grid;gap:10px;margin:0}
+.meta div{display:flex;justify-content:space-between;gap:12px;font-size:.92rem;border-bottom:1px solid var(--line);padding-bottom:9px}
+.meta dt{color:var(--muted)}.meta dd{margin:0;font-weight:600;text-align:right}
+.status{justify-self:start;display:inline-flex;align-items:center;gap:7px;font-size:.8rem;font-weight:700;padding:5px 11px;border-radius:999px;background:color-mix(in srgb,#FFC24B 18%,transparent);color:#FFD27A}
+.status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.side .btn{width:100%}
+@media (max-width:920px){.dash{grid-template-columns:1fr}.side{order:-1}.pages{height:auto;max-height:80vh}}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Update Group"><img src="mark.png" alt="" width="38" height="33"><span class="wm"><b>update</b><small>GROUP</small></span></a>
+    <ul>
+      <li><a href="#servicios"><span class="en">Services</span><span class="es">Servicios</span></a></li>
+      <li><a href="#ai"><span class="en">AI Automations</span><span class="es">Automatizaciones AI</span></a></li>
+      <li><a href="#proceso"><span class="en">Process</span><span class="es">Proceso</span></a></li>
+      <li><a href="#contacto"><span class="en">Contact</span><span class="es">Contacto</span></a></li>
+    </ul>
+    <div class="nav-r">
+      <div class="lang" role="group" aria-label="Language / Idioma">
+        <button type="button" id="l-en" data-set="en" aria-pressed="true">EN</button>
+        <button type="button" id="l-es" data-set="es" aria-pressed="false">ES</button>
+      </div>
+      <a class="btn btn-glass" href="#portal"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span class="t"><i class="en">Client portal</i><i class="es">Portal de clientes</i></span></a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HOME ============ -->
+<main id="view-home">
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div>
+        <h1 class="stack">
+          <span class="en"><span>Strategy.</span><span class="b">Creativity.</span><span class="l">Results.</span></span>
+          <span class="es"><span>Estrategia.</span><span class="b">Creatividad.</span><span class="l">Resultados.</span></span>
+        </h1>
+        <p class="lede"><span class="en">We turn ideas into actions that create <strong>real impact</strong> and <strong>grow your brand</strong>. Digital marketing, content and AI automations, made in Puerto Rico.</span><span class="es">Convertimos ideas en acciones que generan <strong>impacto real</strong> y <strong>hacen crecer</strong> tu marca. Mercadeo digital, contenido y automatizaciones AI, hecho en Puerto Rico.</span></p>
+        <div class="ctas">
+          <a class="btn btn-grad" href="#contacto"><span class="en">Let’s talk →</span><span class="es">¡Hablemos! →</span></a>
+          <a class="btn btn-glass" href="#portal"><i class="en">I have a proposal</i><i class="es">Tengo una propuesta</i></a>
+        </div>
+      </div>
+      <div class="orb"><img src="mark.png" alt="Update Group" width="360" height="311"></div>
+    </div>
+  </section>
+
+  <div class="clients">
+    <p class="k"><span class="en">Trusted by</span><span class="es">Confían en nosotros</span></p>
+    <div class="track"><div class="marquee">
+      <span>Coca-Cola</span><span>Frito Lay</span><span>Del Valle</span><span>Ticketera</span><span>Travel With Sears</span><span>Susan G. Komen PR</span><span>Piñones del Sopapo</span><span>Chomba Metro</span>
+      <span aria-hidden="true">Coca-Cola</span><span aria-hidden="true">Frito Lay</span><span aria-hidden="true">Del Valle</span><span aria-hidden="true">Ticketera</span><span aria-hidden="true">Travel With Sears</span><span aria-hidden="true">Susan G. Komen PR</span><span aria-hidden="true">Piñones del Sopapo</span><span aria-hidden="true">Chomba Metro</span>
+    </div></div>
+  </div>
+
+  <section class="s" id="servicios">
+    <div class="wrap">
+      <div class="head">
+        <h2><span class="en">Ideas that <span class="gt">update.</span> Results you can see.</span><span class="es">Ideas que se <span class="gt">actualizan.</span> Resultados que se notan.</span></h2>
+        <p><span class="en">Strategy, creativity and technology in one team, from your first post to the system that turns followers into customers.</span><span class="es">Estrategia, creatividad y tecnología en un solo equipo, desde tu primer post hasta el sistema que convierte seguidores en clientes.</span></p>
+      </div>
+
+      <div class="bento">
+        <article class="tile t-ai" id="ai">
+          <div style="display:grid;gap:12px">
+            <span class="pill"><span class="en">NEW · AI</span><span class="es">NUEVO · AI</span></span>
+            <h3><span class="en">AI automations that sell <span class="gt">24/7.</span></span><span class="es">Automatizaciones AI que venden <span class="gt">24/7.</span></span></h3>
+            <p><span class="en">Chatbots for WhatsApp, Instagram and Messenger, automatic lead follow-up, self-booking and reports that write themselves.</span><span class="es">Chatbots para WhatsApp, Instagram y Messenger, seguimiento automático de leads, citas solas y reportes que se hacen solos.</span></p>
+          </div>
+          <div class="chat" id="chat" aria-label="Chat example"></div>
+        </article>
+
+        <article class="tile t-portal">
+          <div class="row">
+            <span class="lockico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
+            <a class="btn btn-grad" href="#portal"><i class="en">Open portal</i><i class="es">Abrir portal</i></a>
+          </div>
+          <h3><span class="en">Proposal portal</span><span class="es">Portal de propuestas</span></h3>
+          <p><span class="en">Got a proposal from us? Enter your private access code to view it, review it and approve it in one place.</span><span class="es">¿Te enviamos una propuesta? Entra con tu clave privada para verla, revisarla y aprobarla en un solo lugar.</span></p>
+        </article>
+
+        <article class="tile t-quote">
+          <blockquote><span class="en">“It’s not about having ideas. It’s about <span class="gt">updating</span> them so they <span class="gt">work.</span>”</span><span class="es">“No se trata de tener ideas, se trata de <span class="gt">actualizarlas</span> para que <span class="gt">funcionen.</span>”</span></blockquote>
+        </article>
+
+        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/><path d="M12 12l8-8M17 4h3v3"/></svg></span><h3><span class="en">Digital strategy</span><span class="es">Estrategia digital</span></h3><p><span class="en">Where to be, what to say and how to measure it.</span><span class="es">Dónde estar, qué decir y cómo medirlo.</span></p></article>
+        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><path d="M4 20v-5M9 20v-8M14 20v-6M19 20V9M3 11l6-5 4 3 7-6M16 3h4v4"/></svg></span><h3><span class="en">Digital marketing</span><span class="es">Marketing digital</span></h3><p><span class="en">Meta and Google Ads built for sales and leads.</span><span class="es">Meta y Google Ads enfocados en ventas y leads.</span></p></article>
+        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></span><h3><span class="en">Design &amp; branding</span><span class="es">Diseño y branding</span></h3><p><span class="en">Identities that make your brand recognizable.</span><span class="es">Identidades que hacen tu marca reconocible.</span></p></article>
+        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><path d="M3 10v4h3l7 5V5L6 10zM17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h3><span class="en">Audiovisual content</span><span class="es">Contenido audiovisual</span></h3><p><span class="en">Photos, reels and video for social media.</span><span class="es">Fotos, reels y video para redes sociales.</span></p></article>
+        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M6 6h.01M8.5 6h.01M13 13l7 3-3 1-1 3z"/></svg></span><h3><span class="en">Web development</span><span class="es">Desarrollo web</span></h3><p><span class="en">Fast WordPress sites, mobile-first.</span><span class="es">Websites en WordPress, rápidos y para el celular.</span></p></article>
+        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 20c0-3 3-5 6-5s6 2 6 5M14 15.3c.6-.2 1.3-.3 2-.3 3 0 6 2 6 5"/></svg></span><h3>Community management</h3><p><span class="en">Your social media and community, every day.</span><span class="es">Tus redes y tu comunidad, todos los días.</span></p></article>
+        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg></span><h3>SEO &amp; analytics</h3><p><span class="en">Get found on Google and know what works.</span><span class="es">Aparece en Google y sabe qué funciona.</span></p></article>
+        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span><h3><span class="en">Strategic consulting</span><span class="es">Consultoría estratégica</span></h3><p><span class="en">Better decisions for your brand and business.</span><span class="es">Mejores decisiones de marca y negocio.</span></p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="s" id="proceso" style="padding-top:0">
+    <div class="wrap">
+      <div class="head"><h2><span class="en">How we <span class="gt">work</span></span><span class="es">Cómo <span class="gt">trabajamos</span></span></h2></div>
+      <ol class="proc">
+        <li><span class="n gt">01</span><h3><span class="en">Diagnosis</span><span class="es">Diagnóstico</span></h3><p><span class="en">We review your brand, social media and website.</span><span class="es">Revisamos tu marca, redes y website.</span></p></li>
+        <li><span class="n gt">02</span><h3><span class="en">Proposal</span><span class="es">Propuesta</span></h3><p><span class="en">You receive it in your private portal, ready to review and approve.</span><span class="es">La recibes en tu portal privado, lista para revisar y aprobar.</span></p></li>
+        <li><span class="n gt">03</span><h3><span class="en">Execution</span><span class="es">Ejecución</span></h3><p><span class="en">Content, campaigns and automations go live.</span><span class="es">Contenido, campañas y automatizaciones en marcha.</span></p></li>
+        <li><span class="n gt">04</span><h3><span class="en">Results</span><span class="es">Resultados</span></h3><p><span class="en">We measure, optimize and report every month.</span><span class="es">Medimos, optimizamos y reportamos cada mes.</span></p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="contacto">
+    <div class="wrap">
+      <div class="cta">
+        <div>
+          <p class="k"><span class="en">Let’s talk</span><span class="es">¡Hablemos!</span></p>
+          <h2 style="margin-top:14px"><span class="en">Ready to take your brand to the <span class="gt">next level?</span></span><span class="es">¿Listo para llevar tu marca al <span class="gt">siguiente nivel?</span></span></h2>
+          <p class="lede"><span class="en">Tell us about your business and we’ll send you a proposal straight to your private portal.</span><span class="es">Cuéntanos de tu negocio y te enviamos una propuesta directo a tu portal privado.</span></p>
+          <ul class="cinfo">
+            <li><span class="k">WhatsApp</span><a href="https://wa.me/17879494781" target="_blank" rel="noopener">(787) 949-4781</a></li>
+            <li><span class="k">Email</span>info@updategrouppr.com</li>
+            <li><span class="k">Social</span>@updategrouppr</li>
+          </ul>
+        </div>
+        <form id="lead-form" novalidate>
+          <label for="f-name"><span><i class="en">Name</i><i class="es">Nombre</i></span><input id="f-name" required data-ph-en="Your name" data-ph-es="Tu nombre"></label>
+          <label for="f-biz"><span><i class="en">Business</i><i class="es">Negocio</i></span><input id="f-biz" data-ph-en="Business name and type" data-ph-es="Nombre y tipo de negocio"></label>
+          <label for="f-phone"><span><i class="en">Phone / WhatsApp</i><i class="es">Teléfono / WhatsApp</i></span><input id="f-phone" required inputmode="tel" placeholder="787-"></label>
+          <button class="btn btn-grad" type="submit"><span class="en">Request my proposal</span><span class="es">Pedir mi propuesta</span></button>
+          <p class="note" id="f-note" hidden></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ PORTAL ============ -->
+<main id="view-portal" hidden>
+  <div class="wrap">
+    <a class="back" href="#top">← <i class="en">Back to site</i><i class="es">Volver al website</i></a>
+
+    <div class="gate" id="gate">
+      <span class="lockico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
+      <h1><span class="en">Client <span class="gt">portal</span></span><span class="es">Portal de <span class="gt">clientes</span></span></h1>
+      <p><span class="en">Enter the access code we sent you to view your proposal.</span><span class="es">Escribe la clave de acceso que te enviamos para ver tu propuesta.</span></p>
+      <form id="gate-form" novalidate>
+        <label for="g-pass"><span><i class="en">Access code</i><i class="es">Clave de acceso</i></span><input id="g-pass" type="password" autocomplete="off" required data-ph-en="Your access code" data-ph-es="Tu clave de acceso"></label>
+        <button class="btn btn-grad" type="submit"><span class="en">View my proposal</span><span class="es">Ver mi propuesta</span></button>
+        <p class="err" id="g-err" hidden></p>
+      </form>
+      <p class="demo"><i class="en">Demo: try the code</i><i class="es">Demo: prueba la clave</i> <code>UPDATE2026</code></p>
+    </div>
+
+    <div id="dash" hidden style="margin-top:26px">
+      <div class="dash-top">
+        <div>
+          <p class="k" id="d-client"></p>
+          <h1 style="margin-top:10px"><span class="en">Your <span class="gt">proposal</span></span><span class="es">Tu <span class="gt">propuesta</span></span></h1>
+        </div>
+        <button class="btn btn-glass" type="button" id="logout"><i class="en">Sign out</i><i class="es">Salir</i></button>
+      </div>
+      <div class="dash">
+        <div class="viewer">
+          <div class="vbar">
+            <span id="pg-info">—</span>
+            <div class="tools">
+              <button type="button" id="z-out" aria-label="Zoom out">−</button>
+              <button type="button" id="z-in" aria-label="Zoom in">+</button>
+            </div>
+          </div>
+          <div class="pages" id="pages"><p class="loading"><i class="en">Loading proposal…</i><i class="es">Cargando propuesta…</i></p></div>
+        </div>
+        <aside class="side">
+          <div class="card">
+            <span class="status"><i class="en">Pending approval</i><i class="es">Pendiente de aprobación</i></span>
+            <dl class="meta">
+              <div><dt><i class="en">Proposal</i><i class="es">Propuesta</i></dt><dd id="d-num"></dd></div>
+              <div><dt><i class="en">Sent</i><i class="es">Enviada</i></dt><dd id="d-date"></dd></div>
+              <div><dt><i class="en">Valid for</i><i class="es">Válida por</i></dt><dd><i class="en">30 days</i><i class="es">30 días</i></dd></div>
+            </dl>
+            <a class="btn btn-grad" id="approve" target="_blank" rel="noopener" href="#"><i class="en">Approve via WhatsApp</i><i class="es">Aprobar por WhatsApp</i></a>
+            <a class="btn btn-glass" id="ask" target="_blank" rel="noopener" href="#"><i class="en">I have questions</i><i class="es">Tengo preguntas</i></a>
+          </div>
+          <div class="card">
+            <p class="k"><i class="en">Your contact</i><i class="es">Tu contacto</i></p>
+            <p style="font-weight:600">Update Group</p>
+            <p style="color:var(--muted);font-size:.92rem">(787) 949-4781 · info@updategrouppr.com</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</main>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2F6BFF"/><stop offset=".55" stop-color="#19CBEA"/><stop offset="1" stop-color="#8BE24C"/></linearGradient></defs></svg>
+
+<a class="wa" href="https://wa.me/17879494781" target="_blank" rel="noopener" aria-label="WhatsApp (787) 949-4781"><svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg></a>
+
+<footer><div class="wrap">
+  <span>© 2026 Update Group · updategrouppr.com</span>
+  <div class="social">
+    <a href="https://www.facebook.com/updategrouppr" target="_blank" rel="noopener" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V5h-3c-2.8 0-4 1.7-4 4v2H7v4h3v8h4v-8h3l1-4h-4V9.5c0-.3.2-.5.5-.5z"/></svg></a>
+    <a href="https://www.instagram.com/updategrouppr" target="_blank" rel="noopener" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a>
+    <a href="https://www.linkedin.com/company/updategrouppr" target="_blank" rel="noopener" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4 9h4v12H4zM6 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4zM10 9h4v1.7c.6-1 1.9-2 3.8-2 3.6 0 4.2 2.3 4.2 5.4V21h-4v-6c0-1.4 0-3.2-2-3.2s-2.3 1.5-2.3 3.1V21H10z"/></svg></a>
+    <span>@updategrouppr</span>
+  </div>
+</div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"></script>
+<script>
+(() => {
+  const root=document.documentElement, $=id=>document.getElementById(id);
+  let L='en';
+  try{const s=localStorage.getItem('ug-lang'); if(s==='es'||s==='en') L=s;}catch(e){}
+
+  // ---- Language
+  function setLang(l){
+    L=l; root.dataset.lang=l; root.lang=l;
+    try{localStorage.setItem('ug-lang',l)}catch(e){}
+    document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.set===l)));
+    document.querySelectorAll('[data-ph-en]').forEach(el=>el.placeholder=el.dataset[l==='en'?'phEn':'phEs']);
+    if(active) fillDash();
+    chatReset();
+  }
+  document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.set)));
+
+  // ---- Chat demo
+  const CHAT={
+    en:[["in","Hi! How much is catering for 40 people?","11:52 PM"],["out","Hi! 👋 Our catering for 40 starts at our Classic menu. Is it for an office or a private event?","11:52 PM · AI"],["in","Office, next Friday","11:53 PM"],["out","Perfect. I can book a 10-minute call tomorrow at 9:00 AM to confirm the menu. Does that work?","11:53 PM · AI"],["in","Yes 🙌","11:54 PM"],["out","Done! ✅ Booked for tomorrow 9:00 AM. You’ll get a reminder here.","11:54 PM · AI"]],
+    es:[["in","¡Hola! ¿Cuánto cuesta el catering para 40 personas?","11:52 PM"],["out","¡Hola! 👋 El catering para 40 empieza con nuestro menú Clásico. ¿Es para oficina o evento privado?","11:52 PM · AI"],["in","Oficina, el viernes que viene","11:53 PM"],["out","Perfecto. Puedo agendarte una llamada de 10 minutos mañana a las 9:00 AM para confirmar el menú. ¿Te funciona?","11:53 PM · AI"],["in","Sí 🙌","11:54 PM"],["out","¡Listo! ✅ Agendado para mañana 9:00 AM. Te llegará un recordatorio por aquí.","11:54 PM · AI"]]
+  };
+  const chat=$('chat'), reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  let ci=0, timer;
+  const bubble=([w,t,s])=>`<div class="msg ${w}">${esc(t)}<small>${esc(s)}</small></div>`;
+  function chatReset(){
+    clearInterval(timer);
+    if(reduce){chat.innerHTML=CHAT[L].slice(-4).map(bubble).join('');return;}
+    ci=3; chat.innerHTML=CHAT[L].slice(0,3).map(bubble).join('');
+    timer=setInterval(()=>{
+      const m=CHAT[L];
+      if(ci>=m.length){ci=0;chat.innerHTML='';}
+      chat.insertAdjacentHTML('beforeend',bubble(m[ci++]));
+      while(chat.children.length>4) chat.firstElementChild.remove();
+    },2600);
+  }
+
+  // ---- Lead form (preview only)
+  $('lead-form').addEventListener('submit',e=>{
+    e.preventDefault(); const n=$('f-note'), ok=$('f-name').value.trim()&&$('f-phone').value.trim(); n.hidden=false;
+    n.textContent= L==='en'?(ok?"Preview: on the live site this goes to info@updategrouppr.com.":"Enter your name and phone to continue."):(ok?"Vista previa: en el website real esto llega a info@updategrouppr.com.":"Escribe tu nombre y teléfono para continuar.");
+  });
+
+  // ---- Portal (prototype only: real access control happens in WordPress, on the server)
+  const PROPOSALS={
+    "UPDATE2026":{client:"Café Ejemplo PR",num:"UG-2026-014",date:{en:"Oct 18, 2026",es:"18 oct 2026"},pdf:"propuesta-ejemplo.pdf"}
+  };
+  let active=null, pdfDoc=null, scale=1.3;
+  function route(){
+    const portal=location.hash==='#portal';
+    $('view-home').hidden=portal; $('view-portal').hidden=!portal;
+    if(portal){ window.scrollTo(0,0); if(!active) setTimeout(()=>$('g-pass').focus(),50); }
+  }
+  addEventListener('hashchange',route);
+
+  function fillDash(){
+    $('d-client').textContent=(L==='en'?'Prepared for ':'Preparada para ')+active.client;
+    $('d-num').textContent='#'+active.num; $('d-date').textContent=active.date[L];
+    const wa=t=>'https://wa.me/17879494781?text='+encodeURIComponent(t);
+    $('approve').href=wa(L==='en'?`Hi Update Group! I approve proposal #${active.num} for ${active.client}.`:`¡Hola Update Group! Apruebo la propuesta #${active.num} para ${active.client}.`);
+    $('ask').href=wa(L==='en'?`Hi Update Group! I have questions about proposal #${active.num}.`:`¡Hola Update Group! Tengo preguntas sobre la propuesta #${active.num}.`);
+  }
+  async function render(){
+    const box=$('pages'); box.innerHTML='';
+    for(let i=1;i<=pdfDoc.numPages;i++){
+      const page=await pdfDoc.getPage(i), vp=page.getViewport({scale:scale*(devicePixelRatio||1)});
+      const cv=document.createElement('canvas'); cv.width=vp.width; cv.height=vp.height;
+      cv.style.width=(vp.width/(devicePixelRatio||1))+'px'; cv.setAttribute('aria-label','Page '+i);
+      box.appendChild(cv); await page.render({canvasContext:cv.getContext('2d'),viewport:vp}).promise;
+    }
+    $('pg-info').textContent=(L==='en'?'Pages: ':'Páginas: ')+pdfDoc.numPages+' · '+Math.round(scale/1.3*100)+'%';
+  }
+  async function open(p){
+    active=p; $('gate').hidden=true; $('dash').hidden=false; fillDash();
+    try{
+      if(!window.pdfjsLib) throw new Error('pdfjs');
+      pdfDoc=await pdfjsLib.getDocument({url:p.pdf}).promise; await render();
+    }catch(err){
+      $('pages').innerHTML=`<p class="loading">${L==='en'?'The proposal could not load. Message us on WhatsApp and we’ll send it right away.':'No se pudo cargar la propuesta. Escríbenos por WhatsApp y te la enviamos enseguida.'}</p>`;
+    }
+  }
+  $('gate-form').addEventListener('submit',e=>{
+    e.preventDefault();
+    const code=$('g-pass').value.trim().toUpperCase(), err=$('g-err');
+    if(PROPOSALS[code]){err.hidden=true; $('g-pass').value=''; open(PROPOSALS[code]);}
+    else{err.hidden=false; err.textContent= L==='en'?'That access code doesn’t match. Check the message we sent you or contact us on WhatsApp.':'Esa clave no coincide. Revisa el mensaje que te enviamos o escríbenos por WhatsApp.';}
+  });
+  $('logout').addEventListener('click',()=>{active=null;pdfDoc=null;$('dash').hidden=true;$('gate').hidden=false;$('pages').innerHTML='';$('g-pass').focus();});
+  $('z-in').addEventListener('click',()=>{if(pdfDoc&&scale<2.6){scale+=.25;render();}});
+  $('z-out').addEventListener('click',()=>{if(pdfDoc&&scale>.8){scale-=.25;render();}});
+
+  setLang(L); route();
+})();
+</script>
+
+</body></html>
