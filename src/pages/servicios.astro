@@ -1,0 +1,133 @@
+---
+import Base from '../layouts/Base.astro';
+import Arrow from '../components/Arrow.astro';
+import ClosingCta from '../components/ClosingCta.astro';
+import { getServices } from '../lib/content';
+
+const services = await getServices();
+---
+<Base
+  title="Servicios"
+  description="Estrategia, redes sociales, branding, producción audiovisual, websites, publicidad digital, comunicación institucional, eventos y email marketing en Puerto Rico."
+>
+  <section class="page-hero">
+    <div class="container ph-grid">
+      <div>
+        <p class="eyebrow">Servicios</p>
+        <h1 class="display">Estrategia, creatividad y ejecución <span class="grad-text">en un mismo equipo.</span></h1>
+      </div>
+      <p class="lead">Organizamos nuestro trabajo en nueve áreas que se combinan según cada proyecto. Puedes contratarnos para una sola o para integrar varias en un plan de comunicación completo.</p>
+    </div>
+  </section>
+
+  <section class="section srv-page" aria-label="Áreas de servicio">
+    <div class="container srv-layout">
+      <nav class="srv-index" aria-label="Índice de servicios">
+        <p class="srv-index-head">Áreas</p>
+        <ol role="list">
+          {services.map((s, i) => (
+            <li><a href={`#${s.id}`}><span class="condensed">{String(i + 1).padStart(2, '0')}</span> {s.data.short}</a></li>
+          ))}
+        </ol>
+      </nav>
+
+      <div class="srv-blocks">
+        {services.map((s, i) => (
+          <article class="srv-block reveal" id={s.id} aria-labelledby={`${s.id}-t`}>
+            <span class="srv-n condensed" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <div class="srv-body">
+              <h2 id={`${s.id}-t`} class="h2 srv-h">{s.data.title}</h2>
+              <p class="lead srv-sum">{s.data.summary}</p>
+              <div class="srv-cols">
+                <div>
+                  <h3 class="srv-label">Qué incluye</h3>
+                  <ul class="srv-incl">
+                    {s.data.includes.map((x) => <li>{x}</li>)}
+                  </ul>
+                </div>
+                <div>
+                  <h3 class="srv-label">Qué necesidad atiende</h3>
+                  <p>{s.data.need}</p>
+                  <a href={`/contacto/?servicio=${s.id}`} class="link-arrow">Solicita una propuesta de {s.data.short.toLowerCase()} <Arrow size={13} /></a>
+                </div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft how">
+    <div class="container how-grid">
+      <h2 class="h2">¿Cómo solicitar una propuesta?</h2>
+      <ol class="how-list" role="list">
+        <li><span class="condensed">01</span><div><strong>Cuéntanos tu objetivo.</strong> Completa el formulario con lo que quieres lograr, el público y la fecha estimada.</div></li>
+        <li><span class="condensed">02</span><div><strong>Conversamos.</strong> Revisamos la información y coordinamos una reunión para entender el contexto.</div></li>
+        <li><span class="condensed">03</span><div><strong>Recibes una propuesta.</strong> Preparamos un alcance según los objetivos, los entregables y los tiempos del proyecto.</div></li>
+      </ol>
+    </div>
+  </section>
+
+  <ClosingCta title="¿Qué necesita tu proyecto?" text="Si no sabes por dónde empezar, cuéntanos el objetivo y te ayudamos a definir el alcance." />
+</Base>
+
+<style>
+  .page-hero { padding: clamp(3rem, 8vw, 6.5rem) 0 clamp(2rem, 5vw, 4rem); }
+  .ph-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 2rem 4rem; align-items: end; }
+  @media (max-width: 860px) { .ph-grid { grid-template-columns: 1fr; } }
+
+  .srv-page { padding-top: clamp(2rem, 4vw, 3rem); }
+  .srv-layout { display: grid; grid-template-columns: 220px 1fr; gap: 4rem; }
+  .srv-index { position: sticky; top: calc(var(--header-h) + 2rem); align-self: start; }
+  .srv-index-head { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+  .srv-index ol { list-style: none; border-left: 1px solid var(--line); }
+  .srv-index a {
+    display: flex; gap: 0.7rem; padding: 0.45rem 0 0.45rem 1rem; margin-left: -1px; border-left: 2px solid transparent;
+    text-decoration: none; font-size: 0.92rem; color: var(--muted); transition: color 0.3s, border-color 0.3s;
+  }
+  .srv-index a:hover, .srv-index a.is-active { color: var(--ink); border-left-color: var(--blue); }
+  .srv-index .condensed { font-size: 0.85rem; }
+
+  .srv-block { display: grid; grid-template-columns: 6rem 1fr; gap: 1rem; padding: 3.5rem 0; border-top: 1px solid var(--line); }
+  .srv-block:first-child { border-top: 0; padding-top: 0; }
+  .srv-n { font-size: clamp(2.5rem, 2rem + 2vw, 4rem); line-height: 0.9; color: transparent; -webkit-text-stroke: 1.2px var(--ink); }
+  .srv-h { margin-bottom: 1.25rem; }
+  .srv-sum { max-width: 44ch; margin-bottom: 2.25rem; color: var(--text); }
+  .srv-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 3rem; }
+  .srv-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+  .srv-incl { list-style: none; }
+  .srv-incl li { padding: 0.55rem 0 0.55rem 1.4rem; border-bottom: 1px solid var(--line); position: relative; }
+  .srv-incl li::before { content: ''; position: absolute; left: 0; top: 1.15rem; width: 0.6rem; height: 2px; background: var(--grad); }
+  .srv-cols p { color: var(--muted); }
+
+  @media (max-width: 960px) {
+    .srv-layout { grid-template-columns: 1fr; gap: 0; }
+    .srv-index { display: none; }
+  }
+  @media (max-width: 640px) {
+    .srv-block { grid-template-columns: 1fr; padding: 2.75rem 0; }
+    .srv-cols { grid-template-columns: 1fr; }
+  }
+
+  .how-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 2rem 5rem; }
+  .how-list { list-style: none; }
+  .how-list li { display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; padding: 1.4rem 0; border-top: 1px solid var(--line); }
+  .how-list .condensed { font-size: 1.2rem; color: var(--blue-text); }
+  .how-list strong { color: var(--ink); font-weight: 600; }
+  @media (max-width: 860px) { .how-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  // Resalta el área visible en el índice lateral.
+  const links = new Map([...document.querySelectorAll<HTMLAnchorElement>('.srv-index a')].map((a) => [a.hash.slice(1), a]));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        links.forEach((a) => a.classList.remove('is-active'));
+        links.get(e.target.id)?.classList.add('is-active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  document.querySelectorAll('.srv-block').forEach((el) => io.observe(el));
+</script>

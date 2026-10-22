@@ -1,0 +1,109 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import site from '../data/site.json';
+import { REVIEW } from '../lib/content';
+import ogDefault from '../assets/brand/logo-update-group.png';
+import { getImage } from 'astro:assets';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: ImageMetadata;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown>;
+}
+const { title, description, image, noindex = false, jsonLd } = Astro.props;
+const fullTitle = title === site.name ? `${site.name} — ${site.tagline}` : `${title} | ${site.name}`;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const og = await getImage({ src: image ?? ogDefault, width: 1200, format: 'jpg' });
+const ogUrl = new URL(og.src, site.url).href;
+const { ga4, metaPixel } = site.analytics;
+---
+<!doctype html>
+<html lang="es-PR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {(noindex || REVIEW) && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_PR" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+
+    <script is:inline>document.documentElement.classList.add('js');</script>
+
+    {ga4 && (
+      <Fragment>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${ga4}`}></script>
+        <script is:inline define:vars={{ ga4 }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date()); gtag('config', ga4, { anonymize_ip: true });
+        </script>
+      </Fragment>
+    )}
+    {metaPixel && (
+      <script is:inline define:vars={{ metaPixel }}>
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', metaPixel); fbq('track', 'PageView');
+      </script>
+    )}
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    {REVIEW && (
+      <div class="review-bar" role="note" data-review-bar>
+        <span>Versión de revisión · Los proyectos marcados como <strong>Borrador</strong> no se publicarán hasta su aprobación.</span>
+        <button type="button" aria-label="Ocultar aviso de revisión" onclick="this.parentElement.remove()">×</button>
+      </div>
+    )}
+    <Header />
+    <main id="contenido" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // Revelado discreto al hacer scroll (desactivado con reducir movimiento).
+      const els = document.querySelectorAll('.reveal');
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+        els.forEach((el) => el.classList.add('is-in'));
+      } else {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+        els.forEach((el) => io.observe(el));
+      }
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  main { padding-top: var(--header-h); outline: none; }
+  .review-bar {
+    position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); z-index: 150;
+    width: max-content; max-width: calc(100% - 2rem);
+    background: #fff4cc; color: #4d3800; border: 1px solid #f0d77a; border-radius: 999px;
+    padding: 0.4rem 0.5rem 0.4rem 1.1rem; font-size: 0.8rem; box-shadow: 0 8px 24px rgba(10, 20, 36, 0.12);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .review-bar button { flex: none; width: 32px; height: 32px; border: 0; border-radius: 50%; background: transparent; font-size: 1.2rem; line-height: 1; cursor: pointer; color: inherit; }
+  .review-bar button:hover { background: rgba(0, 0, 0, 0.06); }
+  @media (max-width: 600px) { .review-bar { font-size: 0.7rem; border-radius: 12px; bottom: 0.5rem; } }
+</style>

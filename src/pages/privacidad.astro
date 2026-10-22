@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.json';
+const hasAnalytics = Boolean(site.analytics.ga4 || site.analytics.metaPixel);
+const updated = '3 de octubre de 2026';
+---
+<Base title="Política de privacidad" description="Cómo Update Group recopila, usa y protege los datos personales enviados a través de este website.">
+  <section class="page-hero">
+    <div class="container narrow">
+      <p class="eyebrow">Legal</p>
+      <h1 class="h2">Política de privacidad</h1>
+      <p class="muted">Última actualización: {updated}</p>
+    </div>
+  </section>
+  <section class="section legal">
+    <div class="container narrow">
+      <h2>Quiénes somos</h2>
+      <p>Este website pertenece a {site.legalName} (“Update Group”), empresa de estrategia, marketing y comunicación establecida en Puerto Rico.</p>
+
+      <h2>Qué datos recopilamos</h2>
+      <p>Solo recopilamos los datos que nos envías voluntariamente a través del formulario de contacto: nombre, empresa u organización, email, teléfono (opcional), servicio de interés, descripción del proyecto, fecha estimada y presupuesto aproximado (opcional).</p>
+
+      <h2>Para qué los usamos</h2>
+      <p>Usamos esta información únicamente para responder a tu consulta, coordinar una conversación y, si lo solicitas, preparar una propuesta. No la vendemos, no la alquilamos y no la usamos para enviarte publicidad sin tu autorización.</p>
+
+      <h2>Dónde se procesan</h2>
+      <p>Las consultas se reciben mediante el servicio de formularios de Netlify, Inc., proveedor de alojamiento de este website, que las almacena y nos notifica por correo electrónico. Netlify procesa los datos en nuestro nombre y aplica filtros automáticos contra el spam.</p>
+
+      <h2>Cuánto tiempo los conservamos</h2>
+      <p>Conservamos las consultas mientras sean necesarias para darles seguimiento y por un máximo de 24 meses, salvo que se conviertan en una relación profesional, en cuyo caso se rigen por el acuerdo correspondiente.</p>
+
+      <h2>Cookies y analítica</h2>
+      {hasAnalytics ? (
+        <p>Este website utiliza herramientas de analítica (como Google Analytics o Meta Pixel) para entender de forma agregada cómo se usan sus páginas. Estas herramientas pueden instalar cookies en tu navegador. Puedes bloquearlas desde la configuración de tu navegador sin afectar el uso del sitio.</p>
+      ) : (
+        <p>Actualmente este website no utiliza cookies de analítica ni de publicidad. Si en el futuro las incorporamos, actualizaremos esta política.</p>
+      )}
+
+      <h2>Enlaces externos</h2>
+      <p>El sitio incluye enlaces a Instagram, Facebook y WhatsApp. Al visitarlos, aplican las políticas de privacidad de esas plataformas.</p>
+
+      <h2>Tus derechos</h2>
+      <p>Puedes pedirnos acceso, corrección o eliminación de los datos que nos enviaste. Para hacerlo, escríbenos a través del formulario de contacto indicando tu solicitud{site.email && <Fragment> o al correo <a href={`mailto:${site.email}`}>{site.email}</a></Fragment>}.</p>
+
+      <h2>Cambios a esta política</h2>
+      <p>Podemos actualizar esta política para reflejar cambios en el website o en la forma en que tratamos los datos. La fecha de la última actualización aparece al inicio.</p>
+    </div>
+  </section>
+</Base>
+<style>
+  .page-hero { padding: clamp(3rem, 8vw, 6rem) 0 1rem; }
+  .narrow { max-width: 760px; }
+  .legal { padding-top: 2rem; }
+  .legal h2 { font-size: 1.2rem; margin: 2.5rem 0 0.75rem; }
+  .legal h2:first-child { margin-top: 0; }
+  .legal p { color: var(--muted); }
+</style>

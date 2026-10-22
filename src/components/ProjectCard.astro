@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Arrow from './Arrow.astro';
+import { disciplinesText, REVIEW } from '../lib/content';
+
+interface Props { project: CollectionEntry<'projects'>; sizes?: string; ratio?: string; headingLevel?: 'h2' | 'h3' }
+const { project, sizes = '(max-width: 760px) 100vw, 50vw', ratio = '4 / 5', headingLevel = 'h3' } = Astro.props;
+const d = project.data;
+const H = headingLevel;
+const href = `/proyectos/${project.id}/`;
+---
+<article class="pcard reveal" data-disciplines={d.disciplines.join(' ')}>
+  <a href={href} class="pcard-link">
+    <div class="pcard-media" style={`aspect-ratio:${ratio}`}>
+      {d.cover ? (
+        <Image src={d.cover} alt={d.coverAlt} widths={[480, 800, 1200]} sizes={sizes} />
+      ) : (
+        <div class="pcard-empty"><span>Materiales pendientes</span></div>
+      )}
+      {REVIEW && d.draft && <span class="badge-draft pcard-badge">Borrador</span>}
+    </div>
+    <div class="pcard-meta">
+      <p class="pcard-client">{d.client}</p>
+      <H class="h3 pcard-title">{d.title}</H>
+      <p class="tag">{disciplinesText(project) || 'Disciplina por confirmar'}</p>
+      <span class="pcard-more">Conocer el proyecto <Arrow size={13} /></span>
+    </div>
+  </a>
+</article>
+
+<style>
+  .pcard-link { display: block; text-decoration: none; color: inherit; }
+  .pcard-media { position: relative; overflow: hidden; background: var(--bg-soft); border-radius: var(--radius); }
+  .pcard-media :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s var(--ease); }
+  .pcard-link:hover .pcard-media :global(img) { transform: scale(1.035); }
+  .pcard-empty { display: grid; place-items: center; height: 100%; color: var(--muted); font-size: 0.9rem; border: 1px dashed var(--line); }
+  .pcard-badge { position: absolute; top: 1rem; left: 1rem; }
+  .pcard-meta { padding-top: 1.25rem; }
+  .pcard-client { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.45rem; }
+  .pcard-title { margin-bottom: 0.4rem; }
+  .pcard-more {
+    display: inline-flex; align-items: center; gap: 0.45rem; margin-top: 0.75rem; font-size: 0.9rem; font-weight: 500;
+    background: var(--grad) left bottom / 0% 2px no-repeat; padding-bottom: 2px; transition: background-size 0.45s var(--ease);
+  }
+  .pcard-link:hover .pcard-more { background-size: 100% 2px; }
+  .pcard-link:hover .pcard-more :global(.arrow) { transform: translate(3px, -3px); }
+  .pcard-more :global(.arrow) { transition: transform 0.35s var(--ease); }
+</style>

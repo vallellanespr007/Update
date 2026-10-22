@@ -1,0 +1,130 @@
+---
+import Base from '../layouts/Base.astro';
+import Arrow from '../components/Arrow.astro';
+import ClosingCta from '../components/ClosingCta.astro';
+import site from '../data/site.json';
+import { REVIEW } from '../lib/content';
+
+const founder = site.founder;
+const showFounder = founder && (founder.approved || REVIEW);
+
+const values = [
+  { title: 'Pensamiento estratégico', text: 'Cada pieza responde a un objetivo. Antes de diseñar, entendemos qué se quiere lograr y cómo se va a medir.' },
+  { title: 'Creatividad con propósito', text: 'Buscamos ideas que se recuerden, pero sobre todo que comuniquen con claridad lo que el público necesita saber.' },
+  { title: 'Ejecución organizada', text: 'Calendarios, procesos de aprobación y entregas claras. Sabemos manejar proyectos con varias partes y plazos definidos.' },
+  { title: 'Colaboración cercana', text: 'Trabajamos como una extensión de tu equipo, con comunicación directa y seguimiento constante.' },
+  { title: 'Atención al contexto', text: 'Una marca, una agencia pública y una organización sin fines de lucro no hablan igual. Ajustamos el tono y el canal a cada público.' },
+];
+---
+<Base
+  title="Nosotros"
+  description={`Update Group es una empresa de estrategia, marketing y comunicación fundada en Puerto Rico en ${site.founded}. Trabajamos con marcas, instituciones y organizaciones.`}
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Nosotros</p>
+      <h1 class="display ab-title">Estrategia, marketing y comunicación <span class="grad-text">hechos en Puerto Rico.</span></h1>
+    </div>
+  </section>
+
+  <section class="section ab-story">
+    <div class="container ab-grid">
+      <div class="ab-year reveal" aria-hidden="true">
+        <span class="condensed">{site.founded}</span>
+      </div>
+      <div class="ab-copy reveal">
+        <p class="lead">Update Group nació en Puerto Rico en {site.founded} con una idea sencilla: las buenas ideas necesitan estrategia para funcionar y un equipo capaz de llevarlas a la práctica.</p>
+        <p>Desde entonces hemos trabajado con marcas comerciales, entidades gubernamentales y organizaciones sin fines de lucro. Algunos proyectos buscan vender; otros buscan informar, convocar, educar o dar visibilidad a un servicio. En todos, el punto de partida es el mismo: entender qué se quiere lograr y para quién.</p>
+        <p>Integramos estrategia, diseño, contenido, producción audiovisual y tecnología en un mismo proceso. Así cada proyecto mantiene una sola dirección, desde la primera reunión hasta el último entregable.</p>
+      </div>
+    </div>
+  </section>
+
+  {showFounder && (
+    <section class="section founder" aria-labelledby="founder-title">
+      <div class="container founder-grid">
+        <div>
+          <p class="eyebrow">Mensaje del fundador {!founder.approved && <span class="badge-draft">Borrador para aprobar</span>}</p>
+          <h2 id="founder-title" class="h2">Entender primero. Ejecutar con orden.</h2>
+        </div>
+        <blockquote class="founder-letter reveal">
+          {founder.paragraphs.map((p) => <p>{p}</p>)}
+          <footer>
+            <span class="founder-line" aria-hidden="true"></span>
+            <cite><strong>{founder.name}</strong><span>{founder.role}, {site.name}</span></cite>
+          </footer>
+        </blockquote>
+      </div>
+    </section>
+  )}
+
+  <section class="section section--soft ab-values" aria-labelledby="values-title">
+    <div class="container">
+      <div class="ab-vhead">
+        <p class="eyebrow">Cómo trabajamos</p>
+        <h2 id="values-title" class="h2">Lo que guía cada proyecto.</h2>
+      </div>
+      <ol class="v-list" role="list">
+        {values.map((v, i) => (
+          <li class="v-item reveal">
+            <span class="v-num condensed">0{i + 1}</span>
+            <h3 class="h3">{v.title}</h3>
+            <p class="muted">{v.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section ab-team" aria-labelledby="team-title">
+    <div class="container ab-grid">
+      <h2 id="team-title" class="h2 reveal">Un equipo que se integra al tuyo.</h2>
+      <div class="ab-copy reveal">
+        <p>Somos estrategas, diseñadores, creadores de contenido, productores y desarrolladores que trabajan de forma coordinada. Según el alcance de cada proyecto, armamos el equipo con los perfiles que hacen falta y un punto de contacto claro.</p>
+        <p>Conocemos los procesos de aprobación de las entidades públicas, los tiempos de una campaña comercial y la sensibilidad que requiere una causa. Esa experiencia nos permite anticipar necesidades y mantener el proyecto en curso.</p>
+        <div class="ab-links">
+          <a href="/servicios/" class="link-arrow">Conoce nuestros servicios <Arrow size={13} /></a>
+          <a href="/proyectos/" class="link-arrow">Mira nuestro trabajo <Arrow size={13} /></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ClosingCta title="Conversemos sobre tu próximo proyecto." />
+</Base>
+
+<style>
+  .page-hero { padding: clamp(3rem, 8vw, 6.5rem) 0 clamp(1rem, 3vw, 2rem); }
+  .ab-title { max-width: 18ch; }
+  .ab-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 2.5rem 5rem; align-items: start; }
+  .ab-year span {
+    display: block; font-size: clamp(6rem, 4rem + 10vw, 13rem); line-height: 0.82; color: transparent;
+    -webkit-text-stroke: 1.5px var(--ink); letter-spacing: -0.01em;
+  }
+  .ab-year::after { content: ''; display: block; width: 5rem; height: 3px; background: var(--grad); margin-top: 1.5rem; }
+  .ab-copy .lead { color: var(--text); margin-bottom: 1.5rem; }
+  .ab-copy p { color: var(--muted); }
+  .ab-links { display: flex; flex-wrap: wrap; gap: 1rem 2rem; margin-top: 1.5rem; }
+
+  .founder { border-top: 1px solid var(--line); }
+  .founder-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 2.5rem 5rem; align-items: start; }
+  .founder .badge-draft { margin-left: 0.5rem; }
+  .founder-letter { margin: 0; font-size: clamp(1.05rem, 1rem + 0.3vw, 1.2rem); line-height: 1.75; color: var(--text); }
+  .founder-letter p:first-child { font-size: 1.25em; line-height: 1.5; color: var(--ink); font-weight: 500; letter-spacing: -0.01em; }
+  .founder-letter footer { display: flex; align-items: center; gap: 1rem; margin-top: 2rem; }
+  .founder-line { width: 3rem; height: 2px; background: var(--grad); }
+  .founder-letter cite { font-style: normal; display: grid; font-size: 0.95rem; }
+  .founder-letter cite strong { color: var(--ink); }
+  .founder-letter cite span { color: var(--muted); }
+  @media (max-width: 860px) { .founder-grid { grid-template-columns: 1fr; } }
+  .ab-vhead { margin-bottom: 3rem; }
+  .v-list { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: 2rem; }
+  .v-item { border-top: 2px solid var(--ink); padding-top: 1.25rem; }
+  .v-num { display: block; color: var(--blue-text); font-size: 1rem; margin-bottom: 1.5rem; }
+  .v-item h3 { margin-bottom: 0.75rem; font-size: 1.15rem; }
+  .v-item p { font-size: 0.93rem; }
+
+  @media (max-width: 1080px) { .v-list { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 860px) { .ab-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .v-list { grid-template-columns: 1fr; } }
+</style>

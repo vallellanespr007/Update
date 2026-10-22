@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/brand/logo-update-group.png';
+import Icon from './Icon.astro';
+import site from '../data/site.json';
+import { t } from '../i18n/ui';
+const year = new Date().getFullYear();
+const s = site.social;
+---
+<footer class="site-footer">
+  <div class="container">
+    <div class="f-top">
+      <div class="f-brand">
+        <Image src={logo} alt="Update Group" width={360} widths={[180, 360]} sizes="180px" class="f-logo" />
+        <p class="f-claim">{site.claim}</p>
+        <p class="muted f-small">Estrategia, marketing y comunicación desde Puerto Rico desde {site.founded}.</p>
+      </div>
+      <nav class="f-nav" aria-label="Pie de página">
+        <p class="f-head">Navegación</p>
+        <ul>
+          <li><a href="/">{t('nav.home')}</a></li>
+          <li><a href="/servicios/">{t('nav.services')}</a></li>
+          <li><a href="/proyectos/">{t('nav.projects')}</a></li>
+          <li><a href="/nosotros/">{t('nav.about')}</a></li>
+          <li><a href="/contacto/">{t('nav.contact')}</a></li>
+        </ul>
+      </nav>
+      <div class="f-social">
+        <p class="f-head">Síguenos</p>
+        <a class="f-ig" href={s.instagram.url} target="_blank" rel="noopener">
+          <Icon name="instagram" size={22} /><span>{s.instagram.handle}</span><span class="sr-only"> en Instagram (abre en una pestaña nueva)</span>
+        </a>
+        <ul class="f-icons">
+          {s.facebook.url && <li><a href={s.facebook.url} target="_blank" rel="noopener" aria-label="Facebook de Update Group (abre en una pestaña nueva)"><Icon name="facebook" /></a></li>}
+          {s.whatsapp.enabled && s.whatsapp.url && <li><a href={s.whatsapp.url} target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp (abre en una pestaña nueva)"><Icon name="whatsapp" /></a></li>}
+        </ul>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <p>© {year} {site.legalName}. Todos los derechos reservados.</p>
+      <a href="/privacidad/">Política de privacidad</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer { background: var(--bg-soft); padding: clamp(3.5rem, 8vw, 5.5rem) 0 2rem; border-top: 1px solid var(--line); }
+  .f-top { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 3rem; padding-bottom: 3rem; }
+  .f-logo { width: 180px; margin-bottom: 1.5rem; }
+  .f-claim { font-weight: 600; color: var(--ink); margin-bottom: 0.4rem; }
+  .f-small { font-size: 0.9rem; max-width: 34ch; }
+  .f-head { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+  .f-nav ul, .f-icons { list-style: none; }
+  .f-nav li + li { margin-top: 0.45rem; }
+  .f-nav a { text-decoration: none; }
+  .f-nav a:hover { color: var(--blue-text); }
+  .f-ig { display: inline-flex; align-items: center; gap: 0.6rem; font-weight: 600; font-size: 1.1rem; text-decoration: none; color: var(--ink); }
+  .f-ig:hover span:first-of-type { color: var(--blue-text); }
+  .f-icons { display: flex; gap: 0.5rem; margin-top: 1rem; }
+  .f-icons a {
+    display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%;
+    background: #fff; color: var(--ink); transition: border-color 0.3s, color 0.3s;
+  }
+  .f-icons a:hover { border-color: var(--blue); color: var(--blue-text); }
+  .f-bottom {
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; padding-top: 1.75rem;
+    border-top: 1px solid var(--line); font-size: 0.85rem; color: var(--muted);
+  }
+  .f-bottom p { margin: 0; }
+  @media (max-width: 760px) { .f-top { grid-template-columns: 1fr 1fr; } .f-brand { grid-column: 1 / -1; } }
+</style>

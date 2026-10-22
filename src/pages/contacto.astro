@@ -1,0 +1,309 @@
+---
+import Base from '../layouts/Base.astro';
+import Arrow from '../components/Arrow.astro';
+import Icon from '../components/Icon.astro';
+import site from '../data/site.json';
+import { getServices } from '../lib/content';
+
+const services = await getServices();
+const s = site.social;
+const formName = site.form.name;
+// Netlify define NETLIFY=true al compilar. Fuera de Netlify nadie procesaría el envío, así que el formulario se desactiva
+// en lugar de mostrar un éxito falso.
+const formsEnabled = process.env.NETLIFY === 'true';
+
+const timing = ['Lo antes posible', 'En el próximo mes', 'En 1 a 3 meses', 'En 3 a 6 meses', 'Todavía por definir'];
+const budgets = ['Menos de $2,500', '$2,500 a $5,000', '$5,000 a $10,000', '$10,000 a $25,000', 'Más de $25,000', 'Según proceso de compra o subasta', 'Prefiero conversarlo'];
+---
+<Base
+  title="Contacto"
+  description="Cuéntanos qué quieres lograr. Solicita una propuesta de estrategia, marketing y comunicación a Update Group."
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Contacto</p>
+      <h1 class="display c-title">Hablemos de lo que <span class="grad-text">quieres lograr.</span></h1>
+    </div>
+  </section>
+
+  <section class="section c-section">
+    <div class="container c-grid">
+      <div class="c-form-wrap">
+        <p class="lead c-intro">Completa el formulario y nos comunicaremos contigo para conversar sobre el proyecto. Los campos marcados con <span aria-hidden="true">*</span><span class="sr-only">asterisco</span> son obligatorios.</p>
+
+        <ol class="c-steps" role="list" aria-label="Cómo empezamos">
+          <li><span class="condensed">01</span><div><strong>Conversación inicial.</strong> Revisamos tu mensaje y coordinamos una reunión para entender qué quieres lograr, para quién y en qué tiempo.</div></li>
+          <li><span class="condensed">02</span><div><strong>Propuesta.</strong> Te enviamos por escrito el alcance, los entregables, el equipo, el calendario y la inversión.</div></li>
+          <li><span class="condensed">03</span><div><strong>Arranque.</strong> Al aprobarla, definimos canales de comunicación, calendario de aprobaciones y comenzamos a trabajar.</div></li>
+        </ol>
+
+        <form
+          class="c-form"
+          name={formName}
+          method="POST"
+          action="/gracias/"
+          data-netlify="true"
+          netlify-honeypot="empresa_web"
+          novalidate
+          data-contact-form
+          data-enabled={formsEnabled ? 'true' : 'false'}
+        >
+          <input type="hidden" name="form-name" value={formName} />
+          <p class="hp" aria-hidden="true">
+            <label>No completar este campo: <input name="empresa_web" tabindex="-1" autocomplete="off" /></label>
+          </p>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="f-nombre">Nombre <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-nombre" name="nombre" type="text" autocomplete="name" required maxlength="120" aria-describedby="e-nombre" />
+              <p class="err" id="e-nombre" data-error-for="nombre"></p>
+            </div>
+            <div class="field">
+              <label for="f-org">Empresa u organización <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-org" name="organizacion" type="text" autocomplete="organization" required maxlength="160" aria-describedby="e-org" />
+              <p class="err" id="e-org" data-error-for="organizacion"></p>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="f-email">Email <span class="req" aria-hidden="true">*</span></label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="160" aria-describedby="e-email" />
+              <p class="err" id="e-email" data-error-for="email"></p>
+            </div>
+            <div class="field">
+              <label for="f-tel">Teléfono <span class="opt">(opcional)</span></label>
+              <input id="f-tel" name="telefono" type="tel" autocomplete="tel" maxlength="30" inputmode="tel" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="f-servicio">Servicio de interés <span class="req" aria-hidden="true">*</span></label>
+            <select id="f-servicio" name="servicio" required aria-describedby="e-servicio">
+              <option value="">Selecciona una opción</option>
+              {services.map((sv) => <option value={sv.data.title} data-slug={sv.id}>{sv.data.title}</option>)}
+              <option value="Varios servicios">Varios servicios</option>
+              <option value="No estoy seguro">No estoy seguro todavía</option>
+            </select>
+            <p class="err" id="e-servicio" data-error-for="servicio"></p>
+          </div>
+
+          <div class="field">
+            <label for="f-desc">Descripción del proyecto <span class="req" aria-hidden="true">*</span></label>
+            <textarea id="f-desc" name="descripcion" rows="6" required minlength="20" maxlength="4000" aria-describedby="h-desc e-desc"></textarea>
+            <p class="hint" id="h-desc">¿Qué quieres lograr? ¿A qué público te diriges? ¿Hay alguna fecha o actividad importante?</p>
+            <p class="err" id="e-desc" data-error-for="descripcion"></p>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="f-fecha">Fecha estimada <span class="req" aria-hidden="true">*</span></label>
+              <select id="f-fecha" name="fecha_estimada" required aria-describedby="e-fecha">
+                <option value="">Selecciona una opción</option>
+                {timing.map((t) => <option>{t}</option>)}
+              </select>
+              <p class="err" id="e-fecha" data-error-for="fecha_estimada"></p>
+            </div>
+            <div class="field">
+              <label for="f-pres">Presupuesto aproximado <span class="opt">(opcional)</span></label>
+              <select id="f-pres" name="presupuesto">
+                <option value="">Selecciona una opción</option>
+                {budgets.map((b) => <option>{b}</option>)}
+              </select>
+            </div>
+          </div>
+
+          <div class="field field-check">
+            <input id="f-consent" name="consentimiento" type="checkbox" value="Acepto" required aria-describedby="e-consent" />
+            <label for="f-consent">
+              Autorizo a Update Group a usar estos datos únicamente para responder a mi consulta, según la <a href="/privacidad/">política de privacidad</a>. <span class="req" aria-hidden="true">*</span>
+            </label>
+            <p class="err" id="e-consent" data-error-for="consentimiento"></p>
+          </div>
+
+          {!formsEnabled && (
+            <p class="c-notice" role="note">El envío del formulario se activa cuando el sitio se publica en Netlify. En esta versión de revisión las consultas no se envían.</p>
+          )}
+          <div class="c-submit">
+            <button type="submit" class="btn" data-submit>
+              <span data-submit-label>Enviar consulta</span> <Arrow size={14} />
+            </button>
+          </div>
+
+          <div class="c-status" role="status" aria-live="polite" tabindex="-1" data-status></div>
+        </form>
+      </div>
+
+      <aside class="c-side" aria-label="Otras formas de contacto">
+        <div class="c-card">
+          <p class="c-head">Síguenos en Instagram</p>
+          <a href={s.instagram.url} class="c-ig" target="_blank" rel="noopener">
+            <Icon name="instagram" size={26} /> {s.instagram.handle}<span class="sr-only"> (abre en una pestaña nueva)</span>
+          </a>
+          <p class="muted c-small">Piezas recientes, producciones y lo que estamos trabajando.</p>
+        </div>
+        <div class="c-card">
+          <p class="c-head">Otros canales</p>
+          <ul class="c-links">
+            {s.whatsapp.enabled && s.whatsapp.url && (
+              <li><a href={s.whatsapp.url} target="_blank" rel="noopener"><Icon name="whatsapp" /> WhatsApp<span class="sr-only"> (abre en una pestaña nueva)</span></a></li>
+            )}
+            {s.facebook.url && (
+              <li><a href={s.facebook.url} target="_blank" rel="noopener"><Icon name="facebook" /> Facebook<span class="sr-only"> (abre en una pestaña nueva)</span></a></li>
+            )}
+            {site.email && <li><a href={`mailto:${site.email}`}>{site.email}</a></li>}
+            {site.phone && <li><a href={`tel:${site.phone.replace(/[^\d+]/g, '')}`}>{site.phone}</a></li>}
+          </ul>
+        </div>
+        <div class="c-card c-card--plain">
+          <p class="c-head">Desde Puerto Rico</p>
+          <p class="muted c-small">Trabajamos con marcas, instituciones y organizaciones en toda la isla.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-hero { padding: clamp(3rem, 8vw, 6.5rem) 0 clamp(1rem, 3vw, 2rem); }
+  .c-title { max-width: 16ch; }
+  .c-section { padding-top: clamp(1.5rem, 4vw, 3rem); }
+  .c-grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: 3rem 5rem; align-items: start; }
+  .c-intro { margin-bottom: 2.5rem; max-width: 46ch; }
+
+  .c-steps { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 3rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--line); }
+  .c-steps li { display: grid; gap: 0.6rem; font-size: 0.9rem; color: var(--muted); border-top: 2px solid var(--ink); padding-top: 1rem; }
+  .c-steps .condensed { font-size: 1.1rem; color: var(--blue-text); }
+  .c-steps strong { color: var(--ink); font-weight: 600; display: block; margin-bottom: 0.2rem; }
+  @media (max-width: 700px) { .c-steps { grid-template-columns: 1fr; } }
+  .c-form { display: grid; gap: 1.5rem; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .field { display: grid; gap: 0.45rem; align-content: start; }
+  .field label { font-weight: 500; font-size: 0.95rem; color: var(--ink); }
+  .req { color: var(--blue-text); }
+  .opt { color: var(--muted); font-weight: 400; font-size: 0.85rem; }
+  .field input:not([type='checkbox']), .field select, .field textarea {
+    width: 100%; min-height: 52px; padding: 0.8rem 1rem; border: 1.5px solid #c9ced6; border-radius: var(--radius);
+    background: #fff; font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .field textarea { resize: vertical; min-height: 150px; }
+  .field select {
+    appearance: none; padding-right: 2.5rem; cursor: pointer;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='m1 1 5 5 5-5' stroke='%230a1424' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 1rem center;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.18); }
+  .field [aria-invalid='true'] { border-color: #c4262e !important; }
+  .hint { font-size: 0.85rem; color: var(--muted); margin: 0; }
+  .err { font-size: 0.85rem; color: #b3141c; margin: 0; min-height: 0; }
+  .err:empty { display: none; }
+
+  .field-check { grid-template-columns: auto 1fr; column-gap: 0.85rem; align-items: start; }
+  .field-check input { width: 22px; height: 22px; margin-top: 0.15rem; accent-color: var(--blue); cursor: pointer; }
+  .field-check label { font-weight: 400; font-size: 0.92rem; color: var(--text); }
+  .field-check .err { grid-column: 2; }
+
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .c-submit .btn[disabled] { opacity: 0.6; cursor: progress; }
+  .c-notice { font-size: 0.85rem; color: #6b4e00; background: #fff8dc; border: 1px solid #f0d77a; padding: 0.75rem 1rem; border-radius: var(--radius); margin: 0; }
+  .c-status:empty { display: none; }
+  .c-status { padding: 1.1rem 1.25rem; border-radius: var(--radius); font-size: 0.95rem; outline: none; }
+  .c-status.is-ok { background: #e7f8ef; border: 1px solid #8fd6ae; color: #0b4d2a; }
+  .c-status.is-error { background: #fdecec; border: 1px solid #f0a5a5; color: #7a0d12; }
+  .c-status strong { display: block; margin-bottom: 0.25rem; }
+
+  .c-side { display: grid; gap: 1rem; position: sticky; top: calc(var(--header-h) + 1.5rem); }
+  .c-card { padding: 1.75rem; background: var(--bg-soft); border-radius: var(--radius); }
+  .c-card--plain { background: transparent; border: 1px solid var(--line); }
+  .c-head { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.9rem; }
+  .c-ig { display: inline-flex; align-items: center; gap: 0.6rem; font-size: 1.35rem; font-weight: 600; text-decoration: none; color: var(--ink); letter-spacing: -0.02em; }
+  .c-ig:hover { color: var(--blue-text); }
+  .c-small { font-size: 0.9rem; margin: 0.6rem 0 0; }
+  .c-links { list-style: none; display: grid; gap: 0.5rem; }
+  .c-links a { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; font-weight: 500; min-height: 36px; }
+  .c-links a:hover { color: var(--blue-text); }
+
+  @media (max-width: 960px) { .c-grid { grid-template-columns: 1fr; } .c-side { position: static; } }
+  @media (max-width: 600px) { .field-row { grid-template-columns: 1fr; } .c-submit .btn { width: 100%; } }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]')!;
+  const status = form.querySelector<HTMLElement>('[data-status]')!;
+  const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+  const submitLabel = form.querySelector<HTMLElement>('[data-submit-label]')!;
+
+  // Preselecciona el servicio si se llega desde /servicios/?servicio=...
+  const pre = new URLSearchParams(location.search).get('servicio');
+  if (pre) {
+    const opt = form.querySelector<HTMLOptionElement>(`option[data-slug="${CSS.escape(pre)}"]`);
+    if (opt) opt.selected = true;
+  }
+
+  const messages: Record<string, (el: HTMLInputElement) => string> = {
+    nombre: () => 'Escribe tu nombre.',
+    organizacion: () => 'Escribe el nombre de tu empresa u organización.',
+    email: (el) => (el.validity.valueMissing ? 'Escribe tu email.' : 'Revisa el formato del email (ejemplo: nombre@empresa.com).'),
+    servicio: () => 'Selecciona el servicio que te interesa.',
+    descripcion: (el) => (el.validity.tooShort ? 'Cuéntanos un poco más sobre el proyecto (mínimo 20 caracteres).' : 'Describe brevemente el proyecto.'),
+    fecha_estimada: () => 'Selecciona una fecha estimada.',
+    consentimiento: () => 'Necesitamos tu autorización para gestionar la consulta.',
+  };
+
+  const validateField = (el: HTMLInputElement) => {
+    const err = form.querySelector<HTMLElement>(`[data-error-for="${el.name}"]`);
+    if (!err) return true;
+    const ok = el.checkValidity();
+    el.setAttribute('aria-invalid', String(!ok));
+    err.textContent = ok ? '' : messages[el.name]?.(el) ?? 'Revisa este campo.';
+    return ok;
+  };
+
+  form.querySelectorAll<HTMLInputElement>('[required]').forEach((el) => {
+    el.addEventListener('blur', () => el.value && validateField(el));
+    el.addEventListener('change', () => el.getAttribute('aria-invalid') === 'true' && validateField(el));
+  });
+
+  const enabled = form.dataset.enabled === 'true';
+  const showStatus = (type: 'ok' | 'error', title: string, text: string, focus = true) => {
+    status.className = `c-status is-${type}`;
+    status.innerHTML = '';
+    const s = document.createElement('strong'); s.textContent = title;
+    const p = document.createElement('span'); p.textContent = text;
+    status.append(s, p);
+    if (focus) status.focus();
+  };
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fields = [...form.querySelectorAll<HTMLInputElement>('[required]')];
+    const invalid = fields.filter((el) => !validateField(el));
+    if (invalid.length) {
+      showStatus('error', 'Revisa el formulario.', `Hay ${invalid.length} ${invalid.length === 1 ? 'campo' : 'campos'} por completar o corregir.`, false);
+      invalid[0].focus();
+      return;
+    }
+    if (!enabled) {
+      showStatus('error', 'El formulario no está conectado en esta versión.', 'Tu consulta no se envió. Mientras tanto, escríbenos por Instagram a @updategrouppr.');
+      return;
+    }
+
+    submit.disabled = true;
+    submitLabel.textContent = 'Enviando…';
+    status.className = 'c-status'; status.textContent = '';
+
+    try {
+      const body = new URLSearchParams(new FormData(form) as unknown as Record<string, string>).toString();
+      const res = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      form.reset();
+      showStatus('ok', 'Recibimos tu consulta.', 'Gracias por escribirnos. Nos comunicaremos contigo pronto.');
+      if (typeof (window as any).gtag === 'function') (window as any).gtag('event', 'generate_lead', { form: 'contacto' });
+    } catch {
+      showStatus('error', 'No pudimos enviar tu consulta.', 'Inténtalo de nuevo en unos minutos o escríbenos por Instagram a @updategrouppr.');
+    } finally {
+      submit.disabled = false;
+      submitLabel.textContent = 'Enviar consulta';
+    }
+  });
+</script>

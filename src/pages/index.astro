@@ -1,0 +1,503 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Arrow from '../components/Arrow.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import InstagramBlock from '../components/InstagramBlock.astro';
+import ClosingCta from '../components/ClosingCta.astro';
+import site from '../data/site.json';
+import { getProjects, getServices, getClients, disciplinesText, SECTOR_LABELS, REVIEW } from '../lib/content';
+
+const projects = await getProjects();
+const spotlight = projects.find((p) => p.data.spotlight);
+const featured = projects.filter((p) => p.data.featured && p.data.cover);
+const featuredGrid = featured.filter((p) => p !== spotlight);
+const services = await getServices();
+const clients = await getClients();
+const homeClients = clients.filter((c) => c.data.home);
+
+// Cifras: solo datos verificables (derivados del contenido) + cifras aprobadas en site.json.
+const stats = [
+  { value: String(site.founded), label: 'Año de fundación en Puerto Rico' },
+  { value: String(clients.length), label: 'Marcas e instituciones en nuestra lista de clientes' },
+  { value: String(clients.filter((c) => c.data.sector === 'gobierno').length), label: 'Entidades públicas' },
+  { value: String(services.length), label: 'Áreas de servicio integradas' },
+  ...site.stats,
+];
+
+// Hero: hasta tres piezas reales. Si aún no hay proyectos publicados, se usa la composición tipográfica.
+const heroVideo = featuredGrid.find((p) => p.data.video);
+const heroImages = featuredGrid.filter((p) => p !== heroVideo).slice(0, heroVideo ? 2 : 3);
+const hasHeroMedia = heroImages.length > 0 || !!heroVideo;
+
+const sectors = [
+  {
+    key: 'marcas',
+    title: 'Marcas y empresas',
+    text: 'Campañas, contenido y presencia digital para marcas que necesitan conectar con su público y mantenerse relevantes.',
+  },
+  {
+    key: 'gobierno',
+    title: 'Gobierno e instituciones',
+    text: 'Comunicación clara y responsable para divulgar servicios, iniciativas y eventos a la ciudadanía.',
+  },
+  {
+    key: 'organizaciones',
+    title: 'Organizaciones y causas',
+    text: 'Mensajes que movilizan: campañas de concienciación, eventos y comunicación con voluntarios, donantes y comunidades.',
+  },
+];
+
+const steps = [
+  { title: 'Entendemos', text: 'Conocemos los objetivos, el público y el contexto.' },
+  { title: 'Diseñamos', text: 'Definimos la estrategia y la dirección creativa.' },
+  { title: 'Ejecutamos', text: 'Producimos y coordinamos los entregables.' },
+  { title: 'Evaluamos', text: 'Revisamos el desempeño y ajustamos según los objetivos y los datos disponibles.' },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.legalName,
+  alternateName: site.name,
+  url: site.url,
+  foundingDate: String(site.founded),
+  areaServed: 'Puerto Rico',
+  slogan: site.tagline,
+  sameAs: [site.social.instagram.url, site.social.facebook.url].filter(Boolean),
+};
+---
+<Base
+  title="Update Group"
+  description="Estrategia, creatividad y comunicación para marcas, instituciones y organizaciones en Puerto Rico. Actualizamos ideas. Impulsamos resultados."
+  jsonLd={jsonLd}
+>
+  <!-- 1. HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container hero-grid" data-media={hasHeroMedia ? 'yes' : 'no'}>
+      <div class="hero-copy">
+        <p class="eyebrow">Desde Puerto Rico. Con visión estratégica.</p>
+        <h1 id="hero-title" class="display hero-title">
+          <span class="hero-line">Actualizamos ideas.</span>
+          <span class="hero-line">Impulsamos <span class="grad-text">resultados.</span></span>
+        </h1>
+        <p class="lead hero-lead">Estrategia, creatividad y comunicación para marcas, instituciones y organizaciones que quieren avanzar.</p>
+        <div class="hero-actions">
+          <a href="/contacto/" class="btn">Hablemos de tu proyecto <Arrow size={14} /></a>
+          <a href="/proyectos/" class="btn btn--ghost">Explora nuestro trabajo</a>
+        </div>
+      </div>
+
+      {hasHeroMedia ? (
+        <div class="hero-media" aria-label="Selección de trabajos">
+          {heroImages[0] && (
+            <a href={`/proyectos/${heroImages[0].id}/`} class="hm hm--a">
+              <Image src={heroImages[0].data.cover!} alt={heroImages[0].data.coverAlt} widths={[600, 900, 1300]} sizes="(max-width: 960px) 100vw, 40vw" loading="eager" fetchpriority="high" />
+              <span class="hm-cap">{heroImages[0].data.client}</span>
+            </a>
+          )}
+          {heroVideo && (
+            <figure class="hm hm--b">
+              <video
+                data-hero-video
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                poster={heroVideo.data.videoPoster?.src}
+                aria-label={`Animación: ${heroVideo.data.title}, ${heroVideo.data.client}`}
+              >
+                <source src={heroVideo.data.video} type="video/mp4" />
+              </video>
+              <button type="button" class="hm-play" data-hero-video-toggle aria-pressed="false">
+                <span data-label>Reproducir</span>
+              </button>
+              <figcaption class="hm-cap">
+                <a href={`/proyectos/${heroVideo.id}/`}>{heroVideo.data.client}</a>
+              </figcaption>
+            </figure>
+          )}
+          {!heroVideo && heroImages[2] && (
+            <a href={`/proyectos/${heroImages[2].id}/`} class="hm hm--b hm--img">
+              <Image src={heroImages[2].data.cover!} alt={heroImages[2].data.coverAlt} widths={[400, 700]} sizes="(max-width: 960px) 50vw, 22vw" loading="eager" />
+              <span class="hm-cap">{heroImages[2].data.client}</span>
+            </a>
+          )}
+          {heroImages[1] && (
+            <a href={`/proyectos/${heroImages[1].id}/`} class="hm hm--c">
+              <Image src={heroImages[1].data.cover!} alt={heroImages[1].data.coverAlt} widths={[400, 700]} sizes="(max-width: 960px) 50vw, 22vw" loading="eager" />
+              <span class="hm-cap">{heroImages[1].data.client}</span>
+            </a>
+          )}
+        </div>
+      ) : (
+        <div class="hero-mark" aria-hidden="true">
+          <svg viewBox="0 0 400 400">
+            <defs><linearGradient id="hg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#0066ff"/><stop offset=".4" stop-color="#00c2ff"/><stop offset=".72" stop-color="#00e0c2"/><stop offset="1" stop-color="#7cf55a"/></linearGradient></defs>
+            <path d="M50 350 L300 100" stroke="url(#hg)" stroke-width="46" />
+            <path d="M140 100 H300 V260" stroke="url(#hg)" stroke-width="46" fill="none" stroke-linejoin="miter" />
+          </svg>
+          <p class="condensed hero-claim">Estrategia.<br />Creatividad.<br />Resultados.</p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- 2. CLIENTES -->
+  <section class="section clients" aria-labelledby="clients-title">
+    <div class="container">
+      <div class="clients-head">
+        <h2 id="clients-title" class="h3 clients-title">Marcas e instituciones con las que hemos trabajado.</h2>
+        <a href="/proyectos/#clientes" class="link-arrow">Ver la lista completa <Arrow size={13} /></a>
+      </div>
+      <ul class="logo-grid" role="list">
+        {homeClients.map((c) => (
+          <li class="logo-cell">
+            {c.data.logo ? (
+              <Image src={c.data.logo} alt={c.data.name} height={120} densities={[1, 2]} class="logo-img" />
+            ) : (
+              <span class="logo-name">{c.data.name}</span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3. PRESENTACIÓN -->
+  <section class="section section--soft intro" aria-labelledby="intro-title">
+    <div class="container intro-grid">
+      <h2 id="intro-title" class="h2 reveal">Una visión estratégica. <span class="muted-ink">Un equipo que la ejecuta.</span></h2>
+      <div class="intro-copy reveal">
+        <p class="lead">En Update Group conectamos estrategia, diseño, contenido y tecnología para convertir ideas en acciones. Trabajamos con marcas comerciales, entidades gubernamentales y organizaciones sin fines de lucro, desarrollando soluciones alineadas con sus objetivos y sus públicos.</p>
+        <a href="/nosotros/" class="link-arrow">Conoce cómo trabajamos <Arrow size={13} /></a>
+      </div>
+    </div>
+    <div class="container">
+      <dl class="stats" aria-label="Update Group en cifras">
+        {stats.map((st) => (
+          <div class="stat reveal">
+            <dt class="stat-label">{st.label}</dt>
+            <dd class="stat-value condensed">{st.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <!-- 4. SERVICIOS -->
+  <section class="section services" aria-labelledby="services-title">
+    <div class="container">
+      <div class="sec-head">
+        <p class="eyebrow">Servicios</p>
+        <h2 id="services-title" class="h2">Lo que tu marca necesita para avanzar.</h2>
+      </div>
+      <ol class="srv-list" role="list">
+        {services.map((s, i) => (
+          <li class="srv-row reveal">
+            <a href={`/servicios/#${s.id}`} class="srv-link">
+              <span class="srv-num condensed">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="srv-title">{s.data.title}</h3>
+              <p class="srv-sum">{s.data.summary}</p>
+              <Arrow size={18} class="srv-arrow" />
+            </a>
+          </li>
+        ))}
+      </ol>
+      <div class="sec-foot">
+        <a href="/servicios/" class="btn btn--ghost">Ver todos los servicios <Arrow size={14} /></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASO DESTACADO -->
+  {spotlight && (
+    <section class="section section--dark spot" aria-labelledby="spot-title">
+      <div class="container spot-grid">
+        <div class="spot-media reveal">
+          {spotlight.data.video ? (
+            <video controls preload="metadata" playsinline poster={spotlight.data.videoPoster?.src ?? spotlight.data.cover?.src}>
+              <source src={spotlight.data.video} type="video/mp4" />
+            </video>
+          ) : spotlight.data.cover && (
+            <Image src={spotlight.data.cover} alt={spotlight.data.coverAlt} widths={[600, 1000]} sizes="(max-width: 860px) 100vw, 45vw" />
+          )}
+        </div>
+        <div class="spot-copy reveal">
+          <p class="eyebrow">Caso destacado {REVIEW && spotlight.data.draft && <span class="badge-draft">Borrador</span>}</p>
+          <p class="spot-client">{spotlight.data.client}</p>
+          <h2 id="spot-title" class="display spot-title">{spotlight.data.title}</h2>
+          <p class="lead">{spotlight.data.summary}</p>
+          {spotlight.data.context && <p>{spotlight.data.context}</p>}
+          <p class="spot-tags">{disciplinesText(spotlight)}</p>
+          <a href={`/proyectos/${spotlight.id}/`} class="btn btn--light">Ver el caso completo <Arrow size={14} /></a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- 5. PROYECTOS DESTACADOS -->
+  {featuredGrid.length > 0 && (
+    <section class="section section--soft work" aria-labelledby="work-title">
+      <div class="container">
+        <div class="sec-head sec-head--row">
+          <div>
+            <p class="eyebrow">Proyectos</p>
+            <h2 id="work-title" class="h2">Trabajo que habla por nosotros.</h2>
+          </div>
+          <a href="/proyectos/" class="link-arrow">Ver todos los proyectos <Arrow size={13} /></a>
+        </div>
+        <div class="work-grid">
+          {featuredGrid.slice(0, 4).map((p, i) => (
+            <div class={`work-item work-item--${i}`}>
+              <ProjectCard
+                project={p}
+                ratio={i === 0 ? '16 / 10' : i === 3 ? '21 / 9' : '4 / 5'}
+                sizes={i === 0 || i === 3 ? '(max-width: 760px) 100vw, 90vw' : '(max-width: 760px) 100vw, 45vw'}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- 6. SECTORES -->
+  <section class="section section--dark sectors" aria-labelledby="sectors-title">
+    <div class="container">
+      <div class="sec-head sectors-head">
+        <p class="eyebrow">Experiencia en distintos sectores</p>
+        <h2 id="sectors-title" class="h2">Cada público tiene su lenguaje.</h2>
+        <p class="lead">Adaptamos la estrategia y el tono a cada audiencia: desde campañas comerciales hasta comunicación institucional y eventos.</p>
+      </div>
+      <div class="sector-grid">
+        {sectors.map((s, i) => {
+          const names = clients.filter((c) => c.data.sector === s.key).slice(0, 4).map((c) => c.data.name);
+          return (
+            <article class="sector reveal">
+              <span class="sector-num condensed">0{i + 1}</span>
+              <h3 class="h3">{s.title}</h3>
+              <p>{s.text}</p>
+              {names.length > 0 && (
+                <ul class="sector-clients" aria-label={`Algunos clientes de ${SECTOR_LABELS[s.key].toLowerCase()}`}>
+                  {names.map((n) => <li>{n}</li>)}
+                </ul>
+              )}
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. PROCESO -->
+  <section class="section process" aria-labelledby="process-title">
+    <div class="container">
+      <div class="sec-head">
+        <p class="eyebrow">Proceso</p>
+        <h2 id="process-title" class="h2">De la idea a la ejecución.</h2>
+      </div>
+      <ol class="steps" role="list">
+        {steps.map((s, i) => (
+          <li class="step reveal" style={`--d:${i * 90}ms`}>
+            <div class="step-top">
+              <span class="step-num condensed">0{i + 1}</span>
+              {i < steps.length - 1 && <span class="step-line" aria-hidden="true"></span>}
+              {i === steps.length - 1 && <Arrow size={22} class="step-end" />}
+            </div>
+            <h3 class="h3">{s.title}</h3>
+            <p class="muted">{s.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <InstagramBlock />
+
+  <!-- 8. CIERRE -->
+  <ClosingCta />
+</Base>
+
+<script>
+  // Video del hero: reproducción automática solo si el usuario no pidió reducir movimiento. Siempre con control visible.
+  const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
+  const btn = document.querySelector<HTMLButtonElement>('[data-hero-video-toggle]');
+  if (video && btn) {
+    const label = btn.querySelector('[data-label]')!;
+    const sync = () => {
+      const playing = !video.paused;
+      btn.setAttribute('aria-pressed', String(playing));
+      label.textContent = playing ? 'Pausar' : 'Reproducir';
+    };
+    btn.addEventListener('click', () => (video.paused ? video.play() : video.pause()));
+    video.addEventListener('play', sync);
+    video.addEventListener('pause', sync);
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) video.play().catch(() => {});
+  }
+</script>
+
+<style>
+  /* HERO */
+  .hero { padding: clamp(2.5rem, 6vw, 5rem) 0 clamp(3.5rem, 7vw, 6rem); overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; min-height: min(78vh, 760px); }
+  .hero-title { margin-bottom: 1.75rem; }
+  .hero-line { display: block; }
+  .js .hero-line { animation: rise 0.9s var(--ease) both; }
+  .js .hero-line + .hero-line { animation-delay: 0.08s; }
+  .hero-lead { max-width: 33ch; margin-bottom: 2.25rem; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 0.85rem; }
+  @keyframes rise { from { opacity: 0; transform: translateY(24px); } }
+
+  .hero-media {
+    display: grid; grid-template-columns: 1.15fr 1fr; grid-template-rows: auto auto; gap: 1rem; align-items: start;
+  }
+  .hm { position: relative; margin: 0; overflow: hidden; border-radius: var(--radius); background: var(--bg-soft); display: block; text-decoration: none; }
+  .hm :global(img), .hm video { width: 100%; height: 100%; object-fit: cover; }
+  .hm--a { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
+  .hm--b { aspect-ratio: 9 / 16; max-height: 400px; justify-self: center; }
+  .hm--c { aspect-ratio: 4 / 5; margin-top: 2.5rem; }
+  .hm--img { aspect-ratio: 4 / 5; max-height: none; justify-self: stretch; }
+  .hm-cap {
+    position: absolute; left: 0.75rem; bottom: 0.75rem; background: rgba(255, 255, 255, 0.94); color: var(--ink);
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.35rem 0.6rem; border-radius: 2px;
+    max-width: calc(100% - 1.5rem);
+  }
+  .hm-cap a { text-decoration: none; }
+  .hm-play {
+    position: absolute; right: 0.75rem; top: 0.75rem; min-height: 36px; padding: 0.35rem 0.8rem; border-radius: 999px; border: 0;
+    background: rgba(10, 20, 36, 0.8); color: #fff; font-size: 0.75rem; font-weight: 500; cursor: pointer;
+  }
+  .hm-play:hover { background: var(--ink); }
+
+  .hero-mark { display: grid; grid-template-columns: auto 1fr; align-items: end; gap: 1.5rem; justify-self: end; }
+  .hero-mark svg { width: clamp(180px, 26vw, 380px); }
+  .hero-claim { font-size: clamp(1.5rem, 1rem + 1.6vw, 2.4rem); line-height: 0.98; color: var(--ink); margin: 0 0 0.5rem; }
+  @media (max-width: 960px) { .hero-mark { justify-self: start; } }
+
+  @media (max-width: 960px) {
+    .hero-grid { grid-template-columns: 1fr; min-height: 0; }
+    .hero-media { grid-template-columns: 1fr 1fr; }
+    .hm--b { max-height: none; }
+    .hm--c, .hm--img { margin-top: 0; aspect-ratio: 4 / 5; }
+  }
+  @media (max-width: 480px) {
+    .hero-actions .btn { width: 100%; }
+    .hm-cap { font-size: 0.6rem; padding: 0.25rem 0.45rem; left: 0.5rem; bottom: 0.5rem; max-width: calc(100% - 1rem); }
+    .hm-play { right: 0.5rem; top: 0.5rem; }
+  }
+
+  /* CLIENTES */
+  .clients { padding-block: clamp(3.5rem, 7vw, 5.5rem); border-top: 1px solid var(--line); }
+  .clients-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1rem 2rem; margin-bottom: 2.5rem; }
+  .clients-title { max-width: 26ch; font-weight: 500; }
+  .logo-grid { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .logo-cell {
+    display: grid; place-items: center; min-height: 150px; padding: 1.25rem 1.5rem;
+    border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center;
+  }
+  .logo-img { max-height: 88px; width: auto; max-width: min(100%, 170px); object-fit: contain; }
+  .logo-name { font-weight: 600; font-size: 0.9rem; line-height: 1.3; color: var(--ink); letter-spacing: -0.01em; max-width: 20ch; }
+  @media (max-width: 900px) { .logo-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 560px) { .logo-grid { grid-template-columns: repeat(2, 1fr); } .logo-cell { min-height: 108px; padding: 1rem; } .logo-img { max-height: 52px; } }
+
+  /* PRESENTACIÓN */
+  .intro-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 2.5rem 5rem; align-items: start; }
+  .muted-ink { color: var(--muted); }
+  .intro-copy .lead { color: var(--text); margin-bottom: 1.75rem; }
+  @media (max-width: 860px) { .intro-grid { grid-template-columns: 1fr; } }
+
+  /* CIFRAS */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); margin: clamp(3rem, 6vw, 5rem) 0 0; border-top: 1px solid var(--line); }
+  .stat { display: flex; flex-direction: column-reverse; justify-content: flex-end; padding: 1.75rem 1.5rem 0 0; }
+  .stat + .stat { padding-left: 1.5rem; border-left: 1px solid var(--line); }
+  .stat-value { margin: 0 0 0.6rem; font-size: clamp(3rem, 2rem + 4vw, 5.5rem); line-height: 0.9; color: var(--ink); }
+  .stat:first-child .stat-value { background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .stat-label { font-size: 0.9rem; color: var(--muted); max-width: 22ch; }
+  @media (max-width: 860px) {
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stat, .stat + .stat { padding: 1.5rem 1rem 1.5rem 0; border-left: 0; border-bottom: 1px solid var(--line); }
+  }
+
+  /* CASO DESTACADO */
+  .spot-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr); gap: 3rem 5rem; align-items: center; }
+  .spot-media { border-radius: var(--radius); overflow: hidden; background: #000; }
+  .spot-media video, .spot-media :global(img) { width: 100%; max-height: 78vh; object-fit: contain; margin-inline: auto; }
+  .spot-client { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255, 255, 255, 0.6); margin-bottom: 0.75rem; }
+  .spot-title { font-size: clamp(2.4rem, 1.4rem + 3.6vw, 4.8rem); margin-bottom: 1.5rem; }
+  .spot-copy .lead { margin-bottom: 1.25rem; }
+  .spot-tags { font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); margin-bottom: 2rem; }
+  .spot .badge-draft { margin-left: 0.5rem; }
+  @media (max-width: 860px) { .spot-grid { grid-template-columns: 1fr; } .spot-media { max-width: 420px; } }
+
+  /* Encabezados de sección */
+  .sec-head { margin-bottom: clamp(2.5rem, 5vw, 4rem); max-width: 50rem; }
+  .sec-head--row { max-width: none; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1.5rem; }
+  .sec-foot { margin-top: 3rem; }
+
+  /* SERVICIOS */
+  .srv-list { list-style: none; border-top: 1px solid var(--line); }
+  .srv-row { border-bottom: 1px solid var(--line); }
+  .srv-link {
+    display: grid; grid-template-columns: 4rem minmax(0, 1.1fr) minmax(0, 1.4fr) 2rem; gap: 1.5rem; align-items: baseline;
+    padding: 1.6rem 0; text-decoration: none; color: inherit; position: relative;
+  }
+  .srv-link::after {
+    content: ''; position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; background: var(--grad);
+    transform: scaleX(0); transform-origin: left; transition: transform 0.6s var(--ease);
+  }
+  .srv-link:hover::after { transform: scaleX(1); }
+  .srv-num { font-size: 1.1rem; color: var(--muted); }
+  .srv-title { font-size: clamp(1.15rem, 1rem + 0.6vw, 1.45rem); font-weight: 600; transition: color 0.3s; }
+  .srv-link:hover .srv-title { color: var(--blue-text); }
+  .srv-sum { margin: 0; color: var(--muted); font-size: 0.97rem; }
+  .srv-link :global(.srv-arrow) { justify-self: end; align-self: center; transition: transform 0.35s var(--ease); }
+  .srv-link:hover :global(.srv-arrow) { transform: translate(3px, -3px); }
+  @media (max-width: 760px) {
+    .srv-link { grid-template-columns: 2.5rem 1fr 1.5rem; gap: 0.25rem 1rem; padding: 1.3rem 0; }
+    .srv-sum { grid-column: 2 / 3; grid-row: 2; font-size: 0.92rem; }
+  }
+
+  /* PROYECTOS */
+  .work-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: clamp(2.5rem, 5vw, 4.5rem) clamp(1rem, 3vw, 2.5rem); }
+  .work-item--0 { grid-column: 1 / -1; }
+  .work-item--1 { grid-column: 1 / 7; }
+  .work-item--2 { grid-column: 7 / -1; margin-top: clamp(0rem, 8vw, 7rem); }
+  .work-item--3 { grid-column: 1 / -1; }
+  @media (max-width: 760px) { .work-item { grid-column: 1 / -1 !important; margin-top: 0 !important; } }
+
+  /* SECTORES */
+  .sectors-head .lead { margin-top: 1.5rem; max-width: 46ch; }
+  .sector-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line-dark); }
+  .sector { padding: 2.25rem 2rem 2.5rem 0; position: relative; }
+  .sector + .sector { padding-left: 2rem; border-left: 1px solid var(--line-dark); }
+  .sector::before { content: ''; position: absolute; top: -1px; left: 0; width: 3.5rem; height: 2px; background: var(--grad); }
+  .sector + .sector::before { left: 2rem; }
+  .sector-num { display: block; font-size: 1rem; color: rgba(255, 255, 255, 0.5); margin-bottom: 1.5rem; }
+  .sector h3 { margin-bottom: 1rem; }
+  .sector-clients { list-style: none; margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px solid var(--line-dark); font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); }
+  .sector-clients li + li { margin-top: 0.3rem; }
+  @media (max-width: 860px) {
+    .sector-grid { grid-template-columns: 1fr; }
+    .sector, .sector + .sector { padding: 2rem 0; border-left: 0; border-bottom: 1px solid var(--line-dark); }
+    .sector + .sector::before { left: 0; }
+  }
+
+  /* PROCESO */
+  .steps { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+  .step { transition-delay: var(--d); }
+  .step-top { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+  .step-num {
+    flex: none; display: grid; place-items: center; width: 3.25rem; height: 3.25rem; border-radius: 50%;
+    border: 1.5px solid var(--ink); font-size: 1.15rem; color: var(--ink);
+  }
+  .step-line { flex: 1; height: 1.5px; background: linear-gradient(90deg, var(--ink), var(--line)); }
+  .step-top :global(.step-end) { color: var(--blue-text); }
+  .step h3 { margin-bottom: 0.6rem; }
+  .step p { font-size: 0.97rem; max-width: 26ch; }
+  @media (max-width: 860px) {
+    .steps { grid-template-columns: 1fr 1fr; gap: 2.5rem 1.5rem; }
+    .step-line { display: none; }
+  }
+  @media (max-width: 520px) { .steps { grid-template-columns: 1fr; } }
+</style>
