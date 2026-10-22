@@ -114,6 +114,30 @@ section.s{padding-block:clamp(56px,8vw,104px)}
 @media (max-width:1000px){.bento{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:560px){.bento{grid-template-columns:1fr}.t-ai,.t-portal,.t-quote{grid-column:auto;grid-row:auto}}
 
+
+/* INTRO + WAVES + SERVICES BAND */
+.intro{padding-bottom:clamp(32px,5vw,56px)}
+.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,64px);align-items:start}
+.intro h2{font-stretch:75%;font-weight:900;text-transform:uppercase;font-size:clamp(2.2rem,5.4vw,4rem);line-height:.92}
+.intro-p{color:var(--muted);font-size:clamp(1.05rem,1.4vw,1.18rem)}
+.intro-p strong{color:var(--ink)}
+.intro-q{margin:26px 0 0;padding-left:18px;border-left:3px solid;border-image:var(--grad) 1;font-family:var(--f-display);font-stretch:85%;font-weight:700;font-size:clamp(1.1rem,1.8vw,1.35rem);line-height:1.25}
+@media (max-width:860px){.intro-grid{grid-template-columns:1fr}}
+.wave{display:block;line-height:0;height:clamp(56px,8vw,120px);background:var(--bg);position:relative;margin-block:-1px}
+.wave svg{width:100%;height:100%;display:block}
+.wave .w-grad{fill:url(#wg)}
+.wave .w-fill{fill:var(--panel)}
+.wave-down svg{transform:scaleY(-1)}
+.band{background:var(--panel);padding-block:clamp(24px,4vw,48px)}
+.band .tile{background:var(--bg)}
+.band .t-ai{background:radial-gradient(500px 300px at 100% 0%,color-mix(in srgb,var(--blue) 30%,transparent),transparent 70%),var(--bg)}
+.band-head{text-align:center;margin-bottom:clamp(28px,4vw,44px);display:grid;gap:10px;justify-items:center}
+.band-title{font-stretch:70%;font-weight:900;text-transform:uppercase;font-size:clamp(3rem,9vw,6.5rem);line-height:.88;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.after-wave{padding-top:clamp(32px,5vw,64px)}
+.portal-wide{grid-template-columns:auto 1fr auto;align-items:center;gap:22px}
+.portal-wide h3{margin-bottom:6px}
+@media (max-width:700px){.portal-wide{grid-template-columns:1fr}.portal-wide .btn{justify-self:start}}
+
 /* PROCESS */
 .proc{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:p}
 .proc li{list-style:none;padding:22px;border-radius:var(--r);border:1px solid var(--line);display:grid;gap:8px;align-content:start}
@@ -227,49 +251,42 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-con
     </div></div>
   </div>
 
-  <section class="s" id="servicios">
-    <div class="wrap">
-      <div class="head">
-        <h2><span class="en">Ideas that <span class="gt">update.</span> Results you can see.</span><span class="es">Ideas que se <span class="gt">actualizan.</span> Resultados que se notan.</span></h2>
-        <p><span class="en">Strategy, creativity and technology in one team, from your first post to the system that turns followers into customers.</span><span class="es">Estrategia, creatividad y tecnología en un solo equipo, desde tu primer post hasta el sistema que convierte seguidores en clientes.</span></p>
-      </div>
-
-      <div class="bento">
-        <article class="tile t-ai" id="ai">
-          <div style="display:grid;gap:12px">
-            <span class="pill"><span class="en">NEW · AI</span><span class="es">NUEVO · AI</span></span>
-            <h3><span class="en">AI automations that sell <span class="gt">24/7.</span></span><span class="es">Automatizaciones AI que venden <span class="gt">24/7.</span></span></h3>
-            <p><span class="en">Chatbots for WhatsApp, Instagram and Messenger, automatic lead follow-up, self-booking and reports that write themselves.</span><span class="es">Chatbots para WhatsApp, Instagram y Messenger, seguimiento automático de leads, citas solas y reportes que se hacen solos.</span></p>
-          </div>
-          <div class="chat" id="chat" aria-label="Chat example"></div>
-        </article>
-
-        <article class="tile t-portal">
-          <div class="row">
-            <span class="lockico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
-            <a class="btn btn-grad" href="#portal"><i class="en">Open portal</i><i class="es">Abrir portal</i></a>
-          </div>
-          <h3><span class="en">Proposal portal</span><span class="es">Portal de propuestas</span></h3>
-          <p><span class="en">Got a proposal from us? Enter your private access code to view it, review it and approve it in one place.</span><span class="es">¿Te enviamos una propuesta? Entra con tu clave privada para verla, revisarla y aprobarla en un solo lugar.</span></p>
-        </article>
-
-        <article class="tile t-quote">
-          <blockquote><span class="en">“It’s not about having ideas. It’s about <span class="gt">updating</span> them so they <span class="gt">work.</span>”</span><span class="es">“No se trata de tener ideas, se trata de <span class="gt">actualizarlas</span> para que <span class="gt">funcionen.</span>”</span></blockquote>
-        </article>
-
-        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/><path d="M12 12l8-8M17 4h3v3"/></svg></span><h3><span class="en">Digital strategy</span><span class="es">Estrategia digital</span></h3><p><span class="en">Where to be, what to say and how to measure it.</span><span class="es">Dónde estar, qué decir y cómo medirlo.</span></p></article>
-        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><path d="M4 20v-5M9 20v-8M14 20v-6M19 20V9M3 11l6-5 4 3 7-6M16 3h4v4"/></svg></span><h3><span class="en">Digital marketing</span><span class="es">Marketing digital</span></h3><p><span class="en">Meta and Google Ads built for sales and leads.</span><span class="es">Meta y Google Ads enfocados en ventas y leads.</span></p></article>
-        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></span><h3><span class="en">Design &amp; branding</span><span class="es">Diseño y branding</span></h3><p><span class="en">Identities that make your brand recognizable.</span><span class="es">Identidades que hacen tu marca reconocible.</span></p></article>
-        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><path d="M3 10v4h3l7 5V5L6 10zM17 9a4 4 0 0 1 0 6M20 6a8 8 0 0 1 0 12"/></svg></span><h3><span class="en">Audiovisual content</span><span class="es">Contenido audiovisual</span></h3><p><span class="en">Photos, reels and video for social media.</span><span class="es">Fotos, reels y video para redes sociales.</span></p></article>
-        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M6 6h.01M8.5 6h.01M13 13l7 3-3 1-1 3z"/></svg></span><h3><span class="en">Web development</span><span class="es">Desarrollo web</span></h3><p><span class="en">Fast WordPress sites, mobile-first.</span><span class="es">Websites en WordPress, rápidos y para el celular.</span></p></article>
-        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 20c0-3 3-5 6-5s6 2 6 5M14 15.3c.6-.2 1.3-.3 2-.3 3 0 6 2 6 5"/></svg></span><h3>Community management</h3><p><span class="en">Your social media and community, every day.</span><span class="es">Tus redes y tu comunidad, todos los días.</span></p></article>
-        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg></span><h3>SEO &amp; analytics</h3><p><span class="en">Get found on Google and know what works.</span><span class="es">Aparece en Google y sabe qué funciona.</span></p></article>
-        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5"/></svg></span><h3><span class="en">Strategic consulting</span><span class="es">Consultoría estratégica</span></h3><p><span class="en">Better decisions for your brand and business.</span><span class="es">Mejores decisiones de marca y negocio.</span></p></article>
+  <section class="s intro" id="nosotros">
+    <div class="wrap intro-grid">
+      <h2><span class="en">Ideas that <span class="gt">update.</span> Results you can see.</span><span class="es">Ideas que se <span class="gt">actualizan.</span> Resultados que se notan.</span></h2>
+      <div>
+        <p class="intro-p"><span class="en">Update Group is a digital agency in Puerto Rico with <strong>more than 7 years of experience</strong> helping brands, institutions and organizations grow online. We bring strategy, creativity and technology together in one team, from your first post to the system that turns followers into customers.</span><span class="es">Update Group es una agencia digital en Puerto Rico con <strong>más de 7 años de experiencia</strong> ayudando a marcas, instituciones y organizaciones a crecer en el mundo digital. Unimos estrategia, creatividad y tecnología en un solo equipo, desde tu primer post hasta el sistema que convierte seguidores en clientes.</span></p>
+        <blockquote class="intro-q"><span class="en">“It’s not about having ideas. It’s about <span class="gt">updating</span> them so they <span class="gt">work.</span>”</span><span class="es">“No se trata de tener ideas, se trata de <span class="gt">actualizarlas</span> para que <span class="gt">funcionen.</span>”</span></blockquote>
       </div>
     </div>
   </section>
 
-  <section class="s" id="proceso" style="padding-top:0">
+  <div class="wave" aria-hidden="true"><svg viewBox="0 0 1440 140" preserveAspectRatio="none"><path class="w-grad" d="M0,74 C220,14 460,10 720,62 C980,114 1220,118 1440,52 L1440,140 L0,140 Z"/><path class="w-fill" d="M0,98 C220,38 460,34 720,86 C980,138 1220,142 1440,76 L1440,140 L0,140 Z"/></svg></div>
+  <section class="s band" id="servicios">
+    <div class="wrap">
+      <div class="band-head">
+        <p class="k"><span class="en">What we do</span><span class="es">Lo que hacemos</span></p>
+        <h2 class="band-title"><span class="en">Services</span><span class="es">Servicios</span></h2>
+      </div>
+      <div class="bento svc-bento">
+        <article class="tile t-ai" id="ai">
+          <div style="display:grid;gap:12px">
+            <span class="pill"><span class="en">NEW</span><span class="es">NUEVO</span></span>
+            <h3><span class="en">AI Automation</span><span class="es">Automatización AI</span></h3>
+            <p><span class="en">Chatbots for WhatsApp, Instagram and Messenger that answer, quote and book 24/7, plus automatic lead follow-up and reports that write themselves.</span><span class="es">Chatbots para WhatsApp, Instagram y Messenger que contestan, cotizan y agendan 24/7, más seguimiento automático de leads y reportes que se hacen solos.</span></p>
+          </div>
+          <div class="chat" id="chat" aria-label="Chat example"></div>
+        </article>
+        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 20c0-3 3-5 6-5s6 2 6 5M14 15.3c.6-.2 1.3-.3 2-.3 3 0 6 2 6 5"/></svg></span><h3><span class="en">Social Media Management</span><span class="es">Manejo de redes sociales</span></h3><p><span class="en">Planning, content and community management for your social media, every day.</span><span class="es">Planificación, contenido y manejo de comunidad para tus redes, todos los días.</span></p></article>
+        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><path d="M4 20v-5M9 20v-8M14 20v-6M19 20V9M3 11l6-5 4 3 7-6M16 3h4v4"/></svg></span><h3><span class="en">Digital Marketing</span><span class="es">Marketing digital</span></h3><p><span class="en">Meta and Google Ads campaigns built for sales and leads.</span><span class="es">Campañas en Meta y Google Ads enfocadas en ventas y leads.</span></p></article>
+        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></span><h3><span class="en">Design &amp; Branding</span><span class="es">Diseño y branding</span></h3><p><span class="en">Logos, brand identities and graphics that make your brand recognizable.</span><span class="es">Logos, identidad de marca y gráficas que hacen tu marca reconocible.</span></p></article>
+        <article class="tile svc"><span class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M6 6h.01M8.5 6h.01M13 13l7 3-3 1-1 3z"/></svg></span><h3><span class="en">Web Development</span><span class="es">Desarrollo web</span></h3><p><span class="en">Fast, mobile-first websites ready to turn visits into clients.</span><span class="es">Websites rápidos, pensados para el celular y listos para convertir visitas en clientes.</span></p></article>
+      </div>
+    </div>
+  </section>
+  <div class="wave wave-down" aria-hidden="true"><svg viewBox="0 0 1440 140" preserveAspectRatio="none"><path class="w-grad" d="M0,74 C220,14 460,10 720,62 C980,114 1220,118 1440,52 L1440,140 L0,140 Z"/><path class="w-fill" d="M0,98 C220,38 460,34 720,86 C980,138 1220,142 1440,76 L1440,140 L0,140 Z"/></svg></div>
+
+  <section class="s after-wave" id="proceso">
     <div class="wrap">
       <div class="head"><h2><span class="en">How we <span class="gt">work</span></span><span class="es">Cómo <span class="gt">trabajamos</span></span></h2></div>
       <ol class="proc">
@@ -278,6 +295,19 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-con
         <li><span class="n gt">03</span><h3><span class="en">Execution</span><span class="es">Ejecución</span></h3><p><span class="en">Content, campaigns and automations go live.</span><span class="es">Contenido, campañas y automatizaciones en marcha.</span></p></li>
         <li><span class="n gt">04</span><h3><span class="en">Results</span><span class="es">Resultados</span></h3><p><span class="en">We measure, optimize and report every month.</span><span class="es">Medimos, optimizamos y reportamos cada mes.</span></p></li>
       </ol>
+    </div>
+  </section>
+
+  <section class="s portal-sec" style="padding-top:0">
+    <div class="wrap">
+      <article class="tile t-portal portal-wide">
+        <span class="lockico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
+        <div>
+          <h3><span class="en">Proposal portal</span><span class="es">Portal de propuestas</span></h3>
+          <p><span class="en">Got a proposal from us? Enter your private access code to view it, review it and approve it in one place.</span><span class="es">¿Te enviamos una propuesta? Entra con tu clave privada para verla, revisarla y aprobarla en un solo lugar.</span></p>
+        </div>
+        <a class="btn btn-grad" href="#portal"><i class="en">Open portal</i><i class="es">Abrir portal</i></a>
+      </article>
     </div>
   </section>
 
@@ -364,7 +394,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-con
   </div>
 </main>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2F6BFF"/><stop offset=".55" stop-color="#19CBEA"/><stop offset="1" stop-color="#8BE24C"/></linearGradient></defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="wg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2F6BFF"/><stop offset=".55" stop-color="#19CBEA"/><stop offset="1" stop-color="#8BE24C"/></linearGradient><linearGradient id="g" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2F6BFF"/><stop offset=".55" stop-color="#19CBEA"/><stop offset="1" stop-color="#8BE24C"/></linearGradient></defs></svg>
 
 <a class="wa" href="https://wa.me/17879494781" target="_blank" rel="noopener" aria-label="WhatsApp (787) 949-4781"><svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg></a>
 
