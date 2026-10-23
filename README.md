@@ -1,8 +1,11 @@
 # Update Group — Website
 
-Website de una sola página de [Update Group](https://www.updategrouppr.com), en español e inglés.
+Website de [Update Group](https://www.updategrouppr.com), en español e inglés.
 
-- `index.html`: el website completo (diseño, textos y funciones).
+- `index.html`: página principal.
+- `services.html`: página de servicios con fotos y detalle de cada servicio.
+- `site.css`: estilos compartidos por las dos páginas.
+- `img/`: fotos de los servicios (generadas con AI en Higgsfield).
 - `mark.png`: símbolo de la marca.
 - `propuesta-ejemplo.pdf`: propuesta de ejemplo que se muestra en el portal de clientes.
 
