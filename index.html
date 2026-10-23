@@ -77,6 +77,50 @@ i.en,i.es{font-style:normal}
 @keyframes float{50%{transform:translateY(-12px)}}
 @media (max-width:860px){.hero .wrap{grid-template-columns:1fr}.orb{max-width:380px;margin-inline:auto;width:100%;order:-1}}
 
+
+/* HERO SCENE (animación en bucle tipo GIF) */
+.scene-svg{position:relative;z-index:1;width:100%;overflow:visible}
+.scene .bar{transform-box:fill-box;transform-origin:50% 100%;animation:grow 7s cubic-bezier(.22,1,.36,1) infinite;animation-delay:var(--d)}
+@keyframes grow{0%{transform:scaleY(.06)}32%,84%{transform:scaleY(1)}100%{transform:scaleY(.06)}}
+.scene .gline{stroke-dasharray:1;stroke-dashoffset:0;animation:draw 7s ease-in-out infinite}
+@keyframes draw{0%{stroke-dashoffset:1}45%,100%{stroke-dashoffset:0}}
+.scene .growth{animation:fadeLoop 7s linear infinite}
+@keyframes fadeLoop{0%,86%{opacity:1}94%,100%{opacity:0}}
+.scene .ghead{transform-box:fill-box;transform-origin:center;animation:head 7s ease infinite}
+@keyframes head{0%,41%{opacity:0;transform:scale(.3)}50%,86%{opacity:1;transform:scale(1)}94%,100%{opacity:0}}
+.fchip{position:absolute;z-index:2;display:flex;align-items:center;gap:10px;background:color-mix(in srgb,var(--panel) 88%,transparent);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:14px;padding:10px 14px;font-size:.8rem;box-shadow:0 14px 30px -18px #000;white-space:nowrap;animation:chipIn 7s cubic-bezier(.22,1,.36,1) infinite both}
+.fchip b{display:block;font-family:var(--f-display);font-size:.8rem}
+.fchip small{color:var(--muted);font-size:.74rem}
+.fchip .dot{width:9px;height:9px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px color-mix(in srgb,var(--lime) 25%,transparent);flex:none;animation:ping 1.6s ease-in-out infinite}
+.fc1{top:2%;left:-4%;animation-delay:.6s}
+.fc2{bottom:-2%;right:-4%;animation-delay:1.8s}
+.fc2 .dot{background:var(--cyan);box-shadow:0 0 0 4px color-mix(in srgb,var(--cyan) 25%,transparent)}
+.fc3{bottom:-2%;left:-4%;animation-delay:3s}
+.fc3 .dot{background:var(--blue);box-shadow:0 0 0 4px color-mix(in srgb,var(--blue) 30%,transparent)}
+@keyframes chipIn{0%{opacity:0;transform:translateY(14px) scale(.94)}7%,62%{opacity:1;transform:none}70%,100%{opacity:0;transform:translateY(-8px)}}
+@keyframes ping{50%{box-shadow:0 0 0 7px transparent}}
+@media (max-width:860px){.fc1,.fc3{left:0}.fc2{right:0}}
+@media (max-width:420px){.fchip{font-size:.72rem;padding:8px 10px}}
+
+/* SERVICIOS EN MOVIMIENTO */
+.svc-bento .tile{--rx:0deg;--ry:0deg;--ty:0px;transform:perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(var(--ty));transition:transform .35s cubic-bezier(.22,1,.36,1),border-color .3s,box-shadow .3s}
+.svc-bento .tile > *{position:relative;z-index:1}
+.svc-bento .tile::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity .35s;background:radial-gradient(280px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--cyan) 20%,transparent),transparent 65%)}
+.svc-bento .tile:hover{--ty:-6px;border-color:color-mix(in srgb,var(--cyan) 55%,var(--line));box-shadow:0 26px 50px -28px color-mix(in srgb,var(--cyan) 60%,transparent)}
+.svc-bento .tile:hover::before{opacity:1}
+.svc-bento .ico{transition:transform .4s cubic-bezier(.22,1,.36,1)}
+.svc-bento .ico svg{animation:bob 3.6s ease-in-out infinite;animation-delay:var(--b,0s)}
+.svc-bento .tile:hover .ico{transform:rotate(-8deg) scale(1.1)}
+@keyframes bob{50%{transform:translateY(-3px)}}
+.svc-bento .pill{animation:pillGlow 2.4s ease-in-out infinite}
+@keyframes pillGlow{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--cyan) 18%,transparent),0 0 24px color-mix(in srgb,var(--lime) 40%,transparent)}}
+.js-motion .svc-bento .tile{opacity:0;--ty:34px}
+.js-motion .svc-bento .tile.is-in{opacity:1;--ty:0px;transition:transform .8s cubic-bezier(.22,1,.36,1) var(--delay,0s),opacity .8s ease var(--delay,0s),border-color .3s,box-shadow .3s}
+.js-motion .svc-bento .tile.is-in:hover{--ty:-6px;transition-delay:0s}
+.js-motion .band-title{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s cubic-bezier(.22,1,.36,1)}
+.js-motion .band-title.is-in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.js-motion .svc-bento .tile,.js-motion .band-title{opacity:1!important;transform:none!important}}
+
 /* MARQUEE */
 .clients{border-block:1px solid var(--line);padding-block:20px;overflow:hidden;display:flex;gap:28px;align-items:center}
 .clients .k{flex:none;padding-left:clamp(16px,4vw,40px)}
@@ -239,7 +283,30 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-con
           <a class="btn btn-glass" href="#portal"><i class="en">I have a proposal</i><i class="es">Tengo una propuesta</i></a>
         </div>
       </div>
-      <div class="orb"><img src="mark.png" alt="Update Group" width="360" height="311"></div>
+      <div class="orb scene" role="img" aria-label="Animación: una línea de crecimiento sube mientras llegan leads, mensajes de AI y seguidores nuevos">
+        <svg class="scene-svg" viewBox="40 60 330 300" aria-hidden="true">
+          <defs>
+            <linearGradient id="sg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2F6BFF"/><stop offset=".55" stop-color="#19CBEA"/><stop offset="1" stop-color="#8BE24C"/></linearGradient>
+            <linearGradient id="sb" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#2F6BFF" stop-opacity=".15"/><stop offset="1" stop-color="#19CBEA" stop-opacity=".75"/></linearGradient>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <g class="bars">
+            <rect class="bar" style="--d:0s" x="78" y="262" width="36" height="68" rx="8" fill="url(#sb)"/>
+            <rect class="bar" style="--d:.15s" x="136" y="228" width="36" height="102" rx="8" fill="url(#sb)"/>
+            <rect class="bar" style="--d:.3s" x="194" y="188" width="36" height="142" rx="8" fill="url(#sb)"/>
+            <rect class="bar" style="--d:.45s" x="252" y="140" width="36" height="190" rx="8" fill="url(#sb)"/>
+          </g>
+          <line x1="58" y1="331" x2="342" y2="331" stroke="#1E2952" stroke-width="2"/>
+          <g class="growth" filter="url(#glow)">
+            <path id="gp" class="gline" pathLength="1" d="M60,300 L130,246 L180,266 L250,176 L292,196 L338,104" fill="none" stroke="url(#sg)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+            <path class="ghead" d="M314,104 L346,88 L342,124 Z" fill="#8BE24C"/>
+            <circle class="gdot" r="7" fill="#fff"><animateMotion dur="7s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.45;1" calcMode="linear"><mpath href="#gp"/></animateMotion></circle>
+          </g>
+        </svg>
+        <div class="fchip fc1"><span class="dot"></span><span><b>AI</b><small><i class="en">Replied in 3 seconds</i><i class="es">Respondió en 3 segundos</i></small></span></div>
+        <div class="fchip fc2"><span class="dot"></span><span><b><i class="en">New lead</i><i class="es">Nuevo lead</i></b><small><i class="en">Catering · 40 people</i><i class="es">Catering · 40 personas</i></small></span></div>
+        <div class="fchip fc3"><span class="dot"></span><span><b>+128</b><small><i class="en">new followers</i><i class="es">seguidores nuevos</i></small></span></div>
+      </div>
     </div>
   </section>
 
@@ -501,6 +568,31 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-con
   $('logout').addEventListener('click',()=>{active=null;pdfDoc=null;$('dash').hidden=true;$('gate').hidden=false;$('pages').innerHTML='';$('g-pass').focus();});
   $('z-in').addEventListener('click',()=>{if(pdfDoc&&scale<2.6){scale+=.25;render();}});
   $('z-out').addEventListener('click',()=>{if(pdfDoc&&scale>.8){scale-=.25;render();}});
+
+
+  // ---- Servicios en movimiento: entrada escalonada, inclinación y brillo que sigue el cursor
+  const motionOK=!matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const tiles=[...document.querySelectorAll('.svc-bento .tile')];
+  const revealEls=[...tiles, document.querySelector('.band-title')].filter(Boolean);
+  tiles.forEach((t,i)=>{t.style.setProperty('--delay',(i*0.12)+'s'); const ic=t.querySelector('.ico svg'); if(ic) ic.style.setProperty('--b',(i*0.4)+'s');});
+  if(motionOK && 'IntersectionObserver' in window){
+    root.classList.add('js-motion');
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target);}}),{threshold:.15});
+    revealEls.forEach(el=>io.observe(el));
+    if(matchMedia('(hover:hover)').matches){
+      tiles.forEach(t=>{
+        t.addEventListener('pointermove',ev=>{
+          const r=t.getBoundingClientRect(), x=(ev.clientX-r.left)/r.width, y=(ev.clientY-r.top)/r.height;
+          t.style.setProperty('--mx',(x*100)+'%'); t.style.setProperty('--my',(y*100)+'%');
+          t.style.setProperty('--ry',((x-.5)*7)+'deg'); t.style.setProperty('--rx',((.5-y)*7)+'deg');
+        });
+        t.addEventListener('pointerleave',()=>{t.style.setProperty('--rx','0deg');t.style.setProperty('--ry','0deg');});
+      });
+    }
+  } else {
+    revealEls.forEach(el=>el.classList.add('is-in'));
+    document.querySelector('.scene-svg')?.pauseAnimations?.();
+  }
 
   setLang(L); route();
 })();
