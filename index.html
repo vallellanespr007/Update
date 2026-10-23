@@ -1,10 +1,19 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <meta charset="utf-8">
 <title>Update Group Portal</title>
+<script>try{if(sessionStorage.getItem('ug-intro')||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('pl-skip');}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Figtree:wght@400;500;600;700&family=Quicksand:wght@500&display=swap">
 <link rel="stylesheet" href="site.css">
+
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="pl-inner">
+    <img class="pl-logo" src="img/logo-update-group.png" alt="" width="976" height="302">
+    <div class="pl-bar"><span></span></div>
+  </div>
+</div>
+<script>(function(){var r=document.documentElement,p=document.getElementById('preloader');if(r.classList.contains('pl-skip')){p.remove();return;}try{sessionStorage.setItem('ug-intro','1')}catch(e){}r.classList.add('pl-on');setTimeout(function(){p.classList.add('pl-done');r.classList.remove('pl-on');setTimeout(function(){p.remove()},600);},1500);})();</script>
 
 <header class="nav">
   <div class="wrap">
