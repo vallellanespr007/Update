@@ -160,6 +160,15 @@
       </div>
     </div>
   </section>
+  <section class="s certs" aria-labelledby="certs-title">
+    <div class="wrap">
+      <div class="certs-head">
+        <p class="k"><span class="en">Certifications</span><span class="es">Certificaciones</span></p>
+        <h2 id="certs-title"><span class="en">Certified on the platforms <span class="gt">we use every day</span></span><span class="es">Certificados en las plataformas <span class="gt">que usamos a diario</span></span></h2>
+      </div>
+      <ul class="cert-grid"><li><img src="img/certs/meta.svg" alt="Meta" loading="lazy" height="40"><span class="cert-tag"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="en">Verified</span><span class="es">Verificado</span></span></li><li><img src="img/certs/google-ads.svg" alt="Google Ads" loading="lazy" height="40"><span class="cert-tag"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="en">Certified</span><span class="es">Certificado</span></span></li><li><img src="img/certs/google-analytics.svg" alt="Google Analytics" loading="lazy" height="40"><span class="cert-tag"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="en">Certified</span><span class="es">Certificado</span></span></li><li><img src="img/certs/hubspot.svg" alt="HubSpot" loading="lazy" height="40"><span class="cert-tag"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="en">Certified</span><span class="es">Certificado</span></span></li><li><img src="img/certs/tiktok.svg" alt="TikTok" loading="lazy" height="40"><span class="cert-tag"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="en">Certified</span><span class="es">Certificado</span></span></li></ul>
+    </div>
+  </section>
 </main>
 
 <!-- ============ PORTAL ============ -->
@@ -333,7 +342,7 @@
   const motionOK=!matchMedia('(prefers-reduced-motion: reduce)').matches;
   const tiles=[...document.querySelectorAll('.svc-bento .tile')];
   // Elementos que entran al hacer scroll: [selector, variante, retraso escalonado]
-  const RV=[['.intro h2','rv-left',0],['.intro-grid > div','rv-right',0],['#proceso .head','',0],['.proc li','',.14],['.portal-wide','rv-zoom',0],['#contacto .cta','',0]];
+  const RV=[['.intro h2','rv-left',0],['.intro-grid > div','rv-right',0],['#proceso .head','',0],['.proc li','',.14],['.portal-wide','rv-zoom',0],['#contacto .cta','',0],['.certs-head','',0],['.cert-grid li','rv-zoom',.1]];
   const extra=[];
   RV.forEach(([sel,v,step])=>document.querySelectorAll(sel).forEach((el,i)=>{el.classList.add('rv');if(v)el.classList.add(v);el.style.setProperty('--delay',(i*step)+'s');extra.push(el);}));
   const revealEls=[...tiles, document.querySelector('.band-title'), ...extra].filter(Boolean);
