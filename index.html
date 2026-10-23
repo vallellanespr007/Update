@@ -152,6 +152,22 @@ i.en,i.es{font-style:normal}
 @media (max-width:520px){.js-motion .proc li:nth-child(odd){--from:translateX(-50px)}.js-motion .proc li:nth-child(even){--from:translateX(50px)}}
 @media (prefers-reduced-motion:reduce){.js-motion .rv{opacity:1!important;transform:none!important}.js-motion .proc li::after{transform:none!important}}
 
+
+/* Nada se sale del ancho de la pantalla (las animaciones laterales quedan recortadas) */
+html,body{overflow-x:hidden}
+@supports (overflow:clip){html,body{overflow-x:clip}}
+#view-home > section,.band,.wave,.clients,footer{overflow-x:clip;max-width:100%}
+@media (max-width:560px){
+  .rv-left{--from:translateX(-20px) scale(.97)}
+  .rv-right{--from:translateX(20px) scale(.97)}
+  .js-motion .svc-bento .tile:nth-child(odd){--tx:-22px}
+  .js-motion .svc-bento .tile:nth-child(even){--tx:22px}
+  .js-motion .proc li:nth-child(odd){--from:translateX(-22px) scale(.97)}
+  .js-motion .proc li:nth-child(even){--from:translateX(22px) scale(.97)}
+  .svc-bento .tile{--rx:0deg!important;--ry:0deg!important}
+  .fchip{max-width:calc(100% - 8px)}
+}
+
 /* MARQUEE */
 .clients{border-block:1px solid var(--line);padding-block:20px;overflow:hidden;display:flex;gap:28px;align-items:center}
 .clients .k{flex:none;padding-left:clamp(16px,4vw,40px)}
