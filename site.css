@@ -290,3 +290,13 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-con
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 .svc-more{display:flex;justify-content:center;margin-top:clamp(24px,4vw,40px)}
+
+/* Cada tarjeta de servicio lleva a su sección en services.html */
+.svc-bento .tile{cursor:pointer}
+.svc-link{justify-self:start;display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.88rem;text-decoration:none;color:var(--cyan);margin-top:4px}
+.svc-link::after{content:"";position:absolute;inset:0;z-index:3;border-radius:inherit}
+.svc-link span[aria-hidden]{transition:transform .3s cubic-bezier(.22,1,.36,1)}
+.svc-bento .tile:hover .svc-link span[aria-hidden],.svc-link:focus-visible span[aria-hidden]{transform:translateX(5px)}
+.svc-link:focus-visible{outline:none}
+.svc-bento .tile:has(.svc-link:focus-visible){outline:2px solid var(--cyan);outline-offset:3px}
+.svc-bento .tile > .svc-link{position:static}
