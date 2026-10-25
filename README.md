@@ -6,9 +6,11 @@ Website de [Update Group](https://www.updategrouppr.com), en español e inglés.
 - `services.html`: página de servicios con fotos y detalle de cada servicio.
 - `site.css`: estilos compartidos por las dos páginas.
 - `js/`: el código JavaScript de las páginas (`main.js` para la principal, `services.js` para servicios).
-- `vendor/pdfjs/`: visor de PDF (pdf.js 3.11.174) guardado en el repo para no depender de otra página.
+- `vendor/pdfjs/`: visor de PDF (pdf.js 3.11.174) guardado en el repo para no depender de otra página. Solo se descarga al abrir una propuesta en el portal.
 - `img/`: fotos de los servicios (generadas con AI en Higgsfield).
-- `mark.png`: símbolo de la marca.
+- `mark.png`: símbolo de la marca (original). De aquí salen `img/mark-76.webp` (menú), `img/mark-360.webp` (pase y pasaporte), `img/favicon-32.png` y `img/apple-touch-icon.png`.
+- `img/clients/`: logos de clientes en WebP, al doble del tamaño en que se ven.
+- `img/og.jpg`: imagen que sale al compartir el link (captura del hero, 1200×630).
 - `propuesta-ejemplo.pdf`: propuesta de ejemplo que se muestra en el portal de clientes.
 
 ## Verlo y publicarlo

@@ -91,11 +91,20 @@
     }
     $('pg-info').textContent=(L==='en'?'Pages: ':'Páginas: ')+pdfDoc.numPages+' · '+Math.round(scale/1.3*100)+'%';
   }
+  // pdf.js (1.4 MB) solo se descarga cuando alguien abre una propuesta
+  let pdfLoad=null;
+  const loadPdf=()=>pdfLoad||(pdfLoad=new Promise((res,rej)=>{
+    if(window.pdfjsLib) return res(window.pdfjsLib);
+    const s=document.createElement('script'); s.src='vendor/pdfjs/pdf.min.js';
+    s.addEventListener('load',()=>window.pdfjsLib?res(window.pdfjsLib):rej(new Error('pdfjs')));
+    s.addEventListener('error',()=>{pdfLoad=null;s.remove();rej(new Error('pdfjs'));});
+    document.head.appendChild(s);
+  }).then(lib=>{lib.GlobalWorkerOptions.workerSrc='vendor/pdfjs/pdf.worker.min.js';return lib;}));
   async function open(p){
     active=p; $('gate').hidden=true; $('dash').hidden=false; fillDash();
     try{
-      if(!window.pdfjsLib) throw new Error('pdfjs');
-      pdfDoc=await pdfjsLib.getDocument({url:p.pdf,isEvalSupported:false}).promise; await render();
+      const lib=await loadPdf();
+      pdfDoc=await lib.getDocument({url:p.pdf,isEvalSupported:false}).promise; await render();
     }catch(err){
       $('pages').innerHTML=`<p class="loading">${L==='en'?'The proposal could not load. Message us on WhatsApp and we’ll send it right away.':'No se pudo cargar la propuesta. Escríbenos por WhatsApp y te la enviamos enseguida.'}</p>`;
     }
