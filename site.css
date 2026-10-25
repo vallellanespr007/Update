@@ -72,29 +72,61 @@ i.en,i.es{font-style:normal}
 @media (max-width:860px){.hero .wrap{grid-template-columns:1fr}.orb{max-width:380px;margin-inline:auto;width:100%;order:-1}}
 
 
-/* HERO SCENE (animación en bucle tipo GIF) */
-.scene-svg{position:relative;z-index:1;width:100%;overflow:visible}
-.scene .bar{transform-box:fill-box;transform-origin:50% 100%;animation:grow 7s cubic-bezier(.22,1,.36,1) infinite;animation-delay:var(--d)}
-@keyframes grow{0%{transform:scaleY(.06)}32%,84%{transform:scaleY(1)}100%{transform:scaleY(.06)}}
-.scene .gline{stroke-dasharray:1;stroke-dashoffset:0;animation:draw 7s ease-in-out infinite}
-@keyframes draw{0%{stroke-dashoffset:1}45%,100%{stroke-dashoffset:0}}
-.scene .growth{animation:fadeLoop 7s linear infinite}
-@keyframes fadeLoop{0%,86%{opacity:1}94%,100%{opacity:0}}
-.scene .ghead{transform-box:fill-box;transform-origin:center;animation:head 7s ease infinite}
-@keyframes head{0%,41%{opacity:0;transform:scale(.3)}50%,86%{opacity:1;transform:scale(1)}94%,100%{opacity:0}}
-.fchip{position:absolute;z-index:2;display:flex;align-items:center;gap:10px;background:color-mix(in srgb,var(--panel) 88%,transparent);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:14px;padding:10px 14px;font-size:.8rem;box-shadow:0 14px 30px -18px #000;white-space:nowrap;animation:chipIn 7s cubic-bezier(.22,1,.36,1) infinite both}
-.fchip b{display:block;font-family:var(--f-display);font-size:.8rem}
-.fchip small{color:var(--muted);font-size:.74rem}
-.fchip .dot{width:9px;height:9px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px color-mix(in srgb,var(--lime) 25%,transparent);flex:none;animation:ping 1.6s ease-in-out infinite}
-.fc1{top:2%;left:-4%;animation-delay:.6s}
-.fc2{bottom:-2%;right:-4%;animation-delay:1.8s}
-.fc2 .dot{background:var(--cyan);box-shadow:0 0 0 4px color-mix(in srgb,var(--cyan) 25%,transparent)}
-.fc3{bottom:-2%;left:-4%;animation-delay:3s}
-.fc3 .dot{background:var(--blue);box-shadow:0 0 0 4px color-mix(in srgb,var(--blue) 30%,transparent)}
-@keyframes chipIn{0%{opacity:0;transform:translateY(14px) scale(.94)}7%,62%{opacity:1;transform:none}70%,100%{opacity:0;transform:translateY(-8px)}}
-@keyframes ping{50%{box-shadow:0 0 0 7px transparent}}
-@media (max-width:860px){.fc1,.fc3{left:0}.fc2{right:0}}
-@media (max-width:420px){.fchip{font-size:.72rem;padding:8px 10px}}
+/* HERO SCENE: avión Update despegando al próximo nivel (en bucle, sin GIF) */
+.flight{position:relative;aspect-ratio:1/1;width:100%;max-width:100%;container-type:inline-size;isolation:isolate}
+.flight .sun{position:absolute;right:-8%;top:30%;width:60%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,#FFC98A 55%,transparent),color-mix(in srgb,var(--cyan) 12%,transparent) 45%,transparent 70%);filter:blur(10px);z-index:-2;animation:sunPulse 6s ease-in-out infinite}
+@keyframes sunPulse{50%{opacity:.7;transform:scale(1.06)}}
+.clouds{position:absolute;inset:auto 0 26% 0;height:34%;z-index:-1;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent);mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent)}
+.clouds i{position:absolute;bottom:0;width:200%;height:100%;display:block;background:
+  radial-gradient(18% 42% at 8% 70%,#E9EEFA 0,transparent 70%),radial-gradient(14% 36% at 24% 62%,#F6E9DA 0,transparent 70%),
+  radial-gradient(20% 46% at 41% 74%,#DCE5F8 0,transparent 70%),radial-gradient(12% 32% at 55% 60%,#FBE3C8 0,transparent 70%),
+  radial-gradient(18% 42% at 58% 70%,#E9EEFA 0,transparent 70%),radial-gradient(14% 36% at 74% 62%,#F6E9DA 0,transparent 70%),
+  radial-gradient(20% 46% at 91% 74%,#DCE5F8 0,transparent 70%);opacity:.3;filter:blur(4px);animation:drift 38s linear infinite}
+.clouds i:nth-child(2){bottom:-18%;opacity:.32;transform:scaleY(.8);animation-duration:24s;animation-direction:reverse}
+@keyframes drift{to{translate:-50% 0}}
+.trail{position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:0}
+.trail .base{stroke:color-mix(in srgb,var(--cyan) 35%,transparent);stroke-width:2.4;fill:none;stroke-dasharray:1;stroke-dashoffset:1;animation:trailDraw 1.6s .4s cubic-bezier(.22,1,.36,1) forwards}
+.trail .glow{stroke:url(#tg);stroke-width:4.5;fill:none;stroke-linecap:round;stroke-dasharray:.18 .82;filter:drop-shadow(0 0 6px var(--cyan));animation:trailRun 3.2s 1.8s linear infinite;opacity:0}
+@keyframes trailDraw{to{stroke-dashoffset:0}}
+@keyframes trailRun{0%{stroke-dashoffset:1;opacity:1}100%{stroke-dashoffset:0;opacity:1}}
+.plane-wrap{position:absolute;top:3%;left:6%;width:100%;z-index:1;animation:flyIn 1.6s cubic-bezier(.16,1,.3,1) both}
+.plane-wrap img{width:100%;height:auto;transform-origin:60% 50%;filter:drop-shadow(0 26px 30px rgba(0,0,0,.45));animation:cruise 6s 1.6s ease-in-out infinite}
+@keyframes flyIn{from{opacity:0;transform:translate(-45%,38%) scale(.62) rotate(4deg)}to{opacity:1;transform:none}}
+@keyframes cruise{0%,100%{transform:translate(0,0) rotate(0)}30%{transform:translate(-1.2%,-3.5%) rotate(-1.2deg)}65%{transform:translate(.8%,1.5%) rotate(.6deg)}}
+.passport{position:absolute;right:-1%;bottom:12%;width:30%;aspect-ratio:.72;z-index:2;border-radius:3cqw;background:linear-gradient(160deg,#16245A,#0A1433 70%);border:1px solid #24357A;box-shadow:0 2.5cqw 5cqw -1cqw rgba(0,0,0,.6),inset 1.4cqw 0 0 -0.6cqw rgba(255,255,255,.06);display:grid;place-content:center;justify-items:center;gap:2.4cqw;rotate:7deg;animation:passIn 1s 1.25s cubic-bezier(.16,1,.3,1) both,bobP 7s 2.4s ease-in-out infinite}
+.passport img{width:58%;height:auto}
+.passport b{font-family:var(--f-display);font-weight:600;font-stretch:110%;font-size:2.3cqw;letter-spacing:.32em;color:#D9B56A;text-align:center;line-height:1.5;margin-right:-.32em}
+@keyframes passIn{from{opacity:0;transform:translate(30%,25%) rotate(12deg)}to{opacity:1;transform:none}}
+@keyframes bobP{50%{transform:translateY(-1.6cqw) rotate(-1deg)}}
+.ticket{position:absolute;left:-2%;bottom:6%;width:76%;z-index:3;display:grid;grid-template-columns:minmax(0,1fr) 17%;rotate:-5deg;filter:drop-shadow(0 3cqw 4cqw rgba(0,0,0,.55));animation:ticketIn 1.1s 1s cubic-bezier(.16,1,.3,1) both,bobT 6s 2.2s ease-in-out infinite}
+@keyframes ticketIn{from{opacity:0;transform:translateY(40%) rotate(-6deg)}to{opacity:1;transform:none}}
+@keyframes bobT{50%{transform:translateY(-2cqw) rotate(.8deg)}}
+.tk-main,.tk-stub{position:relative;overflow:hidden;min-width:0}
+.tk-main{background:#F7F8FC;color:#0A1433;border-radius:2.4cqw 0 0 2.4cqw;padding:3.4cqw 3.6cqw 3cqw;display:grid;grid-template-columns:minmax(0,1fr);gap:2.2cqw;-webkit-mask:radial-gradient(circle 1.8cqw at 100% 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 1.8cqw at 100% 100%,#0000 98%,#000) bottom/100% 51% no-repeat;mask:radial-gradient(circle 1.8cqw at 100% 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 1.8cqw at 100% 100%,#0000 98%,#000) bottom/100% 51% no-repeat}
+.tk-main::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.85) 50%,transparent 65%);background-size:250% 100%;animation:tkShine 5s 2.4s ease-in-out infinite;pointer-events:none}
+@keyframes tkShine{0%{background-position:150% 0}45%,100%{background-position:-60% 0}}
+.tk-top{display:flex;align-items:center;gap:1.6cqw}
+.tk-top img{width:6.4cqw;height:auto;flex:none}
+.tk-top .w{font-family:var(--f-word);font-weight:500;font-size:4cqw;line-height:.8;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tk-top .w small{display:block;font-family:var(--f-display);font-weight:700;font-size:1.3cqw;letter-spacing:.3em;color:#0A1433;-webkit-text-fill-color:#0A1433;text-align:right;margin-top:.4cqw}
+.tk-top .dash{flex:1;border-top:.3cqw dashed #9AA6C4;margin-inline:1.2cqw}
+.tk-top svg{width:4.4cqw;height:4.4cqw;color:#0A1433;animation:tkPlane 3s ease-in-out infinite}
+@keyframes tkPlane{50%{transform:translateX(1.2cqw)}}
+.tk-title{font-family:var(--f-display);font-stretch:72%;font-weight:900;text-transform:uppercase;font-size:5.4cqw;line-height:.95;letter-spacing:-.01em}
+.tk-title em{font-style:normal;color:#5BB21E}
+.tk-fields{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) minmax(0,.9fr) minmax(0,.6fr);gap:1.4cqw}
+.tk-fields div{min-width:0;display:grid;gap:.4cqw;border-left:.25cqw solid #D3D9E8;padding-left:1.4cqw}
+.tk-fields div:first-child{border-left:0;padding-left:0}
+.tk-fields small{font-size:1.45cqw;font-weight:600;letter-spacing:.12em;color:#5A6684;text-transform:uppercase}
+.tk-fields b{font-family:var(--f-display);font-stretch:85%;font-weight:800;font-size:1.9cqw;overflow-wrap:anywhere;text-transform:uppercase;line-height:1.1}
+.tk-stub{background:linear-gradient(180deg,#2F6BFF,#1A4FD8);color:#fff;border-radius:0 2.4cqw 2.4cqw 0;border-left:.35cqw dashed rgba(255,255,255,.55);display:grid;justify-items:center;align-content:center;gap:1.4cqw;padding:2cqw 1cqw}
+.tk-stub svg{width:5.2cqw;height:5.2cqw}
+.tk-stub b{font-family:var(--f-display);font-stretch:80%;font-weight:900;font-size:5cqw;line-height:1}
+.barcode{position:relative;width:70%;height:12cqw;background:#fff;border-radius:.6cqw;overflow:hidden}
+.barcode::before{content:"";position:absolute;inset:8% 12%;background:repeating-linear-gradient(180deg,#0A1433 0 .35cqw,transparent .35cqw .6cqw,#0A1433 .6cqw 1.3cqw,transparent 1.3cqw 1.6cqw,#0A1433 1.6cqw 1.8cqw,transparent 1.8cqw 2.2cqw)}
+.barcode::after{content:"";position:absolute;left:0;right:0;height:.5cqw;top:0;background:var(--lime);box-shadow:0 0 1.6cqw var(--lime);animation:scan 2.4s 2.6s ease-in-out infinite;opacity:0}
+@keyframes scan{0%{top:6%;opacity:1}50%{top:90%;opacity:1}100%{top:6%;opacity:1}}
+@media (max-width:860px){.flight{max-width:440px;margin-inline:auto;order:-1}}
 
 /* SERVICIOS EN MOVIMIENTO */
 .svc-bento .tile{--rx:0deg;--ry:0deg;--ty:0px;--tx:0px;transform:perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translate(var(--tx),var(--ty));transition:transform .35s cubic-bezier(.22,1,.36,1),border-color .3s,box-shadow .3s}
@@ -159,7 +191,6 @@ html,body{overflow-x:hidden}
   .js-motion .proc li:nth-child(odd){--from:translateX(-22px) scale(.97)}
   .js-motion .proc li:nth-child(even){--from:translateX(22px) scale(.97)}
   .svc-bento .tile{--rx:0deg!important;--ry:0deg!important}
-  .fchip{max-width:calc(100% - 8px)}
 }
 
 /* MARQUEE */
