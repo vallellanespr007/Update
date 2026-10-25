@@ -1,9 +1,9 @@
 <!doctype html><html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; script-src 'none'; object-src 'none'; base-uri 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; script-src 'sha256-RIZocGsxWyw834QPNHCRDM3RAx20fVsWZ+d3Q0WeLj0='; object-src 'none'; base-uri 'self'">
 <meta name="robots" content="noindex">
 <title>Página no encontrada | Update Group</title>
-<link rel="icon" type="image/png" href="/favicon.png">
+
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,800..900&family=Figtree:wght@400;600&display=swap">
 <style>
 :root{--bg:#070B1C;--ink:#F1F4FC;--muted:#8F9BBE;--grad:linear-gradient(100deg,#2F6BFF,#19CBEA 55%,#8BE24C);color-scheme:dark}
@@ -14,8 +14,17 @@ h1 span{background:var(--grad);-webkit-background-clip:text;background-clip:text
 p{color:var(--muted);margin:0 0 26px}
 a{display:inline-block;background:var(--grad);color:#050A1C;font-weight:600;text-decoration:none;padding:13px 24px;border-radius:999px}
 </style></head><body><main>
-<img src="/mark.png" alt="Update Group" width="360" height="311">
+<img id="logo" src="" alt="Update Group" width="360" height="311" hidden>
 <h1>Esta ruta no <span>existe</span></h1>
 <p>La página que buscas no está aquí. · The page you’re looking for isn’t here.</p>
-<a href="/">Volver al inicio · Back home</a>
+<a id="home" href="/">Volver al inicio · Back home</a>
+<script>// Página 404: el sitio puede vivir en la raíz (updategrouppr.com) o en /Update/ (GitHub Pages).
+(function(){
+  var base=/^\/Update(\/|$)/i.test(location.pathname)?'/Update/':'/';
+  var es=new RegExp('^'+base.replace(/\//g,'\\/')+'es(\\/|$)').test(location.pathname);
+  var logo=document.getElementById('logo'), home=document.getElementById('home');
+  logo.src=base+'mark.png'; logo.hidden=false;
+  home.href=base+(es?'es/':'');
+})();
+</script>
 </main></body></html>
