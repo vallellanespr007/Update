@@ -26,5 +26,6 @@ Website de [Update Group](https://www.updategrouppr.com), en español e inglés.
 - Si se añade algo de otra página (un video, un mapa, un chat), hay que permitir ese dominio en la política o no va a cargar.
 
 ## Importante antes de usarlo con clientes reales
-- **Portal de clientes:** es un prototipo. La clave (`UPDATE2026`) está dentro del código, así que cualquiera puede verla. No subir propuestas reales hasta conectar un sistema con acceso protegido en el servidor.
+- **Portal de clientes: apagado.** No hay ningún botón ni enlace hacia él en el website, porque todavía es un prototipo y no tiene acceso protegido de verdad. El código y la ruta siguen ahí: solo abre con el link directo `index.html#portal`. Para volver a mostrarlo, hay que reponer las entradas (botón del menú, enlace del hero y la tarjeta del portal) y el texto del paso 02 y del contacto.
+- **Portal de clientes, por qué es prototipo:** La clave (`UPDATE2026`) está dentro del código, así que cualquiera puede verla. No subir propuestas reales hasta conectar un sistema con acceso protegido en el servidor.
 - **Formulario de contacto:** envía a `/api/contact`, que necesita un servidor. Si el servidor no contesta (por ejemplo en GitHub Pages, donde no existe), el formulario no borra los datos y ofrece un botón para enviar la misma solicitud por WhatsApp, ya escrita.
