@@ -25,4 +25,4 @@ Website de [Update Group](https://www.updategrouppr.com), en español e inglés.
 
 ## Importante antes de usarlo con clientes reales
 - **Portal de clientes:** es un prototipo. La clave (`UPDATE2026`) está dentro del código, así que cualquiera puede verla. No subir propuestas reales hasta conectar un sistema con acceso protegido en el servidor.
-- **Formulario de contacto:** envía a `/api/contact`, que necesita un servidor. En GitHub Pages ese servidor no existe, así que ahí el formulario muestra el aviso para escribir por WhatsApp.
+- **Formulario de contacto:** envía a `/api/contact`, que necesita un servidor. Si el servidor no contesta (por ejemplo en GitHub Pages, donde no existe), el formulario no borra los datos y ofrece un botón para enviar la misma solicitud por WhatsApp, ya escrita.

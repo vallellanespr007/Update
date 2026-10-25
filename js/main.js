@@ -51,7 +51,13 @@
       if(r.ok){f.reset();show(t("Thanks! We got your request and will contact you soon.","¡Gracias! Recibimos tu solicitud y te contactaremos pronto."),true);}
       else if(r.status===429){show(t('Too many requests. Please try again later or message us on WhatsApp.','Demasiados intentos. Intenta más tarde o escríbenos por WhatsApp.'),false);}
       else{throw new Error(r.status);}
-    }catch(err){show(t("We couldn't send your request. Please message us on WhatsApp at (787) 949-4781.","No pudimos enviar tu solicitud. Escríbenos por WhatsApp al (787) 949-4781."),false);}
+    }catch(err){
+      // Sin servidor (o falló): ofrecer el mismo mensaje por WhatsApp, ya escrito. Es un enlace y no window.open, porque los navegadores bloquean popups después de un fetch.
+      const biz=$('f-biz').value.trim(), msg=$('f-msg').value.trim();
+      const lines=[t("Hi Update Group! I'd like a proposal.","¡Hola Update Group! Quiero pedir una propuesta."),t('Name: ','Nombre: ')+name,biz&&t('Business: ','Negocio: ')+biz,t('Phone: ','Teléfono: ')+phone,email&&'Email: '+email,msg&&t('Message: ','Mensaje: ')+msg].filter(Boolean);
+      show(t("We couldn't send your request from here. Send it by WhatsApp, your details are already filled in.","No pudimos enviar tu solicitud desde aquí. Envíala por WhatsApp, tus datos ya están escritos."),false);
+      const a=document.createElement('a'); a.className='btn btn-grad wa-send'; a.href='https://wa.me/17879494781?text='+encodeURIComponent(lines.join('\n')); a.target='_blank'; a.rel='noopener'; a.textContent=t('Send by WhatsApp','Enviar por WhatsApp'); n.appendChild(a);
+    }
     finally{btn.disabled=false;btn.innerHTML=label;}
   });
 

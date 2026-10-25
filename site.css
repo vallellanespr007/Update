@@ -410,4 +410,5 @@ textarea{font:inherit;font-weight:400;color:var(--ink);background:color-mix(in s
 textarea:focus{outline:none;border-color:var(--cyan)}
 .hp{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
 .note.err-note{color:#FF9B9B}
+.note .wa-send{display:flex;width:fit-content;margin-top:12px}
 #lead-form button[disabled]{opacity:.7;cursor:progress}
