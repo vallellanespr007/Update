@@ -1,6 +1,7 @@
 (() => {
   const root=document.documentElement, $=id=>document.getElementById(id);
-  let L='en';
+  // Idioma: gana el que la persona escogió; si no, inglés solo si el navegador está en inglés
+  let L=/^en/i.test(navigator.language||'')?'en':'es';
   try{const s=localStorage.getItem('ug-lang'); if(s==='es'||s==='en') L=s;}catch(e){}
 
   // ---- Language
