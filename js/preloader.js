@@ -1,0 +1,1 @@
+(function(){var r=document.documentElement,p=document.getElementById('preloader');if(r.classList.contains('pl-skip')){p.remove();return;}try{sessionStorage.setItem('ug-intro','1')}catch(e){}r.classList.add('pl-on');setTimeout(function(){p.classList.add('pl-done');r.classList.remove('pl-on');setTimeout(function(){p.remove()},600);},1500);})();
