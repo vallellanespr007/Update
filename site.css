@@ -340,3 +340,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-con
 @keyframes plLogo{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:none}}
 @keyframes plFill{to{transform:scaleX(1)}}
 @keyframes plFade{from{opacity:0}}
+
+/* Formulario: campo de mensaje, trampa anti-spam y mensajes */
+textarea{font:inherit;font-weight:400;color:var(--ink);background:color-mix(in srgb,var(--bg) 75%,transparent);border:1px solid var(--line);border-radius:14px;padding:13px 15px;width:100%;resize:vertical;min-height:84px}
+textarea:focus{outline:none;border-color:var(--cyan)}
+.hp{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
+.note.err-note{color:#FF9B9B}
+#lead-form button[disabled]{opacity:.7;cursor:progress}
