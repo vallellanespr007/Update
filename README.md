@@ -11,9 +11,12 @@ Website de [Update Group](https://www.updategrouppr.com), en español e inglés.
 - `mark.png`: símbolo de la marca.
 - `propuesta-ejemplo.pdf`: propuesta de ejemplo que se muestra en el portal de clientes.
 
-## Verlo
-Abrir `index.html` en el navegador, o publicarlo gratis con GitHub Pages
-(Settings → Pages → Branch: `main` / root).
+## Verlo y publicarlo
+- Local: abrir `index.html` en el navegador.
+- En línea: cada push a `main` publica el website automáticamente con GitHub Actions
+  (`.github/workflows/deploy.yml`). El progreso se ve en la pestaña **Actions** del repo.
+- Requisito, una sola vez: Settings → Pages → Build and deployment → Source: **GitHub Actions**.
+- La rama `pruebas` no se publica sola; para publicar sus cambios hay que pasarlos a `main`.
 
 ## Seguridad
 - Las dos páginas tienen una política de seguridad (Content-Security-Policy) en el `<head>`. Solo deja cargar código desde este mismo sitio y las fuentes de Google.
