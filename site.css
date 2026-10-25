@@ -75,15 +75,23 @@ i.en,i.es{font-style:normal}
 .sky-bg{position:absolute;inset:0;z-index:-1;overflow:hidden;background:linear-gradient(180deg,#060B22 0%,#0A1A4D 38%,#16357F 64%,#2C4F9C 78%,#6E7FB4 88%,var(--bg) 100%)}
 .sky-bg .sun{position:absolute;right:-6%;top:44%;width:min(70vw,900px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#FFE6BF 0,#FFC27A 10%,color-mix(in srgb,#FF9F5A 45%,transparent) 22%,color-mix(in srgb,var(--cyan) 10%,transparent) 45%,transparent 66%);opacity:.75;animation:sunPulse 7s ease-in-out infinite}
 @keyframes sunPulse{50%{opacity:.55;transform:scale(1.05)}}
-.clouds{position:absolute;left:0;right:0;bottom:4%;height:42%}
+.clouds{position:absolute;left:0;right:0;bottom:2%;height:46%}
 .clouds i{position:absolute;bottom:0;left:0;width:200%;height:100%;display:block;background:
-  radial-gradient(9% 30% at 4% 72%,#F2F4FB 0,transparent 72%),radial-gradient(7% 24% at 12% 60%,#FFE9D2 0,transparent 72%),radial-gradient(11% 34% at 21% 76%,#E6ECF9 0,transparent 72%),
-  radial-gradient(8% 26% at 30% 62%,#FFEAD6 0,transparent 72%),radial-gradient(10% 30% at 39% 74%,#EEF2FB 0,transparent 72%),radial-gradient(8% 24% at 47% 64%,#FFE2C2 0,transparent 72%),
-  radial-gradient(9% 30% at 54% 72%,#F2F4FB 0,transparent 72%),radial-gradient(7% 24% at 62% 60%,#FFE9D2 0,transparent 72%),radial-gradient(11% 34% at 71% 76%,#E6ECF9 0,transparent 72%),
-  radial-gradient(8% 26% at 80% 62%,#FFEAD6 0,transparent 72%),radial-gradient(10% 30% at 89% 74%,#EEF2FB 0,transparent 72%),radial-gradient(8% 24% at 97% 64%,#FFE2C2 0,transparent 72%);
-  opacity:.55;filter:blur(6px);animation:drift 60s linear infinite}
-.clouds i:nth-child(2){bottom:16%;opacity:.3;transform:scale(1.2,.8);animation-duration:90s;animation-direction:reverse}
-.clouds i:nth-child(3){bottom:-14%;opacity:.7;transform:scaleY(1.1);animation-duration:45s}
+  radial-gradient(10% 22% at 4% 74%,#EEF2FB 0,transparent 72%),radial-gradient(8% 18% at 13% 64%,#FFE9D2 0,transparent 72%),radial-gradient(12% 26% at 23% 78%,#E6ECF9 0,transparent 72%),
+  radial-gradient(9% 20% at 33% 66%,#FFEAD6 0,transparent 72%),radial-gradient(11% 24% at 42% 76%,#EEF2FB 0,transparent 72%),
+  radial-gradient(10% 22% at 54% 74%,#EEF2FB 0,transparent 72%),radial-gradient(8% 18% at 63% 64%,#FFE9D2 0,transparent 72%),radial-gradient(12% 26% at 73% 78%,#E6ECF9 0,transparent 72%),
+  radial-gradient(9% 20% at 83% 66%,#FFEAD6 0,transparent 72%),radial-gradient(11% 24% at 92% 76%,#EEF2FB 0,transparent 72%);
+  opacity:.22;filter:blur(14px);animation:drift 80s linear infinite}
+.clouds i:nth-child(2){bottom:20%;opacity:.12;transform:scale(1.3,.7);animation-duration:120s;animation-direction:reverse}
+.clouds i:nth-child(3){bottom:-12%;opacity:.3;animation-duration:60s}
+/* nubes finas en lo alto, casi transparentes */
+.wisps{position:absolute;inset:6% 0 auto 0;height:50%;pointer-events:none}
+.wisps i{position:absolute;display:block;height:14%;border-radius:50%;background:radial-gradient(closest-side,rgba(226,234,252,.55),transparent);filter:blur(10px);opacity:.14;animation:wisp linear infinite}
+.wisps i:nth-child(1){top:8%;width:38%;left:-40%;animation-duration:70s}
+.wisps i:nth-child(2){top:42%;width:28%;left:-30%;animation-duration:95s;animation-delay:-40s;opacity:.1}
+.wisps i:nth-child(3){top:70%;width:46%;left:-48%;animation-duration:85s;animation-delay:-62s;opacity:.12}
+.wisps i:nth-child(4){top:24%;width:22%;left:-24%;animation-duration:110s;animation-delay:-20s;opacity:.09}
+@keyframes wisp{to{transform:translateX(560%)}}
 @keyframes drift{to{translate:-50% 0}}
 
 .hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);grid-template-areas:"copy plane" "board board";column-gap:clamp(16px,3vw,40px);align-items:center}
@@ -148,9 +156,9 @@ i.en,i.es{font-style:normal}
   .plane-slot{aspect-ratio:2;margin-inline:-4%}
   .plane-wrap{width:104%;right:-6%;top:6%}
   .trail{left:-6%;top:42%;width:60%}
-  .boarding{margin-top:28px;aspect-ratio:1.9}
-  .ticket{left:-2%;top:16%;width:90%}
-  .passport{right:-2%;top:0;width:34%}
+  .boarding{margin-top:24px;aspect-ratio:1.42}
+  .passport{right:0;top:0;width:36%;rotate:5deg}
+  .ticket{left:-1%;top:50%;width:94%;rotate:-3deg}
 }
 
 /* SERVICIOS EN MOVIMIENTO */
