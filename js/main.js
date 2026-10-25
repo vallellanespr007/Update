@@ -1,7 +1,13 @@
 (() => {
   const root=document.documentElement, $=id=>document.getElementById(id);
-  let L='en';
-  try{const s=localStorage.getItem('ug-lang'); if(s==='es'||s==='en') L=s;}catch(e){}
+  // En el sitio publicado cada idioma tiene su URL (/ y /es/): <html data-lang data-alt> los pone tools/build_site.py.
+  // En la página fuente (bilingüe) el botón EN/ES cambia el idioma en la misma página.
+  const altURL=root.dataset.alt;
+  let L=root.dataset.lang==='es'?'es':'en', stored=null;
+  try{stored=localStorage.getItem('ug-lang');}catch(e){}
+  if(altURL){ if((stored==='es'||stored==='en')&&stored!==L){location.replace(altURL+location.hash);return;} }
+  else if(stored==='es'||stored==='en') L=stored;
+  const goLang=l=>{ if(altURL&&l!==L){try{localStorage.setItem('ug-lang',l)}catch(e){} location.href=altURL+location.hash; return true;} return false; };
 
   // ---- Language
   function setLang(l){
@@ -12,7 +18,7 @@
     if(active) fillDash();
     chatReset();
   }
-  document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.set)));
+  document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>{ if(!goLang(b.dataset.set)) setLang(b.dataset.set); }));
 
   // ---- Chat demo
   const CHAT={
@@ -88,7 +94,7 @@
     active=p; $('gate').hidden=true; $('dash').hidden=false; fillDash();
     try{
       if(!window.pdfjsLib) throw new Error('pdfjs');
-      pdfDoc=await pdfjsLib.getDocument({url:p.pdf,isEvalSupported:false}).promise; await render();
+      pdfDoc=await pdfjsLib.getDocument({url:(root.dataset.base||'')+p.pdf,isEvalSupported:false}).promise; await render();
     }catch(err){
       $('pages').innerHTML=`<p class="loading">${L==='en'?'The proposal could not load. Message us on WhatsApp and we’ll send it right away.':'No se pudo cargar la propuesta. Escríbenos por WhatsApp y te la enviamos enseguida.'}</p>`;
     }

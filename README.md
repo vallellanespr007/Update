@@ -18,6 +18,16 @@ Website de [Update Group](https://www.updategrouppr.com), en español e inglés.
 - Requisito, una sola vez: Settings → Pages → Build and deployment → Source: **GitHub Actions**.
 - La rama `pruebas` no se publica sola; para publicar sus cambios hay que pasarlos a `main`.
 
+## Inglés y español (dos URLs)
+- `index.html` y `services.html` son páginas **bilingües**: cada texto va dos veces, en `<span class="en">` y `<span class="es">` (o `<i>`). Se editan aquí, en un solo lugar.
+- Al publicar, `tools/build_site.py` genera la carpeta `_site/` con:
+  - `/` y `/services.html` → solo inglés.
+  - `/es/` y `/es/services.html` → solo español, con título y descripción propios para Google.
+  - `sitemap.xml` con las 4 páginas y las etiquetas `hreflang` que le dicen a Google cuál es cuál.
+- En el sitio publicado el botón **EN/ES** lleva a la otra URL y recuerda la preferencia.
+- Probarlo local: `python3 tools/build_site.py` y abrir `_site/index.html`.
+- Los títulos y descripciones en español están en `ES_META`, dentro de `tools/build_site.py`.
+
 ## SEO
 - Título, descripción, canonical, Open Graph (imagen `img/og-image.jpg`) y datos estructurados de negocio (JSON-LD) en el `<head>`.
 - `robots.txt` y `sitemap.xml` usan el dominio `https://www.updategrouppr.com/`. Si el sitio se publica en otro dominio, hay que cambiarlos junto con los `canonical`.
