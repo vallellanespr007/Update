@@ -128,7 +128,7 @@
   const extra=[];
   RV.forEach(([sel,v,step])=>document.querySelectorAll(sel).forEach((el,i)=>{el.classList.add('rv');if(v)el.classList.add(v);el.style.setProperty('--delay',(i*step)+'s');extra.push(el);}));
   const revealEls=[...tiles, document.querySelector('.band-title'), ...extra].filter(Boolean);
-  tiles.forEach((t,i)=>{t.style.setProperty('--delay',(i*0.12)+'s'); const ic=t.querySelector('.ico svg'); if(ic) ic.style.setProperty('--b',(i*0.4)+'s');});
+  tiles.forEach((t,i)=>{t.style.setProperty('--delay',(i*0.12)+'s');});
   if(motionOK && 'IntersectionObserver' in window){
     root.classList.add('js-motion');
     const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target);}}),{threshold:.15});

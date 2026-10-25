@@ -50,13 +50,12 @@
 .sv-frame img{width:100%;height:115%;object-fit:cover;transform:translateY(var(--py,0px)) scale(1.04);transition:transform .9s cubic-bezier(.22,1,.36,1);will-change:transform}
 .sv-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,color-mix(in srgb,var(--bg) 55%,transparent));pointer-events:none}
 .sv-media:hover .sv-frame img{transform:translateY(var(--py,0px)) scale(1.1)}
-.sv-badge{position:absolute;z-index:2;left:18px;bottom:18px;display:inline-flex;align-items:center;gap:9px;padding:9px 14px;border-radius:14px;font-weight:700;font-size:.84rem;background:color-mix(in srgb,var(--panel) 85%,transparent);backdrop-filter:blur(10px);border:1px solid var(--line);animation:floatY 5s ease-in-out infinite}
+.sv-badge{position:absolute;z-index:2;left:18px;bottom:18px;display:inline-flex;align-items:center;gap:9px;padding:9px 14px;border-radius:14px;font-weight:700;font-size:.84rem;background:color-mix(in srgb,var(--panel) 85%,transparent);backdrop-filter:blur(10px);border:1px solid var(--line)}
 .sv.rev .sv-badge{left:auto;right:18px}
-.sv-badge .dot{width:9px;height:9px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px color-mix(in srgb,var(--lime) 25%,transparent);animation:ping 1.6s ease-in-out infinite}
-@keyframes floatY{50%{transform:translateY(-8px)}}
+.sv-badge .dot{width:9px;height:9px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px color-mix(in srgb,var(--lime) 25%,transparent)}
 .sv-copy{display:grid;gap:16px;align-content:start;min-width:0}
 .sv-top{display:flex;align-items:center;gap:14px}
-.sv-n{font-family:var(--f-display);font-stretch:70%;font-weight:900;font-size:3.4rem;line-height:.8;background-size:220% 100%;animation:shimmer 4s linear infinite}
+.sv-n{font-family:var(--f-display);font-stretch:70%;font-weight:900;font-size:3.4rem;line-height:.8}
 .sv-copy h2{font-stretch:75%;font-weight:900;text-transform:uppercase;font-size:clamp(2rem,4.6vw,3.4rem);line-height:.92}
 .sv-d{color:var(--muted);font-size:1.05rem}
 .sv-k{margin-top:4px}
@@ -93,7 +92,7 @@
 .sv-cta h2{font-stretch:72%;font-weight:900;text-transform:uppercase;font-size:clamp(2.2rem,6vw,4.4rem);line-height:.9}
 .sv-cta p{color:var(--muted);max-width:32em}
 .sv-cta .ctas{justify-content:center}
-@media (prefers-reduced-motion:reduce){.js-motion .sv .sv-frame,.js-motion .sv .sv-badge,.js-motion .sv .sv-copy > *,.js-motion .sv .sv-list li,.js-motion .sv-hero .wrap > *{clip-path:none!important;opacity:1!important;transform:none!important}}
+@media (prefers-reduced-motion:reduce){.js-motion .sv .sv-frame,.js-motion .sv .sv-badge,.js-motion .sv .sv-copy > *,.js-motion .sv .sv-list li,.js-motion .sv-hero .wrap > *{clip-path:none!important;opacity:1!important;transform:none!important}.sv-chip:hover,.sv-list li:hover{transform:none!important}.sv-media:hover .sv-frame img{transform:translateY(var(--py,0px)) scale(1.04)!important}}
 </style>
 </head>
 <body>
