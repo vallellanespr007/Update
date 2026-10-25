@@ -37,42 +37,46 @@
 
 <!-- ============ HOME ============ -->
 <main id="view-home">
-  <section class="hero" id="top">
-    <div class="wrap">
-      <div>
+  <section class="hero sky" id="top">
+    <div class="sky-bg" aria-hidden="true"><span class="sun"></span><div class="wisps"><i></i><i></i><i></i><i></i></div><div class="clouds"><i></i><i></i><i></i></div></div>
+    <div class="wrap hero-grid">
+      <div class="copy">
         <h1 class="stack">
           <span class="en"><span>Strategy.</span><span class="b">Creativity.</span><span class="l">Results.</span></span>
           <span class="es"><span>Estrategia.</span><span class="b">Creatividad.</span><span class="l">Resultados.</span></span>
         </h1>
-        <p class="lede"><span class="en">We turn ideas into actions that create <strong>real impact</strong> and <strong>grow your brand</strong>. Digital marketing, content and AI automations, made in Puerto Rico.</span><span class="es">Convertimos ideas en acciones que generan <strong>impacto real</strong> y <strong>hacen crecer</strong> tu marca. Mercadeo digital, contenido y automatizaciones AI, hecho en Puerto Rico.</span></p>
+        <p class="lede"><span class="en">Your brand, at its <strong>next level</strong>. We turn ideas into actions that create <strong>real impact</strong>: digital marketing, content and AI automations, made in Puerto Rico.</span><span class="es">Tu marca, en su <strong>próximo nivel</strong>. Convertimos ideas en acciones que generan <strong>impacto real</strong>: mercadeo digital, contenido y automatizaciones AI, hecho en Puerto Rico.</span></p>
         <div class="ctas">
           <a class="btn btn-grad" href="#contacto"><span class="en">Let’s talk →</span><span class="es">¡Hablemos! →</span></a>
           <a class="btn btn-glass" href="#portal"><i class="en">I have a proposal</i><i class="es">Tengo una propuesta</i></a>
         </div>
       </div>
-      <div class="orb scene" role="img" aria-label="Animación: una línea de crecimiento sube mientras llegan leads, mensajes de AI y seguidores nuevos">
-        <svg class="scene-svg" viewBox="40 60 330 300" aria-hidden="true">
-          <defs>
-            <linearGradient id="sg" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#2F6BFF"/><stop offset=".55" stop-color="#19CBEA"/><stop offset="1" stop-color="#8BE24C"/></linearGradient>
-            <linearGradient id="sb" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#2F6BFF" stop-opacity=".15"/><stop offset="1" stop-color="#19CBEA" stop-opacity=".75"/></linearGradient>
-            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-          </defs>
-          <g class="bars">
-            <rect class="bar" style="--d:0s" x="78" y="262" width="36" height="68" rx="8" fill="url(#sb)"/>
-            <rect class="bar" style="--d:.15s" x="136" y="228" width="36" height="102" rx="8" fill="url(#sb)"/>
-            <rect class="bar" style="--d:.3s" x="194" y="188" width="36" height="142" rx="8" fill="url(#sb)"/>
-            <rect class="bar" style="--d:.45s" x="252" y="140" width="36" height="190" rx="8" fill="url(#sb)"/>
-          </g>
-          <line x1="58" y1="331" x2="342" y2="331" stroke="#1E2952" stroke-width="2"/>
-          <g class="growth" filter="url(#glow)">
-            <path id="gp" class="gline" pathLength="1" d="M60,300 L130,246 L180,266 L250,176 L292,196 L338,104" fill="none" stroke="url(#sg)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-            <path class="ghead" d="M314,104 L346,88 L342,124 Z" fill="#8BE24C"/>
-            <circle class="gdot" r="7" fill="#fff"><animateMotion dur="7s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.45;1" calcMode="linear"><mpath href="#gp"/></animateMotion></circle>
-          </g>
+
+      <div class="plane-slot" role="img" aria-label="Animación: el avión de Update Group despega rumbo al próximo nivel">
+        <svg class="trail" viewBox="0 0 100 60" aria-hidden="true">
+          <defs><linearGradient id="tg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#19CBEA" stop-opacity="0"/><stop offset=".5" stop-color="#19CBEA"/><stop offset="1" stop-color="#8BE24C"/></linearGradient></defs>
+          <path class="base" pathLength="1" d="M0,52 C18,58 38,56 46,44 C52,35 42,28 35,33 C27,39 36,50 54,46 C70,42 82,30 99,16"/>
+          <path class="glow" pathLength="1" d="M0,52 C18,58 38,56 46,44 C52,35 42,28 35,33 C27,39 36,50 54,46 C70,42 82,30 99,16"/>
         </svg>
-        <div class="fchip fc1"><span class="dot"></span><span><b>AI</b><small><i class="en">Replied in 3 seconds</i><i class="es">Respondió en 3 segundos</i></small></span></div>
-        <div class="fchip fc2"><span class="dot"></span><span><b><i class="en">New lead</i><i class="es">Nuevo lead</i></b><small><i class="en">Catering · 40 people</i><i class="es">Catering · 40 personas</i></small></span></div>
-        <div class="fchip fc3"><span class="dot"></span><span><b>+128</b><small><i class="en">new followers</i><i class="es">seguidores nuevos</i></small></span></div>
+        <div class="plane-wrap"><img src="img/plane.webp" alt="" width="1011" height="437" decoding="async" fetchpriority="high"></div>
+      </div>
+
+      <div class="boarding" role="img" aria-label="Pase de abordar: Pase al próximo nivel. Origen: tu idea. Destino: tu mejor versión. Clase: creativa. Puerta: UP">
+        <div class="passport" aria-hidden="true"><img src="mark.png" alt="" width="360" height="311"><b><i class="en">CREATIVE<br>PASSPORT</i><i class="es">PASAPORTE<br>CREATIVO</i></b><span class="pp-plane"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 15.5v-1.8l-8-5V3.6a1.5 1.5 0 0 0-3 0v5.1l-8 5v1.8l8-2.4v5.2l-2 1.5v1.4l3.5-1 3.5 1v-1.4l-2-1.5v-5.2z"/></svg></span></div>
+        <div class="ticket" aria-hidden="true">
+          <div class="tk-main">
+            <img class="tk-water" src="mark.png" alt="" width="360" height="311">
+            <div class="tk-top"><img src="mark.png" alt="" width="360" height="311"><span class="w">update<small>GROUP</small></span><span class="dash"></span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 15.5v-1.8l-8-5V3.6a1.5 1.5 0 0 0-3 0v5.1l-8 5v1.8l8-2.4v5.2l-2 1.5v1.4l3.5-1 3.5 1v-1.4l-2-1.5v-5.2z"/></svg></div>
+            <p class="tk-title"><span class="en">Pass to the <em>next</em> level</span><span class="es">Pase al <em>próximo</em> nivel</span></p>
+            <div class="tk-fields">
+              <div><small><i class="en">From</i><i class="es">Origen</i></small><b><i class="en">Your idea</i><i class="es">Tu idea</i></b></div>
+              <div><small><i class="en">To</i><i class="es">Destino</i></small><b><i class="en">Your best version</i><i class="es">Tu mejor versión</i></b></div>
+              <div><small><i class="en">Class</i><i class="es">Clase</i></small><b><i class="en">Creative</i><i class="es">Creativa</i></b></div>
+              <div><small><i class="en">Gate</i><i class="es">Puerta</i></small><b>UP</b></div>
+            </div>
+          </div>
+          <div class="tk-stub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 15.5v-1.8l-8-5V3.6a1.5 1.5 0 0 0-3 0v5.1l-8 5v1.8l8-2.4v5.2l-2 1.5v1.4l3.5-1 3.5 1v-1.4l-2-1.5v-5.2z"/></svg><b>UP</b><span class="barcode"></span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -161,9 +165,12 @@
           </ul>
         </div>
         <form id="lead-form" novalidate>
-          <label for="f-name"><span><i class="en">Name</i><i class="es">Nombre</i></span><input id="f-name" required data-ph-en="Your name" data-ph-es="Tu nombre"></label>
-          <label for="f-biz"><span><i class="en">Business</i><i class="es">Negocio</i></span><input id="f-biz" data-ph-en="Business name and type" data-ph-es="Nombre y tipo de negocio"></label>
-          <label for="f-phone"><span><i class="en">Phone / WhatsApp</i><i class="es">Teléfono / WhatsApp</i></span><input id="f-phone" required inputmode="tel" placeholder="787-"></label>
+          <label for="f-name"><span><i class="en">Name</i><i class="es">Nombre</i></span><input id="f-name" required autocomplete="name" maxlength="120" data-ph-en="Your name" data-ph-es="Tu nombre"></label>
+          <label for="f-biz"><span><i class="en">Business</i><i class="es">Negocio</i></span><input id="f-biz" autocomplete="organization" maxlength="160" data-ph-en="Business name and type" data-ph-es="Nombre y tipo de negocio"></label>
+          <label for="f-phone"><span><i class="en">Phone / WhatsApp</i><i class="es">Teléfono / WhatsApp</i></span><input id="f-phone" required type="tel" autocomplete="tel" inputmode="tel" maxlength="40" placeholder="787-"></label>
+          <label for="f-email"><span><i class="en">Email (optional)</i><i class="es">Email (opcional)</i></span><input id="f-email" type="email" autocomplete="email" data-ph-en="you@business.com" data-ph-es="tu@negocio.com"></label>
+          <label for="f-msg"><span><i class="en">What do you need? (optional)</i><i class="es">¿Qué necesitas? (opcional)</i></span><textarea id="f-msg" rows="3" maxlength="2000" data-ph-en="Social media, ads, website, AI…" data-ph-es="Redes, anuncios, website, AI…"></textarea></label>
+          <div class="hp" aria-hidden="true"><label>Website<input id="f-website" tabindex="-1" autocomplete="off"></label></div>
           <button class="btn btn-grad" type="submit"><span class="en">Request my proposal</span><span class="es">Pedir mi propuesta</span></button>
           <p class="note" id="f-note" hidden></p>
         </form>
@@ -293,10 +300,24 @@
     },2600);
   }
 
-  // ---- Lead form (preview only)
-  $('lead-form').addEventListener('submit',e=>{
-    e.preventDefault(); const n=$('f-note'), ok=$('f-name').value.trim()&&$('f-phone').value.trim(); n.hidden=false;
-    n.textContent= L==='en'?(ok?"Preview: on the live site this goes to info@updategrouppr.com.":"Enter your name and phone to continue."):(ok?"Vista previa: en el website real esto llega a info@updategrouppr.com.":"Escribe tu nombre y teléfono para continuar.");
+  // ---- Formulario de contacto: lo envía el servidor (/api/contact) al Outlook de Update Group
+  const formStart=Date.now();
+  $('lead-form').addEventListener('submit',async e=>{
+    e.preventDefault();
+    const f=e.currentTarget, n=$('f-note'), btn=f.querySelector('button[type=submit]');
+    const t=(en,es)=>L==='en'?en:es;
+    const show=(msg,ok)=>{n.hidden=false;n.textContent=msg;n.classList.toggle('err-note',!ok);};
+    const name=$('f-name').value.trim(), phone=$('f-phone').value.trim(), email=$('f-email').value.trim();
+    if(!name||phone.replace(/\D/g,'').length<7){show(t('Enter your name and a valid phone number.','Escribe tu nombre y un teléfono válido.'),false);(!name?$('f-name'):$('f-phone')).focus();return;}
+    if(email&&!$('f-email').checkValidity()){show(t('Check your email address.','Revisa tu email.'),false);$('f-email').focus();return;}
+    btn.disabled=true; const label=btn.innerHTML; btn.innerHTML=t('Sending…','Enviando…');
+    try{
+      const r=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,business:$('f-biz').value.trim(),phone,email,message:$('f-msg').value.trim(),lang:L,website:$('f-website').value,t:formStart})});
+      if(r.ok){f.reset();show(t("Thanks! We got your request and will contact you soon.","¡Gracias! Recibimos tu solicitud y te contactaremos pronto."),true);}
+      else if(r.status===429){show(t('Too many requests. Please try again later or message us on WhatsApp.','Demasiados intentos. Intenta más tarde o escríbenos por WhatsApp.'),false);}
+      else{throw new Error(r.status);}
+    }catch(err){show(t("We couldn't send your request. Please message us on WhatsApp at (787) 949-4781.","No pudimos enviar tu solicitud. Escríbenos por WhatsApp al (787) 949-4781."),false);}
+    finally{btn.disabled=false;btn.innerHTML=label;}
   });
 
   // ---- Portal (prototype only: real access control happens in WordPress, on the server)
@@ -373,7 +394,6 @@
     }
   } else {
     revealEls.forEach(el=>el.classList.add('is-in'));
-    document.querySelector('.scene-svg')?.pauseAnimations?.();
   }
 
   setLang(L); route();

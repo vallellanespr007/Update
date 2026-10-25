@@ -55,8 +55,6 @@ i.en,i.es{font-style:normal}
 
 /* HERO */
 .hero{position:relative;padding-block:clamp(40px,7vw,90px) clamp(36px,5vw,64px);overflow:hidden}
-.hero::before{content:"";position:absolute;width:780px;height:780px;right:-220px;top:-260px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--blue) 30%,transparent),transparent 65%);pointer-events:none}
-.hero .wrap{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(20px,4vw,48px);align-items:center}
 .stack{font-family:var(--f-display);font-stretch:68%;font-weight:900;text-transform:uppercase;line-height:.88;font-size:clamp(3.4rem,10.5vw,8.6rem);letter-spacing:-.01em}
 .stack span{display:block}
 .stack .b{color:var(--blue)}.stack .l{color:var(--lime)}
@@ -69,32 +67,99 @@ i.en,i.es{font-style:normal}
 @keyframes spin{to{transform:rotate(360deg)}}
 .orb img{position:relative;z-index:1;width:72%;filter:drop-shadow(0 40px 50px color-mix(in srgb,var(--blue) 45%,transparent));animation:float 6s ease-in-out infinite}
 @keyframes float{50%{transform:translateY(-12px)}}
-@media (max-width:860px){.hero .wrap{grid-template-columns:1fr}.orb{max-width:380px;margin-inline:auto;width:100%;order:-1}}
 
 
-/* HERO SCENE (animación en bucle tipo GIF) */
-.scene-svg{position:relative;z-index:1;width:100%;overflow:visible}
-.scene .bar{transform-box:fill-box;transform-origin:50% 100%;animation:grow 7s cubic-bezier(.22,1,.36,1) infinite;animation-delay:var(--d)}
-@keyframes grow{0%{transform:scaleY(.06)}32%,84%{transform:scaleY(1)}100%{transform:scaleY(.06)}}
-.scene .gline{stroke-dasharray:1;stroke-dashoffset:0;animation:draw 7s ease-in-out infinite}
-@keyframes draw{0%{stroke-dashoffset:1}45%,100%{stroke-dashoffset:0}}
-.scene .growth{animation:fadeLoop 7s linear infinite}
-@keyframes fadeLoop{0%,86%{opacity:1}94%,100%{opacity:0}}
-.scene .ghead{transform-box:fill-box;transform-origin:center;animation:head 7s ease infinite}
-@keyframes head{0%,41%{opacity:0;transform:scale(.3)}50%,86%{opacity:1;transform:scale(1)}94%,100%{opacity:0}}
-.fchip{position:absolute;z-index:2;display:flex;align-items:center;gap:10px;background:color-mix(in srgb,var(--panel) 88%,transparent);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:14px;padding:10px 14px;font-size:.8rem;box-shadow:0 14px 30px -18px #000;white-space:nowrap;animation:chipIn 7s cubic-bezier(.22,1,.36,1) infinite both}
-.fchip b{display:block;font-family:var(--f-display);font-size:.8rem}
-.fchip small{color:var(--muted);font-size:.74rem}
-.fchip .dot{width:9px;height:9px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px color-mix(in srgb,var(--lime) 25%,transparent);flex:none;animation:ping 1.6s ease-in-out infinite}
-.fc1{top:2%;left:-4%;animation-delay:.6s}
-.fc2{bottom:-2%;right:-4%;animation-delay:1.8s}
-.fc2 .dot{background:var(--cyan);box-shadow:0 0 0 4px color-mix(in srgb,var(--cyan) 25%,transparent)}
-.fc3{bottom:-2%;left:-4%;animation-delay:3s}
-.fc3 .dot{background:var(--blue);box-shadow:0 0 0 4px color-mix(in srgb,var(--blue) 30%,transparent)}
-@keyframes chipIn{0%{opacity:0;transform:translateY(14px) scale(.94)}7%,62%{opacity:1;transform:none}70%,100%{opacity:0;transform:translateY(-8px)}}
-@keyframes ping{50%{box-shadow:0 0 0 7px transparent}}
-@media (max-width:860px){.fc1,.fc3{left:0}.fc2{right:0}}
-@media (max-width:420px){.fchip{font-size:.72rem;padding:8px 10px}}
+
+/* HERO: cielo al amanecer, avión de Update y pase al próximo nivel (como el arte "Tu marca, en su próximo nivel") */
+.hero.sky{padding-block:clamp(28px,5vw,64px) clamp(8px,2vw,24px);isolation:isolate}
+.sky-bg{position:absolute;inset:0;z-index:-1;overflow:hidden;background:linear-gradient(180deg,#060B22 0%,#0A1A4D 38%,#16357F 64%,#2C4F9C 78%,#6E7FB4 88%,var(--bg) 100%)}
+.sky-bg .sun{position:absolute;right:-6%;top:44%;width:min(70vw,900px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#FFE6BF 0,#FFC27A 10%,color-mix(in srgb,#FF9F5A 45%,transparent) 22%,color-mix(in srgb,var(--cyan) 10%,transparent) 45%,transparent 66%);opacity:.75;animation:sunPulse 7s ease-in-out infinite}
+@keyframes sunPulse{50%{opacity:.55;transform:scale(1.05)}}
+.clouds{position:absolute;left:0;right:0;bottom:2%;height:46%}
+.clouds i{position:absolute;bottom:0;left:0;width:200%;height:100%;display:block;background:
+  radial-gradient(10% 22% at 4% 74%,#EEF2FB 0,transparent 72%),radial-gradient(8% 18% at 13% 64%,#FFE9D2 0,transparent 72%),radial-gradient(12% 26% at 23% 78%,#E6ECF9 0,transparent 72%),
+  radial-gradient(9% 20% at 33% 66%,#FFEAD6 0,transparent 72%),radial-gradient(11% 24% at 42% 76%,#EEF2FB 0,transparent 72%),
+  radial-gradient(10% 22% at 54% 74%,#EEF2FB 0,transparent 72%),radial-gradient(8% 18% at 63% 64%,#FFE9D2 0,transparent 72%),radial-gradient(12% 26% at 73% 78%,#E6ECF9 0,transparent 72%),
+  radial-gradient(9% 20% at 83% 66%,#FFEAD6 0,transparent 72%),radial-gradient(11% 24% at 92% 76%,#EEF2FB 0,transparent 72%);
+  opacity:.22;filter:blur(14px);animation:drift 80s linear infinite}
+.clouds i:nth-child(2){bottom:20%;opacity:.12;transform:scale(1.3,.7);animation-duration:120s;animation-direction:reverse}
+.clouds i:nth-child(3){bottom:-12%;opacity:.3;animation-duration:60s}
+/* nubes finas en lo alto, casi transparentes */
+.wisps{position:absolute;inset:6% 0 auto 0;height:50%;pointer-events:none}
+.wisps i{position:absolute;display:block;height:14%;border-radius:50%;background:radial-gradient(closest-side,rgba(226,234,252,.55),transparent);filter:blur(10px);opacity:.14;animation:wisp linear infinite}
+.wisps i:nth-child(1){top:8%;width:38%;left:-40%;animation-duration:70s}
+.wisps i:nth-child(2){top:42%;width:28%;left:-30%;animation-duration:95s;animation-delay:-40s;opacity:.1}
+.wisps i:nth-child(3){top:70%;width:46%;left:-48%;animation-duration:85s;animation-delay:-62s;opacity:.12}
+.wisps i:nth-child(4){top:24%;width:22%;left:-24%;animation-duration:110s;animation-delay:-20s;opacity:.09}
+@keyframes wisp{to{transform:translateX(560%)}}
+@keyframes drift{to{translate:-50% 0}}
+
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);grid-template-areas:"copy plane" "board board";column-gap:clamp(16px,3vw,40px);align-items:center}
+.copy{grid-area:copy;position:relative;z-index:3}
+.hero .stack{text-shadow:0 6px 40px rgba(4,8,30,.55)}
+.hero .lede{color:#C4CDE6}
+
+.plane-slot{grid-area:plane;position:relative;aspect-ratio:1.55;z-index:2}
+.trail{position:absolute;left:-22%;top:44%;width:70%;height:auto;overflow:visible;z-index:0}
+.trail .base{stroke:color-mix(in srgb,var(--cyan) 45%,transparent);stroke-width:.8;fill:none;stroke-dasharray:1;stroke-dashoffset:1;animation:trailDraw 1.8s .5s cubic-bezier(.22,1,.36,1) forwards}
+.trail .glow{stroke:url(#tg);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-dasharray:.2 .8;filter:drop-shadow(0 0 3px var(--cyan));opacity:0;animation:trailRun 3.4s 2.2s linear infinite}
+@keyframes trailDraw{to{stroke-dashoffset:0}}
+@keyframes trailRun{0%{stroke-dashoffset:1;opacity:1}100%{stroke-dashoffset:0;opacity:1}}
+.plane-wrap{position:absolute;width:122%;right:-18%;top:4%;z-index:1;animation:flyIn 1.7s cubic-bezier(.16,1,.3,1) both}
+.plane-wrap img{width:100%;height:auto;transform-origin:60% 50%;filter:drop-shadow(0 30px 34px rgba(2,6,24,.55));animation:cruise 6.5s 1.7s ease-in-out infinite}
+@keyframes flyIn{from{opacity:0;transform:translate(-55%,45%) scale(.55) rotate(5deg)}to{opacity:1;transform:none}}
+@keyframes cruise{0%,100%{transform:translate(0,0) rotate(0)}30%{transform:translate(-1.2%,-4%) rotate(-1.3deg)}65%{transform:translate(.8%,1.5%) rotate(.6deg)}}
+
+/* pase de abordar + pasaporte */
+.boarding{grid-area:board;position:relative;z-index:4;margin-top:clamp(8px,2vw,28px);aspect-ratio:3.15;container-type:inline-size}
+.passport{position:absolute;right:3%;top:2%;width:20%;aspect-ratio:.72;container-type:inline-size;border-radius:10px;background:linear-gradient(160deg,#16245A,#0A1433 70%);border:1px solid #24357A;box-shadow:0 30px 50px -16px rgba(0,0,0,.7),inset 10px 0 0 -6px rgba(255,255,255,.06);display:grid;place-content:center;justify-items:center;gap:7cqw;rotate:6deg;animation:passIn .9s .9s cubic-bezier(.16,1,.3,1) both,bobP 7s 2.6s ease-in-out infinite}
+.passport img{width:56%;height:auto}
+.passport b{font-family:var(--f-display);font-weight:600;font-stretch:110%;font-size:7cqw;letter-spacing:.3em;color:#D9B56A;text-align:center;line-height:1.55;margin-right:-.3em}
+.pp-plane{display:flex;align-items:center;gap:3cqw;color:#D9B56A}
+.pp-plane::before,.pp-plane::after{content:"";width:12cqw;height:1px;background:#D9B56A;opacity:.7}
+.pp-plane svg{width:9cqw;height:9cqw;rotate:90deg}
+@keyframes passIn{from{opacity:0;transform:translateY(30%) rotate(10deg)}to{opacity:1;transform:none}}
+@keyframes bobP{50%{transform:translateY(-1.2cqw) rotate(-1deg)}}
+
+.ticket{position:absolute;left:8%;top:12%;width:64%;display:grid;grid-template-columns:minmax(0,1fr) 15%;rotate:-4deg;transform-origin:100% 50%;filter:drop-shadow(0 30px 40px rgba(0,0,0,.55));container-type:inline-size;animation:ticketOut 1.3s 1.4s cubic-bezier(.16,1,.3,1) both,bobT 6s 2.8s ease-in-out infinite}
+@keyframes ticketOut{0%{opacity:0;clip-path:inset(0 0 0 100%);transform:translateX(30%) rotate(3deg)}35%{opacity:1}100%{opacity:1;clip-path:inset(-20% -20% -20% -20%);transform:none}}
+@keyframes bobT{50%{transform:translateY(-1.2cqw) rotate(.6deg)}}
+.tk-main,.tk-stub{position:relative;overflow:hidden;min-width:0}
+.tk-main{background:linear-gradient(180deg,#FFFFFF,#EEF1F8);color:#0A1433;border-radius:2.2cqw 0 0 2.2cqw;padding:3.4cqw 4cqw 3.2cqw 7cqw;display:grid;grid-template-columns:minmax(0,1fr);gap:2.4cqw;-webkit-mask:radial-gradient(circle 1.7cqw at 100% 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 1.7cqw at 100% 100%,#0000 98%,#000) bottom/100% 51% no-repeat;mask:radial-gradient(circle 1.7cqw at 100% 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 1.7cqw at 100% 100%,#0000 98%,#000) bottom/100% 51% no-repeat}
+.tk-main::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.9) 50%,transparent 65%);background-size:250% 100%;animation:tkShine 5s 3s ease-in-out infinite;pointer-events:none}
+@keyframes tkShine{0%{background-position:150% 0}45%,100%{background-position:-60% 0}}
+.tk-water{position:absolute;left:-6cqw;bottom:-6cqw;width:34cqw;height:auto;opacity:.18;filter:saturate(1.2);pointer-events:none}
+.tk-top{position:relative;display:flex;align-items:center;gap:1.4cqw;padding-left:8cqw}
+.tk-top img{width:5cqw;height:auto;flex:none}
+.tk-top .w{font-family:var(--f-word);font-weight:500;font-size:3.6cqw;line-height:.8;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tk-top .w small{display:block;font-family:var(--f-display);font-weight:700;font-size:1.2cqw;letter-spacing:.3em;color:#0A1433;-webkit-text-fill-color:#0A1433;text-align:right;margin-top:.4cqw}
+.tk-top .dash{flex:1;border-top:.25cqw dashed #9AA6C4;margin-inline:1.4cqw}
+.tk-top svg{width:4cqw;height:4cqw;color:#0A1433;rotate:90deg;animation:tkPlane 3s ease-in-out infinite}
+@keyframes tkPlane{50%{transform:translateY(-1.2cqw)}}
+.tk-title{position:relative;font-family:var(--f-display);font-stretch:72%;font-weight:900;text-transform:uppercase;font-size:6.4cqw;line-height:.95;letter-spacing:-.01em}
+.tk-title em{font-style:normal;color:#5BB21E}
+.tk-fields{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.45fr) minmax(0,.9fr) minmax(0,.6fr);gap:1.6cqw}
+.tk-fields div{min-width:0;display:grid;gap:.5cqw;border-left:.2cqw solid #C9D0E2;padding-left:1.6cqw}
+.tk-fields div:first-child{border-left:0;padding-left:0}
+.tk-fields small{font-size:1.4cqw;font-weight:600;letter-spacing:.14em;color:#5A6684;text-transform:uppercase}
+.tk-fields b{font-family:var(--f-display);font-stretch:85%;font-weight:800;font-size:2.2cqw;text-transform:uppercase;line-height:1.1;overflow-wrap:anywhere}
+.tk-stub{background:linear-gradient(180deg,#2F6BFF,#1A4FD8);color:#fff;border-radius:0 2.2cqw 2.2cqw 0;border-left:.3cqw dashed rgba(255,255,255,.55);display:grid;justify-items:center;align-content:center;gap:1.6cqw;padding:2cqw 1cqw}
+.tk-stub svg{width:4.6cqw;height:4.6cqw}
+.tk-stub b{font-family:var(--f-display);font-stretch:80%;font-weight:900;font-size:4.6cqw;line-height:1}
+.barcode{position:relative;width:62%;height:11cqw;background:#fff;border-radius:.5cqw;overflow:hidden}
+.barcode::before{content:"";position:absolute;inset:8% 12%;background:repeating-linear-gradient(180deg,#0A1433 0 .3cqw,transparent .3cqw .55cqw,#0A1433 .55cqw 1.1cqw,transparent 1.1cqw 1.4cqw,#0A1433 1.4cqw 1.6cqw,transparent 1.6cqw 1.95cqw)}
+.barcode::after{content:"";position:absolute;left:0;right:0;height:.45cqw;top:0;background:var(--lime);box-shadow:0 0 1.4cqw var(--lime);animation:scan 2.4s 3s ease-in-out infinite;opacity:0}
+@keyframes scan{0%{top:6%;opacity:1}50%{top:90%;opacity:1}100%{top:6%;opacity:1}}
+
+@media (max-width:860px){
+  .hero-grid{grid-template-columns:1fr;grid-template-areas:"plane" "copy" "board"}
+  .plane-slot{aspect-ratio:2;margin-inline:-4%}
+  .plane-wrap{width:104%;right:-6%;top:6%}
+  .trail{left:-6%;top:42%;width:60%}
+  .boarding{margin-top:24px;aspect-ratio:1.42}
+  .passport{right:0;top:0;width:36%;rotate:5deg}
+  .ticket{left:-1%;top:50%;width:94%;rotate:-3deg}
+}
 
 /* SERVICIOS EN MOVIMIENTO */
 .svc-bento .tile{--rx:0deg;--ry:0deg;--ty:0px;--tx:0px;transform:perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translate(var(--tx),var(--ty));transition:transform .35s cubic-bezier(.22,1,.36,1),border-color .3s,box-shadow .3s}
@@ -159,7 +224,6 @@ html,body{overflow-x:hidden}
   .js-motion .proc li:nth-child(odd){--from:translateX(-22px) scale(.97)}
   .js-motion .proc li:nth-child(even){--from:translateX(22px) scale(.97)}
   .svc-bento .tile{--rx:0deg!important;--ry:0deg!important}
-  .fchip{max-width:calc(100% - 8px)}
 }
 
 /* MARQUEE */
@@ -340,3 +404,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-con
 @keyframes plLogo{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:none}}
 @keyframes plFill{to{transform:scaleX(1)}}
 @keyframes plFade{from{opacity:0}}
+
+/* Formulario: campo de mensaje, trampa anti-spam y mensajes */
+textarea{font:inherit;font-weight:400;color:var(--ink);background:color-mix(in srgb,var(--bg) 75%,transparent);border:1px solid var(--line);border-radius:14px;padding:13px 15px;width:100%;resize:vertical;min-height:84px}
+textarea:focus{outline:none;border-color:var(--cyan)}
+.hp{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
+.note.err-note{color:#FF9B9B}
+#lead-form button[disabled]{opacity:.7;cursor:progress}
