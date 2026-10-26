@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://www.updategrouppr.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.updategrouppr.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.updategrouppr.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.updategrouppr.com/"/>
+  </url>
+  <url>
+    <loc>https://www.updategrouppr.com/es/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.updategrouppr.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.updategrouppr.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.updategrouppr.com/"/>
+  </url>
+  <url>
+    <loc>https://www.updategrouppr.com/services.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.updategrouppr.com/services.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.updategrouppr.com/es/services.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.updategrouppr.com/services.html"/>
+  </url>
+  <url>
+    <loc>https://www.updategrouppr.com/es/services.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.updategrouppr.com/services.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.updategrouppr.com/es/services.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.updategrouppr.com/services.html"/>
+  </url>
+</urlset>

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /propuesta-ejemplo.pdf
+
+Sitemap: https://www.updategrouppr.com/sitemap.xml
