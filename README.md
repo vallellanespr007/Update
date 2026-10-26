@@ -37,7 +37,8 @@ Website de [Update Group](https://www.updategrouppr.com), en español e inglés.
 - Favicons: `favicon.png`, `favicon-48.png`, `apple-touch-icon.png`, `icon-512.png`.
 
 ## Seguridad
-- Las dos páginas tienen una política de seguridad (Content-Security-Policy) en el `<head>`. Solo deja cargar código desde este mismo sitio y las fuentes de Google.
+- Las dos páginas (y `404.html`) tienen una política de seguridad (Content-Security-Policy) en el `<head>`. Solo deja cargar código desde este mismo sitio y las fuentes de Google.
+- Sentry (reporte de errores) ya está permitido en la política: el SDK desde `browser.sentry-cdn.com` / `js.sentry-cdn.com` y el envío de errores a `*.ingest.sentry.io` / `*.ingest.us.sentry.io`. Si el proyecto de Sentry está en Europa (`*.ingest.de.sentry.io`), hay que añadir ese dominio en `connect-src`.
 - Por eso **no se puede poner código `<script>` directo dentro del HTML**: el navegador lo bloquea. Todo el JavaScript va en archivos dentro de `js/`.
 - Si se añade algo de otra página (un video, un mapa, un chat), hay que permitir ese dominio en la política o no va a cargar.
 
