@@ -8,5 +8,9 @@
       environment: /(^|\.)updategrouppr\.com$/.test(location.hostname) ? 'production' : 'development',
       sendDefaultPii: false // no manda IPs ni datos personales
     });
+    // Prueba: abrir el website con ?prueba-sentry al final del link manda un error de prueba a Sentry.
+    if (/[?&]prueba-sentry(=|&|$)/.test(location.search)) {
+      Sentry.captureException(new Error('Prueba Sentry desde el website'));
+    }
   });
 })();
