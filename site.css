@@ -306,7 +306,8 @@ footer{padding-block:30px;border-top:1px solid var(--line);color:var(--muted);fo
 footer .wrap{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
 .social{display:flex;gap:8px;align-items:center}
 .social a{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--panel-2);border:1px solid var(--line)}
-.wa{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:30;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:#25D366;color:#fff;box-shadow:0 14px 30px -10px rgba(37,211,102,.7)}
+.wa{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:30;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:#25D366;color:#fff;box-shadow:0 14px 30px -10px rgba(37,211,102,.7);transition:opacity .25s,transform .25s,visibility .25s}
+.wa.wa-off{opacity:0;visibility:hidden;transform:translateY(12px)}
 
 /* PORTAL VIEW */
 #view-portal{padding-block:clamp(36px,6vw,72px)}

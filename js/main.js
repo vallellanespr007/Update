@@ -147,5 +147,14 @@
     revealEls.forEach(el=>el.classList.add('is-in'));
   }
 
+  // ---- Celular: la burbuja de WhatsApp no tapa el hero; aparece al bajar
+  const wa=document.querySelector('.wa'), hero=$('top');
+  if(wa&&hero&&'IntersectionObserver' in window){
+    const small=matchMedia('(max-width:860px)'); let heroIn=false;
+    const upd=()=>wa.classList.toggle('wa-off',small.matches&&heroIn);
+    new IntersectionObserver(es=>{heroIn=es[es.length-1].isIntersecting;upd();}).observe(hero);
+    small.addEventListener('change',upd);
+  }
+
   setLang(L); route();
 })();
