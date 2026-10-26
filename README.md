@@ -38,7 +38,7 @@ Website de [Update Group](https://www.updategrouppr.com), en español e inglés.
 
 ## Seguridad
 - Las dos páginas (y `404.html`) tienen una política de seguridad (Content-Security-Policy) en el `<head>`. Solo deja cargar código desde este mismo sitio y las fuentes de Google.
-- **Sentry (reporte de errores):** `index.html` y `services.html` cargan el SDK de Sentry 11.6.0 desde su CDN y lo configuran en `js/sentry.js`. Está **apagado** hasta pegar el DSN del proyecto en `js/sentry.js` (Sentry → Settings → Projects → proyecto → Client Keys). En `updategrouppr.com` los errores salen como `production`; en cualquier otro lugar, como `development`. No manda datos personales.
+- **Sentry (reporte de errores):** `index.html` y `services.html` cargan el Loader Script del proyecto de Sentry (`js.sentry-cdn.com/56d97da5….min.js`), que trae la clave del proyecto y baja el SDK. `js/sentry.js` añade el ambiente (`production` en updategrouppr.com, `development` en otros lugares) y no manda datos personales. Qué se mide (errores, velocidad, replays) se cambia en Sentry → Settings → Projects → proyecto → Loader Script, sin tocar el código.
 - Sentry (reporte de errores) ya está permitido en la política: el SDK desde `browser.sentry-cdn.com` / `js.sentry-cdn.com` y el envío de errores a `*.ingest.sentry.io` / `*.ingest.us.sentry.io`. Si el proyecto de Sentry está en Europa (`*.ingest.de.sentry.io`), hay que añadir ese dominio en `connect-src`.
 - Por eso **no se puede poner código `<script>` directo dentro del HTML**: el navegador lo bloquea. Todo el JavaScript va en archivos dentro de `js/`.
 - Si se añade algo de otra página (un video, un mapa, un chat), hay que permitir ese dominio en la política o no va a cargar.
